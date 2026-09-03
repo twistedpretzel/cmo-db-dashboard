@@ -1,0 +1,24 @@
+# --- Never commit: these embed proprietary Command: Modern Operations data ---
+# Generated dashboards carry a full copy of the game database
+*_dashboard.html
+# ...but always keep the (data-free) template
+!*.template.html
+
+# Game databases and any compressed copies
+*.db3
+*.db3.gz
+
+# Game imagery (proprietary Slitherine/WarfareSims assets)
+Images/
+*.webp
+
+# Raw JSON extracts from the database (also proprietary data)
+*.json
+
+# --- OS / editor cruft ---
+.DS_Store
+Thumbs.db
+desktop.ini
+*~
+.vscode/
+.idea/
