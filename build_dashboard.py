@@ -244,6 +244,7 @@ def _pause_before_exit():
             pass
 
 def run(a):
+    autoselected = not a.db
     db = a.db or _auto_db(_app_dir())
     if not db:
         print("No CMO database (*.db3) found in this folder.")
@@ -262,6 +263,12 @@ def run(a):
 
     dbname = os.path.splitext(os.path.basename(db))[0]
     out = a.out or os.path.join(os.path.dirname(os.path.abspath(db)), dbname + '_dashboard.html')
+
+    if autoselected:
+        n = len(glob.glob(os.path.join(_app_dir(), '*.db3')))
+        print('Auto-selected %s (newest of %d database%s in this folder).'
+              % (os.path.basename(db), n, '' if n == 1 else 's'))
+        print('To build a different one, drag its .db3 file onto this program instead.\n')
 
     print('reading', db)
     try:
@@ -294,14 +301,16 @@ def run(a):
     html = html.replace(marker, blob, 1)
     with open(out, 'w', encoding='utf-8') as f:
         f.write(html)
-    print('wrote', out, '(%.1f MB)' % (os.path.getsize(out) / 1e6))
 
+    print('\nSaved: %s  (%.1f MB)' % (os.path.abspath(out), os.path.getsize(out) / 1e6))
+    print('This file is permanent — bookmark it or double-click it to reopen later, no rebuild needed.')
+    print('Re-run this only when your game database updates.')
     if not a.no_open:
         try:
             webbrowser.open('file://' + os.path.abspath(out))
-            print('opening in your browser...')
+            print('Opening it now...')
         except Exception:
-            print('(open %s in your browser)' % out)
+            print('Open the file above in your browser to view it.')
     return 0
 
 def main():

@@ -23,7 +23,9 @@ That's the whole process — no Python, no command line, nothing to type.
 
 **First run: a blue "Windows protected your PC" box may appear.** That's SmartScreen being cautious about a new file from an unknown indie author — it is expected here and does not mean anything is wrong. Click **More info → Run anyway**. If you'd like to confirm the download first, each release includes a `build_dashboard.exe.sha256` checksum you can verify.
 
-The generated `DB3K_517_dashboard.html` lands right next to the game's database. Keep it in the `DB` folder so it can find the unit photos; you can double-click that `.html` any time to reopen it.
+The generated `DB3K_517_dashboard.html` is **saved right next to the game's database** — it's a permanent file, not just a browser view. Keep it in the `DB` folder (so it can find the unit photos) and **double-click that `.html`, or bookmark it, to reopen any time** — you don't need to rebuild. Only re-run the tool when your game database updates.
+
+**Want an older database?** Double-clicking always builds the newest. To build a specific one instead, **drag its `.db3` file onto `build_dashboard.exe`** (or, from a terminal, `build_dashboard.exe DB3K_515.db3`). The dashboard is written next to whichever database you pick.
 
 ---
 
