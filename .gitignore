@@ -15,6 +15,13 @@ Images/
 # Raw JSON extracts from the database (also proprietary data)
 *.json
 
+# --- Python / PyInstaller build output ---
+__pycache__/
+*.pyc
+build/
+dist/
+*.manifest
+
 # --- OS / editor cruft ---
 .DS_Store
 Thumbs.db

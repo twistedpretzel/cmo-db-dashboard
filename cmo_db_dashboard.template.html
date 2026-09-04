@@ -730,11 +730,26 @@ function sortBy(col){ const {params}=route(); const cur=params.s||''; setParam('
 function matchQ(q, ...fields){ if(!q) return true; const s=q.toLowerCase(); return fields.some(f=>f&&String(f).toLowerCase().includes(s)); }
 /* build filter options from a set of id-lists present in the data */
 function presentOpts(items, getIds, enumName){ const m=new Map(); for(const it of items){ const ids=getIds(it)||[]; for(const id of ids) m.set(id,(m.get(id)||0)+1); } return [...m.entries()].map(([id,n])=>({v:id,l:E(enumName,id)+' ('+n+')'})).sort((a,b)=>a.l.localeCompare(b.l)); }
-function famPresentOpts(items, getSet, lookup){ const s=new Set(); for(const it of items){ const set=getSet(it); if(set) set.forEach(f=>s.add(f)); } return [...s].map(f=>({v:f,l:(lookup[f]?lookup[f].label:f)})).sort((a,b)=>a.l.localeCompare(b.l)); }
+function famPresentOpts(items, getSet, lookup){ const m=new Map(); for(const it of items){ const set=getSet(it); if(set) set.forEach(f=>m.set(f,(m.get(f)||0)+1)); } return [...m.entries()].map(([f,n])=>({v:f,l:(lookup[f]?lookup[f].label:f)+' ('+n+')'})).sort((a,b)=>a.l.localeCompare(b.l)); }
 const threshOpts=(arr,unit)=>arr.map(v=>({v,l:'≥ '+fmt.n(v)+' '+unit}));
+/* count a scalar field across items -> [{v,l:"<label> (n)"}] */
+function valOpts(items, getVal, label){ const m=new Map(); for(const it of items){ const v=getVal(it); if(v==null||v==='') continue; m.set(v,(m.get(v)||0)+1); } return [...m.entries()].map(([v,n])=>({v,l:label(v)+' ('+n+')'})).sort((a,b)=>a.l.localeCompare(b.l)); }
+/* count a set-valued getter (e.g. guidance tags, band letters) across items */
+function setOpts(items, getSet, label, keep){ const m=new Map(); for(const it of items){ const s=getSet(it); if(!s) continue; for(const t of s){ if(keep&&!keep(t)) continue; m.set(t,(m.get(t)||0)+1); } } return [...m.entries()].map(([v,n])=>({v,l:label(v)+' ('+n+')'})).sort((a,b)=>a.l.localeCompare(b.l)); }
+/* faceted filtering: preds is {paramKey:(item)=>bool} for the ACTIVE filters (fold the always-on
+   query/deprecated test in under a key that is never a dropdown, e.g. '_base'). Returns the filtered
+   rows, and sub(key) = items matching every OTHER active filter — so each dropdown lists only the
+   values still reachable given the user's other choices (no "sonar guidance" once family=Bomb). */
+function buildFacets(all, preds){
+  const keys=Object.keys(preds);
+  const rows=all.filter(it=>{ for(const k of keys) if(!preds[k](it)) return false; return true; });
+  const sub=except=>all.filter(it=>{ for(const k of keys){ if(k===except) continue; if(!preds[k](it)) return false; } return true; });
+  return {rows, sub};
+}
 /* weapon guidance classification */
 const GUIDANCE={arh:'Active radar (ARH)',sarh:'Semi-active radar (SARH)',tvm:'Track-via-missile',ir:'Infrared / IIR',eo:'Electro-optical',arm:'Anti-radiation (passive)',laser:'Laser-guided',sonar:'Sonar (torpedo)',gnss:'INS + GNSS/GPS',ins:'INS only',tercom:'TERCOM',unguided:'Unguided'};
 function weaponGuidanceTags(w){
+  if(w._gtags) return w._gtags;
   const t=new Set();
   for (const [sid] of w.sensors){ const s=D.sensor.get(sid); if(!s) continue;
     if(s.Type===2001) t.add('arh'); else if(s.Type===2002||s.Type===2006) t.add('sarh'); else if(s.Type===2005) t.add('tvm'); else if(s.Type===2004) t.add('ir'); else if(s.Type===2003) t.add('eo'); else if(s.Type===3001) t.add('arm'); else if(s.Type>=4001&&s.Type<4100) t.add('laser'); else if(s.fam==='sonar') t.add('sonar'); }
@@ -743,7 +758,7 @@ function weaponGuidanceTags(w){
   else if(c.includes(6101)) t.add('ins');
   if(c.includes(6103)) t.add('tercom'); if(c.includes(3001)) t.add('arm');
   if(!t.size && w.fam!=='decoy' && w.fam!=='cargo' && w.fam!=='tank' && w.fam!=='pod') t.add('unguided');
-  return t;
+  w._gtags=t; return t;
 }
 function warheadDP(w){ let s=0; for(const id of w.warheads){ const h=D.warhead.get(id); if(h) s+=h.DamagePoints||0; } return s; }
 function renderTable(rows, cols, params, rowHref){
@@ -768,15 +783,22 @@ function viewPlatformList(k, params){
   const all = [...D.platforms[k.key].values()];
   const typeEnum = k.key==='Facility'?'FacilityCategory': k.key==='GroundUnit'?'GroundUnitCategory': k.key+'Type';
   const typeField = (k.key==='Facility'||k.key==='GroundUnit')?'Category':'Type';
-  const types = new Map(); for (const u of all) types.set(u[typeField],(types.get(u[typeField])||0)+1);
-  const typeOpts = [...types.keys()].map(t=>({v:t,l:E(typeEnum,t)})).sort((a,b)=>a.l.localeCompare(b.l));
-  const countryOpts = IDX.countries[k.key].map(c=>({v:c.id,l:c.name+' ('+c.n+')'}));
   const decades=[]; for(let y=1940;y<=2030;y+=10) decades.push({v:y,l:y+'s'});
-  const svcMap=new Map(); for(const u of all) if(u.OperatorService) svcMap.set(u.OperatorService,(svcMap.get(u.OperatorService)||0)+1);
-  const serviceOpts=[...svcMap.entries()].map(([id,n])=>({v:id,l:E('OperatorService',id)+' ('+n+')'})).sort((a,b)=>a.l.localeCompare(b.l));
-  const sensorFamOpts=famPresentOpts(all,u=>u._sfams,FAMILY);
-  const carriesOpts=famPresentOpts(all,u=>u._wfams,WFAM);
-  let rows = all.filter(u => (state.showDep||!u.Deprecated) && matchQ(params.q,u.Name,u.Comments) && (!params.c || u.OperatorCountry==+params.c) && (!params.t || u[typeField]==+params.t) && (!params.d || (u.YearCommissioned>=+params.d && u.YearCommissioned<+params.d+10)) && (!params.svc || u.OperatorService==+params.svc) && (!params.sf || (u._sfams&&u._sfams.has(params.sf))) && (!params.wf || (u._wfams&&u._wfams.has(params.wf))));
+  const preds={
+    _base:u=>(state.showDep||!u.Deprecated) && matchQ(params.q,u.Name,u.Comments),
+    c: u=>!params.c||u.OperatorCountry==+params.c,
+    t: u=>!params.t||u[typeField]==+params.t,
+    d: u=>!params.d||(u.YearCommissioned>=+params.d && u.YearCommissioned<+params.d+10),
+    svc: u=>!params.svc||u.OperatorService==+params.svc,
+    sf: u=>!params.sf||(u._sfams&&u._sfams.has(params.sf)),
+    wf: u=>!params.wf||(u._wfams&&u._wfams.has(params.wf)),
+  };
+  const {rows, sub}=buildFacets(all, preds);
+  const typeOpts = valOpts(sub('t'), u=>u[typeField], t=>E(typeEnum,t));
+  const countryOpts = valOpts(sub('c'), u=>u.OperatorCountry, id=>E('OperatorCountry',id));
+  const serviceOpts = valOpts(sub('svc'), u=>u.OperatorService, id=>E('OperatorService',id));
+  const sensorFamOpts = famPresentOpts(sub('sf'), u=>u._sfams, FAMILY);
+  const carriesOpts = famPresentOpts(sub('wf'), u=>u._wfams, WFAM);
   const cols = [
     {key:'name',label:'Name',get:u=>u.Name,link:true,html:u=>esc(u.Name)+flags(u)},
     {key:'type',label:k.key==='Facility'||k.key==='GroundUnit'?'Category':'Type',get:u=>E(typeEnum,u[typeField]),dim:true},
@@ -797,16 +819,24 @@ function viewPlatformList(k, params){
 /* ---------- sensor list ---------- */
 function viewSensorList(params){
   const all=[...D.sensor.values()];
-  const famOpts = Object.entries(FAMILY).map(([v,f])=>({v,l:f.label}));
-  const types = new Map(); for (const s of all) types.set(s.Type,(types.get(s.Type)||0)+1);
-  const typeOpts=[...types.keys()].map(t=>({v:t,l:E('SensorType',t)})).sort((a,b)=>a.l.localeCompare(b.l));
-  const roleMap = new Map(); for (const s of all) if(!params.f||s.fam===params.f) roleMap.set(s.Role,(roleMap.get(s.Role)||0)+1);
-  const roleOpts=[...roleMap.keys()].map(t=>({v:t,l:E('SensorRole',t)})).sort((a,b)=>a.l.localeCompare(b.l));
-  const capOpts=presentOpts(all,s=>s.caps,'SensorCapability');
-  const codeOpts=presentOpts(all,s=>s.codes,'SensorCode');
-  const bset=new Set(); for(const s of all) for(const f of s.freqST) if(f>=1001&&f<=1013) bset.add(E('SensorFrequency',f).charAt(0));
-  const bandOpts=[...bset].sort().map(l=>({v:l,l:l+' band'}));
-  let rows = all.filter(s=>(state.showDep||!s.Deprecated) && matchQ(params.q,s.Name,s.Comments) && (!params.f||s.fam===params.f) && (!params.t||s.Type==+params.t) && (!params.r||s.Role==+params.r) && (!params.cap||s.caps.includes(+params.cap)) && (!params.code||s.codes.includes(+params.code)) && (!params.band||s.freqST.some(f=>f>=1001&&f<=1013&&E('SensorFrequency',f).charAt(0)===params.band)) && (!params.rng||s.RangeMax>=+params.rng));
+  const bands=s=>{ const b=new Set(); for(const f of s.freqST) if(f>=1001&&f<=1013) b.add(E('SensorFrequency',f).charAt(0)); return b; };
+  const preds={
+    _base:s=>(state.showDep||!s.Deprecated) && matchQ(params.q,s.Name,s.Comments),
+    f: s=>!params.f||s.fam===params.f,
+    t: s=>!params.t||s.Type==+params.t,
+    r: s=>!params.r||s.Role==+params.r,
+    cap: s=>!params.cap||s.caps.includes(+params.cap),
+    code: s=>!params.code||s.codes.includes(+params.code),
+    band: s=>!params.band||bands(s).has(params.band),
+    rng: s=>!params.rng||s.RangeMax>=+params.rng,
+  };
+  const {rows, sub}=buildFacets(all, preds);
+  const famOpts = valOpts(sub('f'), s=>s.fam, f=>FAMILY[f]?FAMILY[f].label:f);
+  const typeOpts = valOpts(sub('t'), s=>s.Type, t=>E('SensorType',t));
+  const roleOpts = valOpts(sub('r'), s=>s.Role, t=>E('SensorRole',t));
+  const capOpts = presentOpts(sub('cap'), s=>s.caps,'SensorCapability');
+  const codeOpts = presentOpts(sub('code'), s=>s.codes,'SensorCode');
+  const bandOpts = setOpts(sub('band'), bands, l=>l+' band');
   const cols=[
     {key:'name',label:'Name',get:s=>s.Name,link:true,html:s=>esc(s.Name)+flags(s)},
     {key:'fam',label:'Family',get:s=>FAMILY[s.fam].label,html:s=>`<span class="legend"><span class="sw" style="background:${FAMILY[s.fam].color}"></span>${FAMILY[s.fam].label}</span>`},
@@ -833,14 +863,22 @@ function weaponGuidance(w){
 }
 function viewWeaponList(params){
   const all=[...D.weapon.values()];
-  const famOpts = Object.entries(WFAM).map(([v,f])=>({v,l:f.label}));
-  const types = new Map(); for (const w of all) types.set(w.Type,(types.get(w.Type)||0)+1);
-  const typeOpts=[...types.keys()].map(t=>({v:t,l:E('WeaponType',t)})).sort((a,b)=>a.l.localeCompare(b.l));
-  const gset=new Set(); for(const w of all) weaponGuidanceTags(w).forEach(t=>gset.add(t));
-  const guidOpts=[...gset].filter(t=>GUIDANCE[t]).map(t=>({v:t,l:GUIDANCE[t]})).sort((a,b)=>a.l.localeCompare(b.l));
-  const featOpts=presentOpts(all,w=>w.codes,'WeaponCode');
-  const tgtOpts=presentOpts(all,w=>w.targets,'WeaponTarget');
-  let rows = all.filter(w=>(state.showDep||!w.Deprecated) && matchQ(params.q,w.Name,w.Comments) && (!params.f||w.fam===params.f) && (!params.t||w.Type==+params.t) && (!params.g||weaponGuidanceTags(w).has(params.g)) && (!params.feat||w.codes.includes(+params.feat)) && (!params.dp||warheadDP(w)>=+params.dp) && (!params.tg||w.targets.includes(+params.tg)) && (!params.rng||weaponMaxRange(w)>=+params.rng));
+  const preds={
+    _base:w=>(state.showDep||!w.Deprecated) && matchQ(params.q,w.Name,w.Comments),
+    f: w=>!params.f||w.fam===params.f,
+    t: w=>!params.t||w.Type==+params.t,
+    g: w=>!params.g||weaponGuidanceTags(w).has(params.g),
+    feat: w=>!params.feat||w.codes.includes(+params.feat),
+    tg: w=>!params.tg||w.targets.includes(+params.tg),
+    dp: w=>!params.dp||warheadDP(w)>=+params.dp,
+    rng: w=>!params.rng||weaponMaxRange(w)>=+params.rng,
+  };
+  const {rows, sub}=buildFacets(all, preds);
+  const famOpts = valOpts(sub('f'), w=>w.fam, f=>WFAM[f]?WFAM[f].label:f);
+  const typeOpts = valOpts(sub('t'), w=>w.Type, t=>E('WeaponType',t));
+  const guidOpts = setOpts(sub('g'), weaponGuidanceTags, t=>GUIDANCE[t], t=>!!GUIDANCE[t]);
+  const featOpts = presentOpts(sub('feat'), w=>w.codes,'WeaponCode');
+  const tgtOpts = presentOpts(sub('tg'), w=>w.targets,'WeaponTarget');
   const cols=[
     {key:'name',label:'Name',get:w=>w.Name,link:true,html:w=>esc(w.Name)+flags(w)},
     {key:'fam',label:'Family',get:w=>WFAM[w.fam].label,html:w=>`<span class="legend"><span class="sw" style="background:${WFAM[w.fam].color}"></span>${WFAM[w.fam].label}</span>`},
