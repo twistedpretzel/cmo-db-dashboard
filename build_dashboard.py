@@ -212,8 +212,11 @@ def _auto_db(folder):
     if not dbs:
         return None
     def ver(p):
-        m = re.search(r'(\d+)', os.path.basename(p))
-        return int(m.group(1)) if m else -1
+        # version is the number AFTER the prefix (DB3K_517 -> 517), not the "3" inside "DB3K".
+        # Use the last digit-run of the name stem, so ".db3" and the "3" in "DB3K" don't win.
+        stem = os.path.splitext(os.path.basename(p))[0]
+        nums = re.findall(r'\d+', stem)
+        return int(nums[-1]) if nums else -1
     db3k = [p for p in dbs if os.path.basename(p).upper().startswith('DB3K')]
     cwdb = [p for p in dbs if os.path.basename(p).upper().startswith('CWDB')]
     for group in (db3k, cwdb):
@@ -261,8 +264,14 @@ def run(a):
     out = a.out or os.path.join(os.path.dirname(os.path.abspath(db)), dbname + '_dashboard.html')
 
     print('reading', db)
-    ex = Extractor(db)
-    data = ex.run()
+    try:
+        ex = Extractor(db)
+        data = ex.run()
+    except (KeyError, sqlite3.Error) as e:
+        print("\nCouldn't read %s — it may be an older or incompatible database version." % os.path.basename(db))
+        print("Try the newest DB3K_*.db3 in your game's DB folder (this tool targets current CMO databases).")
+        print("(details: %s)" % e)
+        return 1
     data['meta']['file'] = os.path.basename(db)
     data['meta']['name'] = dbname
     data['meta']['size'] = os.path.getsize(db)
