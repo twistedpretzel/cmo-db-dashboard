@@ -37,6 +37,12 @@ def arcmask(row, suffix=''):
             m |= (1 << i)
     return m
 
+def rc(r, name):
+    """Safe column read from a sqlite3.Row: returns None if the column is absent.
+    Lets the extractor tolerate schema differences across DB versions (older DB3K and CWDB
+    lack some columns the current DB3K has, e.g. DataWeaponWRA.AutoFireRange)."""
+    return r[name] if name in r.keys() else None
+
 def norm(v):
     """Normalise SQLite values for JSON: booleans stored as text -> 0/1, floats trimmed."""
     if v is None:
@@ -153,9 +159,9 @@ class Extractor:
         out['weaponProp'] = self.grouped('DataWeaponPropulsion')
         out['weaponFuel'] = self.grouped('DataWeaponFuel')
         out['weaponSig'] = self.signatures('DataWeaponSignatures')
-        out['weaponWRA'] = self.grouped('DataWeaponWRA', fn=lambda r: [r['CodeID'], r['WeaponQty'], r['ShooterQty'], r['AutoFireRange'], r['SelfDefenceRange']])
+        out['weaponWRA'] = self.grouped('DataWeaponWRA', fn=lambda r: [rc(r,'CodeID'), rc(r,'WeaponQty'), rc(r,'ShooterQty'), rc(r,'AutoFireRange'), rc(r,'SelfDefenceRange')])
         out['warhead'] = self.table('DataWarhead')
-        out['weaponRecord'] = {r['ID']: [r['ComponentID'], r['DefaultLoad'], r['MaxLoad'], r['ROF'], r['Multiple']]
+        out['weaponRecord'] = {r['ID']: [rc(r,'ComponentID'), rc(r,'DefaultLoad'), rc(r,'MaxLoad'), rc(r,'ROF'), rc(r,'Multiple')]
                                for r in self.con.execute('select * from DataWeaponRecord')}
         out['mount'] = self.table('DataMount')
         out['mountWeapons'] = self.grouped('DataMountWeapons')
@@ -165,12 +171,12 @@ class Extractor:
         out['magazine'] = self.table('DataMagazine')
         out['magazineWeapons'] = self.grouped('DataMagazineWeapons')
         out['loadout'] = self.table('DataLoadout')
-        out['loadoutWeapons'] = self.grouped('DataLoadoutWeapons', fn=lambda r: [r['ComponentID'], norm(r['Optional']), norm(r['Internal'])])
+        out['loadoutWeapons'] = self.grouped('DataLoadoutWeapons', fn=lambda r: [rc(r,'ComponentID'), norm(rc(r,'Optional')), norm(rc(r,'Internal'))])
         out['propulsion'] = self.table('DataPropulsion', drop=('Comments',))
-        out['propPerf'] = self.grouped('DataPropulsionPerformance', fn=lambda r: [r['AltitudeBand'], r['Throttle'], r['Speed'], norm(r['AltitudeMin']), norm(r['AltitudeMax']), norm(r['Consumption'])])
-        out['fuel'] = {r['ID']: [r['Type'], r['Capacity']] for r in self.con.execute('select * from DataFuel')}
+        out['propPerf'] = self.grouped('DataPropulsionPerformance', fn=lambda r: [rc(r,'AltitudeBand'), rc(r,'Throttle'), rc(r,'Speed'), norm(rc(r,'AltitudeMin')), norm(rc(r,'AltitudeMax')), norm(rc(r,'Consumption'))])
+        out['fuel'] = {r['ID']: [rc(r,'Type'), rc(r,'Capacity')] for r in self.con.execute('select * from DataFuel')}
         out['comm'] = self.table('DataComm', drop=('Comments',))
-        out['acfacility'] = {r['ID']: [r['Type'], r['PhysicalSize'], r['Capacity'], r['RunwayLength']] for r in self.con.execute('select * from DataAircraftFacility')}
+        out['acfacility'] = {r['ID']: [rc(r,'Type'), rc(r,'PhysicalSize'), rc(r,'Capacity'), rc(r,'RunwayLength')] for r in self.con.execute('select * from DataAircraftFacility')}
         out['dockfacility'] = self.table('DataDockingFacility') if self.has('DataDockingFacility') else None
         for kind in ['Aircraft', 'Ship', 'Submarine', 'Facility', 'GroundUnit']:
             out[kind] = self.platform(kind)
@@ -274,7 +280,7 @@ def run(a):
     try:
         ex = Extractor(db)
         data = ex.run()
-    except (KeyError, sqlite3.Error) as e:
+    except (KeyError, IndexError, TypeError, sqlite3.Error) as e:
         print("\nCouldn't read %s — it may be an older or incompatible database version." % os.path.basename(db))
         print("Try the newest DB3K_*.db3 in your game's DB folder (this tool targets current CMO databases).")
         print("(details: %s)" % e)
