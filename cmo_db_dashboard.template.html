@@ -91,6 +91,19 @@ table.list td .legend{flex-wrap:nowrap;white-space:nowrap;margin:0}
 .chips{display:flex;flex-wrap:wrap;gap:5px}
 .chip{font-size:12px;padding:2px 8px;border-radius:12px;background:var(--surface-2);border:1px solid var(--border);color:var(--text-2)}
 .chip.on{background:var(--accent-soft);color:var(--accent);border-color:transparent}
+a.chip{cursor:pointer;text-decoration:none}
+a.chip.gl{border-style:dashed}
+a.chip:hover{border-color:var(--accent);border-style:solid;color:var(--accent)}
+.gterm{scroll-margin-top:14px}
+.gterm.flash{animation:gflash 1.6s ease-out}
+@keyframes gflash{0%{background:var(--accent-soft)}100%{background:var(--surface)}}
+.gtag{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.5px;padding:0 5px;border-radius:4px;vertical-align:middle}
+.gtag.OBSERVED{background:#dff3e4;color:#1c6b3a}
+.gtag.INFERRED{background:#fff0d6;color:#8a5a00}
+.gtag.SPECULATIVE{background:#f3e0f0;color:#7a2f6f}
+:root[data-theme="dark"] .gtag.OBSERVED{background:#16321f;color:#5fcf88}
+:root[data-theme="dark"] .gtag.INFERRED{background:#332810;color:#f0c060}
+:root[data-theme="dark"] .gtag.SPECULATIVE{background:#301a2c;color:#e089d0}
 .legend{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12px;color:var(--text-2);margin:6px 0 2px}
 .legend .sw{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px}
 .comp-list{display:flex;flex-direction:column;gap:6px}
@@ -644,6 +657,7 @@ function renderNav(){
   html += item('sensor','Sensors',D.sensor.size) + item('weapon','Weapons',D.weapon.size);
   html += `<div class="group">Systems</div>` + item('ew','Electronic Warfare', null) + item('detect','Detection matchup', null) + item('threat','Threat rings', null);
   html += `<div class="group">Analysis</div>` + item('explore','Trend explorer', null) + item('tops','Leaderboards', null);
+  html += `<div class="group">Reference</div>` + item('glossary','Feature glossary', null);
   html += `<div class="group">Tools</div>` + item('compare','Compare', null);
   html += `<div class="foot"><button onclick="toggleTheme()">Toggle theme</button><div style="margin-top:8px">Extracted ${esc(D.meta.extracted||'')}</div></div>`;
   $('#nav').innerHTML = html;
@@ -668,6 +682,7 @@ function render(){
     else if (parts[0]==='ew') main.innerHTML = viewEW(params);
     else if (parts[0]==='detect') main.innerHTML = viewDetect(params);
     else if (parts[0]==='compare') main.innerHTML = viewCompare(params);
+    else if (parts[0]==='glossary') main.innerHTML = viewGlossary(params);
     else main.innerHTML = '<p>Not found.</p>';
   } catch(err){ main.innerHTML = `<div class="card"><h3>Render error</h3><pre>${esc(err.stack||err)}</pre></div>`; console.error(err); }
   window.scrollTo(0,0);
@@ -1148,8 +1163,8 @@ function carrierCard(list, title='Used by'){
    ============================================================ */
 function sensorAltText(s){ return fmt.altPair(s.AltitudeMin,s.AltitudeMax,s.AltitudeMin_ASL,s.AltitudeMax_ASL); }
 function capChips(s){
-  const caps = s.caps.map(c=>`<span class="chip on">${esc(E('SensorCapability',c))}</span>`).join('');
-  const codes = s.codes.map(c=>`<span class="chip">${esc(E('SensorCode',c))}</span>`).join('');
+  const caps = gchips('cap', s.caps, {on:true});
+  const codes = gchips('scode', s.codes);
   return (caps||codes)? `<div class="chips" style="margin-top:6px">${caps}${codes}</div>` : '';
 }
 function bandChips(ids, cls='on'){ return ids.map(f=>`<span class="chip ${cls}">${esc(E('SensorFrequency',f))}</span>`).join(''); }
@@ -1315,13 +1330,15 @@ function torpedoCard(w){
 }
 function seekerCard(w){
   const seekers = w.sensors.map(([sid,mask,maskMax])=>{ const s=D.sensor.get(sid); return s?{s,mask,maskMax}:null; }).filter(Boolean);
-  const codes = w.codes.map(c=>E('WeaponCode',c));
-  const guid = codes.filter(c=>/Navigation|LOAL|Lock-On|HOJ|Illumination|TERCOM|GPS|GLONASS|BeiDou|NavIC|ARM|Bearing|Search Pattern|Drive|Re-Attack|Terminal|Profile|Trajectory|Loiter|Anti-Air|Seaskimmer|Diving|Multi-Stage|CEC|Subsystems|Pre-Briefed|Attitude|Altitude Control|Fuze|C-RAM|Launcher/.test(c));
-  const other = codes.filter(c=>!guid.includes(c));
-  if (!seekers.length && !codes.length && !w.CanActAsSensor) return '';
+  const guidRe=/Navigation|LOAL|Lock-On|HOJ|Illumination|TERCOM|GPS|GLONASS|BeiDou|NavIC|ARM|Bearing|Search Pattern|Drive|Re-Attack|Terminal|Profile|Trajectory|Loiter|Anti-Air|Seaskimmer|Diving|Multi-Stage|CEC|Subsystems|Pre-Briefed|Attitude|Altitude Control|Fuze|C-RAM|Launcher/;
+  const guidIds = w.codes.filter(c=>guidRe.test(E('WeaponCode',c)));
+  const otherIds = w.codes.filter(c=>!guidIds.includes(c));
+  const gtags = [...weaponGuidanceTags(w)];
+  if (!seekers.length && !w.codes.length && !gtags.length && !w.CanActAsSensor) return '';
   const sk = seekers.map(({s,mask})=>`<a class="comp" href="#/sensor/${s.ID}"><span>${arcRose(mask,40,FAMILY[s.fam].color)}</span><span><div class="nm">${esc(s.Name)}</div><div class="sub">${esc(E('SensorType',s.Type))} · ${esc(E('SensorRole',s.Role))}</div></span><span class="cnt">${fmt.nm(s.RangeMax)}</span></a>`).join('');
   return `<div class="card"><h3>Seeker &amp; guidance</h3><div class="comp-list">${sk||'<span class="small">No onboard seeker'+(w.fam==='bomb'||w.fam==='gun'||w.fam==='rocket'?' (unguided or externally guided)':'')+'.</span>'}</div>
-  ${guid.length?`<div class="chips" style="margin-top:8px">${guid.map(c=>`<span class="chip on">${esc(c)}</span>`).join('')}</div>`:''}${other.length?`<div class="chips" style="margin-top:6px">${other.map(c=>`<span class="chip">${esc(c)}</span>`).join('')}</div>`:''}
+  ${gtags.length?`<div style="font-size:12px;color:var(--text-3);text-transform:uppercase;letter-spacing:.4px;margin-top:8px">Guidance method${gtags.length>1?'s':''}</div><div class="chips" style="margin-top:3px">${gchips('guid',gtags,{on:true})}</div>`:''}
+  ${guidIds.length?`<div style="font-size:12px;color:var(--text-3);text-transform:uppercase;letter-spacing:.4px;margin-top:8px">Guidance / employment codes</div><div class="chips" style="margin-top:3px">${gchips('wcode',guidIds,{on:true})}</div>`:''}${otherIds.length?`<div class="chips" style="margin-top:6px">${gchips('wcode',otherIds)}</div>`:''}
   ${kv([['Acts as sensor',w.CanActAsSensor?'yes':null],['Buddy illumination (CEC)',w.BuddyIlluminationForCEC?'yes':null]])}</div>`;
 }
 function warheadCard(w){
@@ -1330,7 +1347,7 @@ function warheadCard(w){
   return `<div class="card"><h3>Warhead${whs.length>1?'s':''}</h3>${whs.map(h=>`<div style="margin-bottom:8px"><div style="font-weight:600;font-size:13px">${esc(h.Name)}</div>${kv([['Type',E('WarheadType',h.Type)],['Damage points',h.DamagePoints||null],['Explosive',(h.ExplosivesWeight&&h.ExplosivesWeight!==1001)?fmt.n(h.ExplosivesWeight,1)+' kg '+(h.ExplosivesType&&h.ExplosivesType!==1001?E('WarheadExplosivesType',h.ExplosivesType):''):null],['Caliber',h.ProjectileCaliber&&h.ProjectileCaliber!==1001?E('WarheadCaliber',h.ProjectileCaliber):null],['Submunitions',h.NumberOfWarheads>1?h.NumberOfWarheads:null],['Dispersion area',(h.ClusterBombDispersionAreaLength&&h.ClusterBombDispersionAreaLength!==1001)?h.ClusterBombDispersionAreaLength+' × '+h.ClusterBombDispersionAreaWidth+' m':null]])}</div>`).join('')}</div>`;
 }
 function targetsCard(w){
-  const tg = w.targets.map(t=>`<span class="chip on">${esc(E('WeaponTarget',t))}</span>`).join('');
+  const tg = gchips('wtarget', w.targets, {on:true});
   const rows = w.wra.filter(r=>r[1]!==-99||r[2]!==-99||r[3]!==-99||r[4]!==-99).map(([code,wq,sq,af,sd])=>`<tr><td>${esc(E('WeaponWRA',code).split(' [')[0].split(' (')[0])}</td><td class="num">${esc(E('WeaponWRAWeaponQty',wq).split(' (')[0])}</td><td class="num">${esc(E('WeaponWRAShooterQty',sq).split(',')[0])}</td><td class="num">${esc(E('WeaponWRAAutoFireRange',af))}</td><td class="num">${esc(E('WeaponWRASelfDefenceRange',sd))}</td></tr>`).join('');
   if (!tg && !rows) return '';
   return `<div class="card"><h3>Targets &amp; release authority (WRA)</h3><div class="chips">${tg}</div>${rows?`<details class="raw" style="margin-top:8px"><summary>Default WRA per target class (${w.wra.length} rows)</summary><div class="wrap"><table class="list" style="margin-top:6px"><thead><tr><th>Target class</th><th>Weapon qty</th><th>Shooters</th><th>Auto-fire</th><th>Self-defence</th></tr></thead><tbody>${rows}</tbody></table></div></details>`:''}</div>`;
@@ -2002,6 +2019,362 @@ function viewThreat(params){
   <p class="note" style="max-width:1100px">Rings are the database's nominal maxima; the detection ring is scaled to the chosen target's front-aspect RCS via the radar equation (calibration reference above; see Detection matchup for the method). Real reach also depends on terrain and radar-horizon masking, jamming, and the engine's detailed radar model — treat these as clean-air planning envelopes.</p>`;
 }
 function threatTgtPick(){ const inp=document.getElementById('threat_tgt'); if(!inp) return; const v=inp.value.trim(); if(!v){ setParam('t2',''); return; } const hit=buildDetMap().get(v); if(hit) setParam('t2', hit.route+':'+hit.id); }
+</script>
+<script>
+/* ============================================================
+   FEATURE / CAPABILITY / GUIDANCE GLOSSARY
+   - Terms are enumerated from the database (100% coverage, auto-updates per DB).
+   - Authored explanations live in GLOSSARY, keyed "<cat>:<id>". They are our own
+     commentary, paraphrased from the CMO manual (page-cited) — never verbatim — and
+     epistemically tagged OBSERVED / INFERRED / SPECULATIVE.
+   ============================================================ */
+const ENUMOF = {cap:'SensorCapability', scode:'SensorCode', wcode:'WeaponCode', wtarget:'WeaponTarget', stype:'SensorType', wtype:'WeaponType', sgen:'SensorGeneration', role:'SensorRole'};
+
+const GLOSSARY = {
+  /* ---- Weapon guidance methods (keys = weaponGuidanceTags / GUIDANCE) ---- */
+  'guid:unguided':{means:'No guidance — the weapon follows a ballistic path after release or launch.',requires:'Nothing; accuracy comes from the delivery platform’s aim and ballistics.',ingame:'Dumb bombs, rockets and gun rounds. Hit chance depends on range, delivery profile and the platform’s fire-control quality.',tag:'OBSERVED',src:'Manual p.287'},
+  'guid:ins':{means:'Inertial guidance: the weapon flies to a pre-set coordinate using only its own internal navigation, with no outside input after launch.',requires:'Target coordinates at launch.',ingame:'Fire-and-forget against fixed points. Accuracy ranges from crude (early ballistic missiles) to very precise; it cannot chase a moving target unless paired with a terminal seeker.',tag:'OBSERVED',src:'Manual p.288'},
+  'guid:gnss':{means:'Inertial navigation corrected by satellite positioning (GPS/GLONASS/BeiDou) for tight accuracy against fixed coordinates; often a backup or aid to another mode.',requires:'Target coordinates at launch (and, realistically, satellite availability).',ingame:'Precise strike on fixed or surveyed locations. Example: the AGM-88E AARGM falls back to GPS + active radar if the target radar it was homing on shuts down.',tag:'OBSERVED',src:'Manual p.291; INFERRED that CMO does not model GPS jamming degradation unless a scenario sets it'},
+  'guid:eo':{means:'Electro-optical guidance: the weapon homes on a visual image of the target.',requires:'Enough daylight/clarity for the seeker to see the target, and a lock (some are lock-on-before-launch).',ingame:'Ranges from crude early trackers (GBU-8 HOBOS) to imaging seekers that can even act as makeshift sensors in their own right.',tag:'OBSERVED',src:'Manual p.288'},
+  'guid:ir':{means:'Infrared guidance: the weapon homes on the target’s heat signature.',requires:'Sufficient IR contrast; older seekers are aspect-limited.',ingame:'Three classes — stern-chase (must sit directly behind, e.g. AIM-9B), rear-aspect (behind but more flexible, e.g. AIM-9H), and all-aspect (any angle, off-boresight with a helmet sight, e.g. AIM-9L+).',tag:'OBSERVED',src:'Manual p.288, 294'},
+  'guid:arh':{means:'Active radar homing: the missile’s own radar finds and tracks the target, going autonomous once the seeker locks.',requires:'Nothing from the shooter after the seeker is active; it can be datalinked or CEC-cued mid-course.',ingame:'Launch-and-leave — the shooter can turn cold or engage other targets. Modern datalinked active-radar missiles can be launched from long range.',tag:'OBSERVED',src:'Manual p.294'},
+  'guid:sarh':{means:'Semi-active radar homing: the missile rides radar energy reflected off a target that a radar is actively “painting.” It carries no radar of its own.',requires:'The shooter (or a supporting platform) to keep its fire-control radar locked on the target for the whole flight.',ingame:'Break the lock — the shooter turns away, or the target masks behind terrain — and the missile loses control. Early SARH also ties up the shooter’s radar so it can’t search or engage anything else while guiding.',tag:'OBSERVED',src:'Manual p.288, 294'},
+  'guid:tvm':{means:'Track-via-missile: the missile relays its seeker returns to a ground/ship radar that computes the intercept and commands the missile — a SARH variant used by systems such as Patriot.',requires:'The guidance radar to keep tracking both the target and the missile.',ingame:'Ties the engagement to the controlling radar much like SARH; losing that track breaks guidance.',tag:'INFERRED',src:'Standard TVM behavior; not detailed by name in the manual'},
+  'guid:arm':{means:'Anti-radiation (passive) homing: the weapon homes passively on a radar’s own emissions.',requires:'The target radar to be emitting.',ingame:'A SEAD weapon — an emitter that shuts down denies a basic ARM its source. Advanced ARMs (e.g. AARGM) fall back to GPS/INS and active radar to keep going.',tag:'OBSERVED',src:'Manual p.291'},
+  'guid:laser':{means:'Semi-active laser (laser-guided): the weapon homes on laser energy reflected from a target being lased by a designator.',requires:'Something to paint the target — the launching aircraft, a buddy platform, or a ground designator — with line of sight to the target through weapon impact.',ingame:'The classic laser-guided bomb; lose the designation and it misses. Loadouts needing an external lasing platform are flagged in the database (RequiresBuddyIllumination).',tag:'OBSERVED',src:'Manual p.288'},
+  'guid:sonar':{means:'Torpedo terminal homing: traditional active/passive sonar guidance, or wake-homing that follows a ship’s wake.',requires:'For wire-guided runs, the guidance wire must stay intact — hard turns or speed over ~10 kt snaps it, after which the torpedo goes autonomous on its terminal seeker.',ingame:'Sonar homing is considerably easier to decoy than wake-homing.',tag:'OBSERVED',src:'Manual p.291'},
+  'guid:tercom':{means:'Terrain contour matching: a cruise missile compares the ground profile it overflies against stored maps to fix its position en route.',requires:'Pre-loaded terrain/route data; works over land with usable relief.',ingame:'Flagged as the TERCOM weapon code; supports precise low-level cruise navigation to a fixed target.',tag:'INFERRED',src:'Standard TERCOM; not detailed by name in the manual'},
+
+  /* ---- Sensor capabilities (what a sensor searches for / measures) ---- */
+  'cap:1001':{means:'Air search: the sensor detects airborne targets — aircraft, helicopters and missiles.',ingame:'Contributes to the air picture; most fire-control and air-search radars carry it.',tag:'OBSERVED',src:'Manual §9.1.1 (p.281)'},
+  'cap:1002':{means:'Surface search: detects ships and boats on the sea surface.',tag:'OBSERVED',src:'Manual §9.1.1'},
+  'cap:1003':{means:'Submarine search: detects submerged submarines (sonar, MAD).',tag:'OBSERVED',src:'Manual §9.1.1'},
+  'cap:1004':{means:'Land search – fixed facility: detects fixed ground installations (buildings, SAM sites, radars).',tag:'OBSERVED',src:'Manual §9.1.1'},
+  'cap:1005':{means:'Land search – mobile unit: detects moving or relocatable ground units (vehicles, mobile launchers).',ingame:'Usually needs a moving-target capability to pull these out of ground clutter.',tag:'OBSERVED',src:'Manual §9.1.1'},
+  'cap:1006':{means:'Periscope search: picks out submarine periscopes and masts — very small returns against sea clutter.',tag:'OBSERVED',src:'Manual §9.1.1'},
+  'cap:1007':{means:'C-RAM: detects incoming rockets, artillery and mortar rounds.',ingame:'Cues very-short-range defences against ballistic sub-munitions.',tag:'OBSERVED',src:'Manual §9.1.1'},
+  'cap:1011':{means:'Space search (ABM): detects targets at ballistic-missile / space altitudes.',ingame:'Needed to see and cue against ballistic-missile threats.',tag:'OBSERVED',src:'Manual §9.1.1'},
+  'cap:1021':{means:'Mine & obstacle search: detects sea mines and underwater obstacles.',tag:'OBSERVED',src:'Manual §9.1.1'},
+  'cap:1022':{means:'Torpedo warning: detects incoming torpedoes.',ingame:'Triggers evasion and countermeasures.',tag:'OBSERVED',src:'Manual §9.1.1'},
+  'cap:1023':{means:'Missile approach warning: detects incoming missiles (MAWS).',ingame:'Cues last-ditch defensive maneuver and countermeasures.',tag:'OBSERVED',src:'Manual §9.1.1'},
+  'cap:2001':{means:'Range information: the sensor can measure a contact’s range, not just its bearing.',ingame:'Sensors that measure more of range/altitude/speed/heading build a fuller, more actionable track; a bearing-only sensor can’t form a firing solution by itself.',tag:'OBSERVED',src:'Manual §9.1.1'},
+  'cap:2002':{means:'Altitude information: the sensor can measure a contact’s altitude (a 3D sensor).',ingame:'Needed for a complete air track and for altitude-dependent engagements.',tag:'OBSERVED',src:'Manual §9.1.1'},
+  'cap:2003':{means:'Speed information: the sensor can measure a contact’s speed.',tag:'OBSERVED',src:'Manual §9.1.1'},
+  'cap:2004':{means:'Heading information: the sensor can measure a contact’s course/heading.',tag:'OBSERVED',src:'Manual §9.1.1'},
+  'cap:4001':{means:'Navigation only: a radar limited to navigation — it does not detect or track combat targets.',ingame:'Purely a flying aid; contributes nothing to the tactical picture.',tag:'OBSERVED',src:'Manual §9.1.1'},
+  'cap:4002':{means:'Ground mapping only: produces a ground map for navigation/bombing but does not track combat targets.',tag:'OBSERVED',src:'Manual §9.1.1'},
+  'cap:4003':{means:'Terrain avoidance / following only: supports low-level flight, not target detection.',tag:'OBSERVED',src:'Manual §9.1.1'},
+  'cap:4004':{means:'Weather only: a weather radar; no combat detection role.',tag:'OBSERVED',src:'Manual §9.1.1'},
+  'cap:4005':{means:'Weather and navigation only: combined weather/nav radar; no combat detection role.',tag:'OBSERVED',src:'Manual §9.1.1'},
+  'cap:9001':{means:'Over-the-horizon backscatter (OTH-B): bounces HF energy off the ionosphere to see far beyond the horizon.',ingame:'Enormous detection range but imprecise — an early-warning cue, not a fire-control track.',tag:'OBSERVED',src:'Manual §9.1.1 / OTH discussion'},
+  'cap:9002':{means:'Over-the-horizon surface wave (OTH-SW): follows the sea surface to detect low targets beyond the horizon.',ingame:'Long-range early warning with limited precision.',tag:'INFERRED',src:'Standard OTH-SW; not detailed by name in the manual'},
+  'cap:10001':{means:'Time-Difference-of-Arrival (TDOA): passively fixes an emitter’s position from timing differences across receivers.',ingame:'How networked ESM turns bearings into a position fix.',tag:'INFERRED',src:'Standard TDOA; manual notes ESM triangulation p.284'},
+  'cap:10002':{means:'Direction finding (DF): passively measures the bearing to an emitter.',ingame:'A single DF sensor gives a bearing line; multiple/ networked ESM triangulate to a fix.',tag:'OBSERVED',src:'Manual p.284'},
+
+  /* ---- Sensor features & modes ---- */
+  'scode:1001':{means:'Identification Friend or Foe (IFF): interrogates transponders to sort friendly contacts from unknown/hostile.',ingame:'Helps resolve a contact’s side quickly so you can decide to engage.',tag:'OBSERVED',src:'Manual p.283–284'},
+  'scode:1002':{means:'Classification / Brilliant Weapon: the sensor can classify a contact’s type or class; on a weapon seeker it enables autonomous target acquisition.',ingame:'Turns a raw contact into a typed track; “brilliant” weapons can pick their own target.',tag:'OBSERVED',src:'Manual p.283'},
+  'scode:1003':{means:'NCTR – Jet Engine Modulation: identifies an aircraft type from the radar return off its spinning engine blades.',ingame:'IDs enemy aircraft flying head-on without cooperative IFF (e.g. F-15C/APG-70).',tag:'OBSERVED',src:'Manual p.283'},
+  'scode:1004':{means:'NCTR – Narrow-Beam Interleaved Search & Track (NBILST): an advanced NCTR that positively identifies aerial targets from any angle.',ingame:'Any-aspect positive ID (e.g. F-22/APG-77) — no need to be head-on.',tag:'OBSERVED',src:'Manual p.283'},
+  'scode:1011':{means:'Continuous tracking capability: the sensor can hold a dedicated, continuous track on a target rather than only intermittent search hits.',ingame:'Required to keep a firm track that can support an engagement.',tag:'OBSERVED',src:'Manual p.282'},
+  'scode:1012':{means:'Continuous tracking (target-tracking radar): a dedicated tracking radar variant of the above.',tag:'OBSERVED',src:'Manual p.282'},
+  'scode:1021':{means:'Continuous tracking (visual): an optical sensor able to hold a continuous track on a target.',tag:'INFERRED',src:'Optical tracking; manual optical section p.284'},
+  'scode:1031':{means:'Periscope search – basic: early ability to detect periscopes/masts against sea clutter.',tag:'OBSERVED',src:'Manual §9.1.1'},
+  'scode:1032':{means:'Periscope/surface search – fine range resolution + rapid scan (1980+): better clutter rejection and revisit for spotting small masts.',tag:'INFERRED',src:'Era-gated capability flag; manual sensor section'},
+  'scode:1033':{means:'Periscope/surface search – advanced processing (2000+): modern processing further improves small-contact detection.',tag:'INFERRED',src:'Era-gated capability flag'},
+  'scode:2001':{means:'Track-while-scan (TWS): the radar tracks multiple targets while still scanning, instead of committing to a single painted target.',ingame:'Without TWS a radar “can either guide missiles to its painted target or search for contacts, but not both.” TWS lets it do both and cue active-radar missiles on several targets.',tag:'OBSERVED',src:'Manual p.282'},
+  'scode:2002':{means:'Moving Target Indicator (MTI): filters out stationary ground clutter to reveal moving targets.',ingame:'Lets a radar pull moving vehicles/aircraft out of the ground return.',tag:'OBSERVED',src:'Manual p.282–283'},
+  'scode:2011':{means:'Low Probability of Intercept (LPI): the radar shapes its waveform/emissions to be hard for an enemy ESM/RWR to detect.',ingame:'Harder for passive receivers to notice the emitter and get a bearing — you can search while staying quieter.',tag:'INFERRED',src:'LPI standard; manual emission-management discussion pp.282–284'},
+  'scode:2701':{means:'Night-capable optics (LLTV / NVG / CCD / searchlight): the electro-optical sensor can see in low light or darkness.',ingame:'Extends passive visual ID/tracking into night conditions.',tag:'OBSERVED',src:'Manual optical section p.284'},
+  'scode:3001':{means:'Pulse-only radar: a basic radar with no doppler processing.',ingame:'Cannot reliably look down against ground clutter, but is immune to doppler-notching evasion (there is no velocity gate to hide in).',tag:'OBSERVED',src:'Manual p.283, 417'},
+  'scode:3002':{means:'Pulse-Doppler, full look-down/shoot-down (LDSD): uses doppler to separate moving targets from ground clutter.',ingame:'Can detect and engage low-flying or terrain-following targets from above.',tag:'OBSERVED',src:'Manual p.282–283'},
+  'scode:3003':{means:'Pulse-Doppler, limited LDSD: partial look-down/shoot-down capability against clutter.',tag:'INFERRED',src:'Graded LDSD flag; manual p.283'},
+  'scode:3011':{means:'Passive Electronically Scanned Array (PESA): a phased array that steers its beam electronically from a single feed.',ingame:'Fast beam steering and (per the model) assumed frequency-agile, so jam- and notch-resistant.',tag:'OBSERVED',src:'Manual p.417'},
+  'scode:3012':{means:'Active Electronically Scanned Array (AESA): a phased array of many transmit/receive modules steering the beam electronically.',ingame:'Frequency-agile (jam-resistant), makes doppler-notching “pointless,” and holds very precise tracks that are hard to break — but its strongest detection is in the center lobe, so edges are weaker.',tag:'OBSERVED',src:'Manual p.283, 417'},
+  'scode:3013':{means:'Can classify ground targets (SAR): synthetic-aperture radar images the ground finely enough to classify what it sees.',ingame:'Turns a ground return into an identifiable target.',tag:'OBSERVED',src:'Manual sensor section'},
+  'scode:4001':{means:'Continuous-wave illumination: the radar paints a target with a continuous beam to guide a semi-active (SARH) missile.',requires:'A continuous line of sight on the target — while illuminating, the radar cannot engage others.',ingame:'Ties up the illuminating radar for the whole SARH engagement.',tag:'OBSERVED',src:'Manual p.282'},
+  'scode:4002':{means:'Interrupted continuous-wave illumination: time-shares the illuminating beam so one radar can support more than one SARH engagement.',ingame:'Eases the “one target at a time” limit of pure CW illumination.',tag:'INFERRED',src:'ICWI standard; manual illumination discussion p.282'},
+  'scode:4003':{means:'Weapon fire-control radar (no CW illumination): provides the fire-control track without needing continuous-wave illumination — e.g. for active-radar or track-via-missile weapons.',ingame:'Supports engagements without tying the radar to a single painted target.',tag:'INFERRED',src:'Derived from CW/illumination model p.282'},
+  'scode:5001':{means:'Frequency agile: the radar hops operating frequency.',ingame:'More resistant to noise jamming and significantly less affected by doppler-notching. All PESA/AESA radars are assumed frequency-agile.',tag:'OBSERVED',src:'Manual p.282, 417'},
+  'scode:5002':{means:'Cognitive EW: adaptive, software-defined EW that senses the threat environment and changes technique on the fly.',ingame:'Represents modern reactive jamming/ECCM; strongest against fixed, known techniques.',tag:'SPECULATIVE',src:'Modern capability; not detailed in the manual'},
+  'scode:6001':{means:'Generates AAW fire-control data: the sensor produces a track good enough to direct anti-air weapons.',ingame:'Marks a radar that can actually cue a SAM/AAW engagement, not just search.',tag:'INFERRED',src:'Fire-control role; manual p.282'},
+  'scode:9101':{means:'Shallow-water capable (partial): the sonar still functions, with reduced performance, in littoral/shallow water.',ingame:'Less degraded than a blue-water-only sonar in the shallows.',tag:'INFERRED',src:'Littoral sonar limits discussed p.300'},
+  'scode:9102':{means:'Shallow-water capable (full): the sonar is designed for effective shallow-water/littoral operation.',ingame:'Retains classification/detection where deep-water sonars struggle.',tag:'INFERRED',src:'Littoral sonar limits discussed p.300'},
+
+  /* ---- Weapon features & guidance/employment codes ---- */
+  'wcode:1001':{means:'Illuminate at launch: the launching platform must illuminate (paint) the target at the moment of launch.',requires:'Fire-control illumination at release (SARH).',tag:'OBSERVED',src:'Manual p.288'},
+  'wcode:1002':{means:'Terminal illumination: the target must be illuminated during the missile’s terminal/homing phase.',requires:'The guiding radar to keep painting the target into impact (SARH).',tag:'OBSERVED',src:'Manual p.282, 288'},
+  'wcode:1003':{means:'Supports buddy illumination: a platform other than the launcher can lase/illuminate the target.',ingame:'“Buddy lasing” — one unit designates while another launches or drops from farther away.',tag:'OBSERVED',src:'Manual p.289'},
+  'wcode:1101':{means:'Home On Jam (HOJ): if a target jams the seeker, the missile homes on the jamming source itself.',ingame:'Turns enemy self-protection jamming into a beacon to home on.',tag:'INFERRED',src:'Standard HOJ; not named in the manual'},
+  'wcode:2001':{means:'Anti-air stern chase: can only engage an air target from directly behind (earliest IR).',tag:'OBSERVED',src:'Manual p.288'},
+  'wcode:2002':{means:'Anti-air rear-aspect: engages from behind, more flexibly than a stern-chase weapon.',tag:'OBSERVED',src:'Manual p.288'},
+  'wcode:2003':{means:'Anti-air all-aspect: can engage an air target from any angle, not just from behind.',tag:'OBSERVED',src:'Manual p.288, 294'},
+  'wcode:2004':{means:'Anti-air dogfight (high off-boresight): can be launched at large angles off the nose, cued by a helmet-mounted sight.',tag:'OBSERVED',src:'Manual p.294'},
+  'wcode:2005':{means:'No diving-target modifier: the usual accuracy penalty against steeply diving targets does not apply to this weapon.',tag:'INFERRED',src:'Modeling flag; not detailed in the manual'},
+  'wcode:2006':{means:'Capable vs sea-skimmer: can engage very low, sea-skimming targets such as anti-ship missiles.',ingame:'Needed to intercept pop-up, wave-top threats that other weapons miss.',tag:'OBSERVED',src:'Manual p.316'},
+  'wcode:2007':{means:'ARH AAW – no HQ track required: an active-radar air-to-air missile that can be launched without a high-quality track from the shooter.',ingame:'The seeker finds the target itself — supports snap/BOL shots.',tag:'INFERRED',src:'Active-radar model p.289, 294'},
+  'wcode:2009':{means:'C-RAM capable: can intercept rockets, artillery and mortar rounds.',tag:'OBSERVED',src:'Manual §9.1.1'},
+  'wcode:2010':{means:'Lock-on-after-launch (LOAL), CEC-capable: fired without a precise lock, and guidable via Cooperative Engagement by a platform other than the launcher.',ingame:'A third party can hand off/guide the shot; the shooter can stay silent or turn away.',tag:'OBSERVED',src:'Manual p.58, 294, 383'},
+  'wcode:2011':{means:'Flight profile – terrain following: flies low, hugging the terrain, to penetrate under radar coverage.',tag:'OBSERVED',src:'Manual p.42, 190'},
+  'wcode:2012':{means:'Lock-on-after-launch (LOAL): fired without a precise lock; the seeker acquires the target after launch.',requires:'A target point/area; tight cross-range but relaxed downrange tolerance.',tag:'OBSERVED',src:'Manual p.58'},
+  'wcode:2025':{means:'Launcher occupied during guidance: the launcher/illuminator is tied up guiding this weapon and cannot act elsewhere until it completes.',ingame:'Like classic SARH — one such engagement at a time.',tag:'OBSERVED',src:'Manual p.282'},
+  'wcode:3001':{means:'ARM target memory: the anti-radiation missile remembers a radar’s last known position and continues to it if the emitter shuts down.',ingame:'Switching the radar off no longer fully defeats the shot.',tag:'OBSERVED',src:'Manual p.291'},
+  'wcode:3003':{means:'Loiter capability: can orbit/wait over an area for a target before attacking.',tag:'INFERRED',src:'Loitering-munition behavior'},
+  'wcode:3004':{means:'Loiter capability (parachute): loiters under a parachute, e.g. a sensor-fuzed submunition.',tag:'INFERRED',src:'Submunition behavior'},
+  'wcode:4001':{means:'Search pattern: runs a programmed search pattern to find its target (e.g. a torpedo or loitering weapon).',tag:'INFERRED',src:'Weapon behavior flag'},
+  'wcode:4002':{means:'Drive-through logic: presses on through the target area under a defined logic if it does not immediately acquire.',tag:'INFERRED',src:'Weapon behavior flag'},
+  'wcode:4003':{means:'Bearing-only launch (BOL): fire a guided weapon without designating a target — designate a point/bearing where the seeker activates to hunt.',ingame:'Lets you shoot at a suspected location and let the seeker sort it out.',tag:'OBSERVED',src:'Manual p.75'},
+  'wcode:4008':{means:'Depressed ballistic trajectory: a flattened, lower ballistic arc (Iskander, ATACMS) — faster to target and harder to intercept than a lofted arc.',tag:'INFERRED',src:'Trajectory flag; ballistic modeling p.287'},
+  'wcode:4010':{means:'Ballistic trajectory: flies a ballistic arc (ballistic missiles, GMLRS).',tag:'OBSERVED',src:'Manual p.287'},
+  'wcode:4012':{means:'Multi-stage missile: has multiple propulsion stages (e.g. a booster plus a sustainer/second stage).',tag:'INFERRED',src:'Propulsion flag'},
+  'wcode:6001':{means:'Pod – terrain avoidance (land 300 ft / sea 200 ft): a targeting/navigation pod that enables terrain-avoidance flight down to the listed floor.',tag:'OBSERVED',src:'Manual (label)'},
+  'wcode:6002':{means:'Pod – terrain following (land 200 ft / sea 100 ft): a pod that enables lower terrain-following flight.',tag:'OBSERVED',src:'Manual (label)'},
+  'wcode:6009':{means:'Pod – day-only navigation: a navigation pod usable only in daylight.',tag:'OBSERVED',src:'Manual (label)'},
+  'wcode:6010':{means:'Pod – day-only navigation/attack: a nav-and-attack pod, daylight only.',tag:'OBSERVED',src:'Manual (label)'},
+  'wcode:6011':{means:'Pod – night navigation: a night-capable navigation pod.',tag:'OBSERVED',src:'Manual (label)'},
+  'wcode:6012':{means:'Pod – night navigation/attack: a night nav-and-attack pod (incl. bomb/rocket delivery).',tag:'OBSERVED',src:'Manual (label)'},
+  'wcode:6021':{means:'Pod – reconnaissance, day only.',tag:'OBSERVED',src:'Manual (label)'},
+  'wcode:6022':{means:'Pod – reconnaissance, night capable.',tag:'OBSERVED',src:'Manual (label)'},
+  'wcode:6101':{means:'Weapon – INS navigation: navigates by inertial guidance alone (see the INS guidance method).',tag:'OBSERVED',src:'Manual p.288'},
+  'wcode:6102':{means:'Weapon – INS with GNSS navigation: inertial navigation aided by satellite positioning (see INS + GNSS).',tag:'OBSERVED',src:'Manual p.291'},
+  'wcode:6103':{means:'Weapon – TERCOM navigation: terrain-contour-matching cruise navigation to a fixed target.',tag:'INFERRED',src:'Standard TERCOM; not named in the manual'},
+  'wcode:6111':{means:'Weapon – pre-briefed target only: can strike only a target/coordinates set before launch; no in-flight retargeting.',tag:'INFERRED',src:'Employment flag'},
+  'wcode:6112':{means:'Weapon – can target specific subsystems: can aim at a chosen subsystem/aimpoint of a target rather than the whole unit.',tag:'INFERRED',src:'Employment flag'},
+  'wcode:6121':{means:'Terminal maneuver – pop-up: climbs then dives onto the target in the terminal phase (top-down attack; helps defeat point defences).',tag:'INFERRED',src:'Terminal-maneuver flag'},
+  'wcode:6122':{means:'Terminal maneuver – zig-zag: weaves in the terminal phase to complicate interception.',tag:'INFERRED',src:'Terminal-maneuver flag'},
+  'wcode:6123':{means:'Terminal maneuver – random (advanced): unpredictable terminal jinking to defeat defences.',tag:'INFERRED',src:'Terminal-maneuver flag'},
+  'wcode:6129':{means:'Re-attack capability: if it misses or fails to acquire, it can come around for another pass.',tag:'INFERRED',src:'Employment flag'},
+  'wcode:6130':{means:'Weapon altitude control possible: its cruise altitude can be set by the player.',tag:'INFERRED',src:'Employment flag'},
+  'wcode:6131':{means:'Attitude control – aerodynamic only: steers with aerodynamic surfaces alone (limited where the air is too thin).',tag:'INFERRED',src:'Control flag'},
+  'wcode:6132':{means:'Attitude control – non-aerodynamic only: steers with thrust-vectoring/reaction control only (for exo-atmospheric flight).',tag:'INFERRED',src:'Control flag'},
+  'wcode:6133':{means:'Attitude control – combined: uses both aerodynamic surfaces and reaction/thrust-vector control.',tag:'INFERRED',src:'Control flag'},
+  'wcode:6140':{means:'Uses GPS: can take navigation fixes from the US GPS constellation.',tag:'INFERRED',src:'Navigation flag'},
+  'wcode:6141':{means:'Uses GLONASS: can take navigation fixes from the Russian GLONASS constellation.',tag:'INFERRED',src:'Navigation flag'},
+  'wcode:6142':{means:'Uses BeiDou/COMPASS: can take navigation fixes from the Chinese BeiDou constellation.',tag:'INFERRED',src:'Navigation flag'},
+  'wcode:6143':{means:'Uses NavIC/IRNSS: can take navigation fixes from the Indian NavIC constellation.',tag:'INFERRED',src:'Navigation flag'},
+  'wcode:6201':{means:'Weapon – has imaging seeker: carries an imaging (EO/IIR) seeker that can also help confirm the target’s identity.',tag:'INFERRED',src:'Seeker flag'},
+  'wcode:6301':{means:'Mine – contact fuze: detonates on direct physical contact.',tag:'OBSERVED',src:'Manual (label)'},
+  'wcode:6311':{means:'Mine – magnetic fuze, simple magnetic: triggers on a ship’s magnetic signature (basic).',tag:'INFERRED',src:'Mine fuze flag'},
+  'wcode:6312':{means:'Mine – magnetic fuze, total-field magnetometer: an advanced magnetic trigger, harder to sweep.',tag:'INFERRED',src:'Mine fuze flag'},
+  'wcode:6321':{means:'Mine – passive acoustic fuze, broad-band (simple): triggers on a passing ship’s radiated noise.',tag:'INFERRED',src:'Mine fuze flag'},
+  'wcode:6322':{means:'Mine – passive acoustic fuze, narrow-band (advanced): a selective acoustic trigger, harder to spoof.',tag:'INFERRED',src:'Mine fuze flag'},
+  'wcode:6331':{means:'Mine – pressure fuze: triggers on the pressure signature of a passing ship (very hard to sweep).',tag:'INFERRED',src:'Mine fuze flag'},
+  'wcode:6341':{means:'Mine – seismic fuze: triggers on ground/seismic vibration.',tag:'INFERRED',src:'Mine fuze flag'},
+  'wcode:6401':{means:'Mine – delay counter: lets a set number of ships pass before it will fire.',tag:'INFERRED',src:'Mine logic flag'},
+  'wcode:6402':{means:'Mine – arming delay: waits a set time after being laid before it arms.',tag:'INFERRED',src:'Mine logic flag'},
+  'wcode:6501':{means:'Mine – target discrimination / identification: distinguishes target types to fire selectively.',tag:'INFERRED',src:'Mine logic flag'},
+  'wcode:6511':{means:'Mine – remote controlled: can be armed, disarmed or fired by remote command.',tag:'INFERRED',src:'Mine logic flag'},
+  'wcode:7001':{means:'Warhead – single re-entry vehicle (RV): one re-entry body.',tag:'INFERRED',src:'Warhead-bus flag'},
+  'wcode:7002':{means:'Warhead – multiple re-entry vehicles (MRV): several RVs that strike the same general area.',tag:'INFERRED',src:'Warhead-bus flag'},
+  'wcode:7003':{means:'Warhead – multiple independent RVs (MIRV): several RVs each aimed at a separate target.',tag:'INFERRED',src:'Warhead-bus flag'},
+  'wcode:7101':{means:'Fuze – impact: detonates on hitting the target.',tag:'OBSERVED',src:'Manual (label)'},
+  'wcode:7102':{means:'Fuze – barometric/altimeter: detonates at a set altitude (airburst).',tag:'INFERRED',src:'Fuze flag'},
+  'wcode:7103':{means:'Fuze – proximity: detonates when close to the target.',tag:'OBSERVED',src:'Manual (label)'},
+  'wcode:7104':{means:'Fuze – top-down proximity: fires downward onto a target from above (e.g. NLAW, TOW Aero) to hit thin top armour.',tag:'OBSERVED',src:'Manual (label)'},
+  'wcode:7110':{means:'Fuze – combination: more than one fuzing mode (e.g. impact plus proximity).',tag:'INFERRED',src:'Fuze flag'},
+  'wcode:7111':{means:'Fuze – shock-factor (under-keel) optimized: detonates below a ship’s keel to maximise the whipping/shock effect.',tag:'INFERRED',src:'Fuze flag'},
+  'wcode:8001':{means:'Capable vs mobile land unit: can engage moving ground targets.',tag:'INFERRED',src:'Employment flag'},
+  'wcode:8002':{means:'Is a retarded munition: a high-drag bomb that slows sharply after release so the aircraft can escape a low-level toss.',tag:'OBSERVED',src:'Retarded-bomb behavior'},
+  'wcode:8010':{means:'Boosted penetrator: rocket-boosted to increase impact velocity and penetration.',tag:'INFERRED',src:'Warhead flag'},
+  'wcode:9001':{means:'Torpedo – straight-running: runs on a straight course with no homing.',tag:'OBSERVED',src:'Manual p.291'},
+  'wcode:9002':{means:'Torpedo – wake homing: follows the target ship’s wake to the hull; considerably harder to decoy than sonar homing.',tag:'OBSERVED',src:'Manual p.291'},
+  'wcode:9003':{means:'Torpedo – straight-running with time detonation: straight run with a timed detonation.',tag:'INFERRED',src:'Torpedo flag'},
+  'wcode:9004':{means:'Torpedo – pattern-running: runs a programmed search pattern to find a target.',tag:'INFERRED',src:'Torpedo flag'},
+  'wcode:9998':{means:'Flight profile – hi-hi-lo: cruises high for range, then drops to low altitude for the terminal run (range vs detection trade-off).',tag:'INFERRED',src:'Flight-profile flag'},
+  'wcode:9999':{means:'Flight profile – level cruise flight: flies a constant-altitude cruise to the target.',tag:'INFERRED',src:'Flight-profile flag'},
+
+  /* ---- Weapon target classes (which targets the weapon is cleared to engage) ---- */
+  'wtarget:1001':{means:'Aircraft: fixed-wing aircraft.',tag:'OBSERVED',src:'Target class'},
+  'wtarget:1002':{means:'Helicopter: rotary-wing aircraft (often a separate clearance because of their low speed/altitude).',tag:'OBSERVED',src:'Target class'},
+  'wtarget:1003':{means:'Missile: airborne missiles — for interceptors and point-defence weapons.',tag:'OBSERVED',src:'Target class'},
+  'wtarget:1004':{means:'Satellite: on-orbit targets (ASAT weapons).',tag:'OBSERVED',src:'Target class'},
+  'wtarget:1005':{means:'C-RAM: rockets, artillery and mortar rounds in flight.',tag:'OBSERVED',src:'Target class'},
+  'wtarget:2001':{means:'Surface vessel: ships and boats on the surface.',tag:'OBSERVED',src:'Target class'},
+  'wtarget:2002':{means:'Submarine: submerged submarines.',tag:'OBSERVED',src:'Target class'},
+  'wtarget:2003':{means:'Mine: sea mines (for mine-clearance weapons).',tag:'OBSERVED',src:'Target class'},
+  'wtarget:2004':{means:'Torpedo: incoming torpedoes (for anti-torpedo weapons).',tag:'OBSERVED',src:'Target class'},
+  'wtarget:3001':{means:'Land structure – soft: unhardened fixed structures.',tag:'OBSERVED',src:'Target class'},
+  'wtarget:3002':{means:'Land structure – hardened: bunkers and hardened fixed sites (need penetrators).',tag:'OBSERVED',src:'Target class'},
+  'wtarget:3003':{means:'Runway: airfield runways/taxiways (cratering weapons).',tag:'OBSERVED',src:'Target class'},
+  'wtarget:3004':{means:'Radar: emitting radars (typically anti-radiation weapons).',tag:'OBSERVED',src:'Target class'},
+  'wtarget:4001':{means:'Mobile target – soft: unarmoured moving ground targets (trucks, mobile launchers).',tag:'OBSERVED',src:'Target class'},
+  'wtarget:4002':{means:'Mobile target – hardened: armoured moving ground targets (tanks).',tag:'OBSERVED',src:'Target class'},
+  'wtarget:4003':{means:'Mobile target – personnel: troops/infantry in the open.',tag:'OBSERVED',src:'Target class'},
+  'wtarget:5001':{means:'Underwater structure: fixed underwater targets.',tag:'OBSERVED',src:'Target class'},
+  'wtarget:9001':{means:'Air base: airfield as an area target.',tag:'OBSERVED',src:'Target class'},
+
+  /* ---- Sensor types ---- */
+  'stype:2001':{means:'Radar: active radio-frequency sensor — emits and listens for the echo, so it can be detected by ESM.',tag:'OBSERVED',src:'Manual p.281'},
+  'stype:2002':{means:'Semi-active: a seeker that homes on radar energy reflected off a target another radar is illuminating (SARH).',tag:'OBSERVED',src:'Manual p.288'},
+  'stype:2003':{means:'Visual: a passive electro-optical/visual sensor — sees but does not emit, and can confirm identity.',tag:'OBSERVED',src:'Manual p.284'},
+  'stype:2004':{means:'Infrared: a passive sensor that detects heat; strong against hot targets, no emission of its own.',tag:'OBSERVED',src:'Manual p.284'},
+  'stype:2005':{means:'Track-via-missile (TVM): a guidance sensor where the missile relays returns to a ground/ship radar that commands it.',tag:'INFERRED',src:'Sensor type'},
+  'stype:2006':{means:'Terminal semi-active: a semi-active seeker that goes active only in the terminal phase of flight.',tag:'INFERRED',src:'Sensor type'},
+  'stype:3001':{means:'ESM: Electronic Support Measures — passively detects and classifies emitters (radars, jammers) without emitting.',tag:'OBSERVED',src:'Manual p.284'},
+  'stype:3002':{means:'ECM: Electronic Countermeasures — an active jammer that degrades enemy radars.',tag:'OBSERVED',src:'Manual (EW)'},
+  'stype:3003':{means:'EMP projector: a directed electromagnetic-pulse effector.',tag:'SPECULATIVE',src:'Sensor type; not detailed in the manual'},
+  'stype:3004':{means:'Passive Coherent Location: detects targets passively using reflections of ambient RF (e.g. broadcast/GSM), with no emission of its own.',tag:'INFERRED',src:'Sensor type'},
+  'stype:4001':{means:'Laser designator: paints a target with a laser for semi-active laser-guided weapons.',tag:'OBSERVED',src:'Manual p.288–289'},
+  'stype:4002':{means:'Laser spot tracker (LST): detects and tracks a laser spot placed on a target by a designator.',tag:'INFERRED',src:'Sensor type'},
+  'stype:4003':{means:'Laser rangefinder: measures precise range to a target with a laser pulse.',tag:'OBSERVED',src:'Sensor type'},
+  'stype:4101':{means:'LIDAR: laser-based detection/imaging.',tag:'INFERRED',src:'Sensor type'},
+  'stype:5001':{means:'Hull sonar, passive-only: hull-mounted sonar that only listens — quiet, gives bearing but not range on its own.',tag:'OBSERVED',src:'Manual sonar section'},
+  'stype:5002':{means:'Hull sonar, active/passive: hull sonar that can ping for range or listen passively.',tag:'OBSERVED',src:'Manual sonar section'},
+  'stype:5003':{means:'Hull sonar, active-only: hull sonar that only pings.',tag:'INFERRED',src:'Sensor type'},
+  'stype:5004':{means:'Bow sonar, active/passive: bow-mounted active/passive sonar.',tag:'INFERRED',src:'Sensor type'},
+  'stype:5011':{means:'Towed array (TASS), passive-only: a long towed hydrophone array — very sensitive at low frequency and very quiet, but degraded when the ship maneuvers or speeds up.',tag:'OBSERVED',src:'Manual sonar section'},
+  'stype:5012':{means:'Towed array (TASS), active/passive: a towed array that can also ping.',tag:'INFERRED',src:'Sensor type'},
+  'stype:5013':{means:'Towed array (TASS), active: an active towed array.',tag:'INFERRED',src:'Sensor type'},
+  'stype:5021':{means:'Variable-depth sonar (VDS), passive-only: a sonar body lowered on a cable to listen below the thermocline.',tag:'OBSERVED',src:'Manual p.300 (thermal layers)'},
+  'stype:5022':{means:'Variable-depth sonar (VDS), active/passive: a lowered sonar that can ping or listen below the layer.',tag:'INFERRED',src:'Sensor type'},
+  'stype:5023':{means:'Variable-depth sonar (VDS), active-only: a lowered active sonar.',tag:'INFERRED',src:'Sensor type'},
+  'stype:5031':{means:'Dipping sonar, passive-only: a sonar a helicopter lowers into the water while hovering, then listens.',tag:'OBSERVED',src:'Sensor type'},
+  'stype:5032':{means:'Dipping sonar, active/passive: a helicopter dipping sonar that can ping or listen.',tag:'OBSERVED',src:'Sensor type'},
+  'stype:5033':{means:'Dipping sonar, active-only: a helicopter dipping sonar that pings.',tag:'INFERRED',src:'Sensor type'},
+  'stype:5041':{means:'Bottom-fixed sonar, passive-only: a seabed hydrophone array (SOSUS-style) that listens over long ranges.',tag:'INFERRED',src:'Sensor type'},
+  'stype:5101':{means:'MAD: Magnetic Anomaly Detector — senses the magnetic disturbance of a submerged submarine at very short range; used to confirm and pinpoint a contact, not to search widely.',tag:'OBSERVED',src:'ASW sensor type'},
+  'stype:5601':{means:'Wake detector: senses a ship’s wake (supports wake-homing torpedoes).',tag:'INFERRED',src:'Sensor type'},
+  'stype:5901':{means:'Acoustic intercept: warns the platform when it is being pinged by an active sonar (a sonar RWR).',tag:'OBSERVED',src:'Sensor type'},
+  'stype:6001':{means:'Mine sweep – mechanical cable cutter: tows cutters to sever moored-mine cables so they float up.',tag:'OBSERVED',src:'MCM type'},
+  'stype:6002':{means:'Mine sweep – magnetic influence: drags a magnetic field to trigger magnetic-fuzed mines at a safe distance.',tag:'OBSERVED',src:'MCM type'},
+  'stype:6003':{means:'Mine sweep – acoustic influence: radiates noise to trigger acoustic-fuzed mines.',tag:'OBSERVED',src:'MCM type'},
+  'stype:6004':{means:'Mine sweep – magnetic & acoustic multi-influence: combined magnetic and acoustic sweep.',tag:'INFERRED',src:'MCM type'},
+  'stype:6011':{means:'Mine sweep – two-ship magnetic influence: two ships tow a shared magnetic sweep.',tag:'INFERRED',src:'MCM type'},
+  'stype:6021':{means:'Mine neutralization – moored-mine cable cutter: cuts individual moored mines.',tag:'INFERRED',src:'MCM type'},
+  'stype:6022':{means:'Mine neutralization – explosive charge disposal: destroys a located mine with a charge (often via ROV).',tag:'INFERRED',src:'MCM type'},
+  'stype:6031':{means:'Mine neutralization – diver-deployed charge: a clearance diver places a charge on the mine.',tag:'INFERRED',src:'MCM type'},
+  'stype:7001':{means:'Microwave emitter: a directed high-power microwave effector.',tag:'INFERRED',src:'Sensor type'},
+  'stype:8001':{means:'Non-detecting emitter: an emitter with no detection function (a beacon/illuminator placeholder).',tag:'INFERRED',src:'Sensor type'},
+  'stype:9001':{means:'Sensor group: a container that bundles several sensors so a platform fits them as one item.',tag:'OBSERVED',src:'Database structure'},
+
+  /* ---- Weapon types ---- */
+  'wtype:2001':{means:'Guided weapon: a guided missile or smart bomb.',tag:'OBSERVED',src:'Weapon type'},
+  'wtype:2002':{means:'Rocket: an unguided rocket.',tag:'OBSERVED',src:'Weapon type'},
+  'wtype:2003':{means:'Bomb: a gravity bomb (guided or unguided depending on its codes).',tag:'OBSERVED',src:'Weapon type'},
+  'wtype:2004':{means:'Gun: a gun or cannon firing shells.',tag:'OBSERVED',src:'Weapon type'},
+  'wtype:2005':{means:'Decoy (expendable): chaff, flares or similar one-shot decoys.',tag:'OBSERVED',src:'Weapon type'},
+  'wtype:2006':{means:'Decoy (towed): a decoy towed behind the platform.',tag:'OBSERVED',src:'Weapon type'},
+  'wtype:2007':{means:'Decoy (vehicle): a decoy that flies/moves on its own (e.g. MALD).',tag:'OBSERVED',src:'Weapon type'},
+  'wtype:2008':{means:'Training round: an inert practice munition.',tag:'INFERRED',src:'Weapon type'},
+  'wtype:2009':{means:'Dispenser: dispenses submunitions/bomblets.',tag:'OBSERVED',src:'Weapon type'},
+  'wtype:2010':{means:'Contact bomb – suicide: a one-way contact charge (suicide attack).',tag:'INFERRED',src:'Weapon type'},
+  'wtype:2011':{means:'Contact bomb – sabotage: a placed contact/sabotage charge.',tag:'INFERRED',src:'Weapon type'},
+  'wtype:2012':{means:'Guided projectile: a guided gun round.',tag:'OBSERVED',src:'Weapon type'},
+  'wtype:2013':{means:'Small arms: personal/crew-served small-arms fire.',tag:'OBSERVED',src:'Weapon type'},
+  'wtype:2014':{means:'UAV (expendable): a one-way attack UAV / loitering munition.',tag:'OBSERVED',src:'Weapon type'},
+  'wtype:3001':{means:'Sensor pod: a carried targeting/nav/recon pod — a store, not a weapon.',tag:'OBSERVED',src:'Weapon type'},
+  'wtype:3002':{means:'Drop tank: an external fuel tank.',tag:'OBSERVED',src:'Weapon type'},
+  'wtype:3003':{means:'Buddy store: an aerial-refuelling pod for buddy tanking.',tag:'OBSERVED',src:'Weapon type'},
+  'wtype:3004':{means:'Ferry tank: an extra fuel tank for ferrying, not combat.',tag:'INFERRED',src:'Weapon type'},
+  'wtype:4001':{means:'Torpedo: an underwater guided/unguided weapon.',tag:'OBSERVED',src:'Manual p.291'},
+  'wtype:4002':{means:'Depth charge: an unguided anti-submarine charge fuzed to detonate at depth.',tag:'OBSERVED',src:'Weapon type'},
+  'wtype:4003':{means:'Sonobuoy: an air-dropped sonar buoy (a sensor delivered as a “weapon” store).',tag:'OBSERVED',src:'Weapon type'},
+  'wtype:4004':{means:'Bottom mine: a mine that rests on the seabed (shallow water).',tag:'OBSERVED',src:'Weapon type'},
+  'wtype:4005':{means:'Moored mine: a mine held at depth by a cable to an anchor.',tag:'OBSERVED',src:'Weapon type'},
+  'wtype:4006':{means:'Floating mine: a mine that floats at the surface.',tag:'OBSERVED',src:'Weapon type'},
+  'wtype:4007':{means:'Moving mine: a mobile mine that transits to its position before settling.',tag:'INFERRED',src:'Weapon type'},
+  'wtype:4008':{means:'Rising mine: sits deep, then launches a payload upward when a target passes (e.g. CAPTOR).',tag:'INFERRED',src:'Weapon type'},
+  'wtype:4009':{means:'Drifting mine: an unmoored mine that drifts with the current.',tag:'INFERRED',src:'Weapon type'},
+  'wtype:4010':{means:'Attached mine: a mine placed directly on a hull (limpet).',tag:'INFERRED',src:'Weapon type'},
+  'wtype:4011':{means:'Dummy mine: an inert mine used to complicate clearance.',tag:'INFERRED',src:'Weapon type'},
+  'wtype:4012':{means:'Guided depth charge: a depth charge with guidance/standoff.',tag:'INFERRED',src:'Weapon type'},
+  'wtype:4101':{means:'Helicopter-towed package: a towed MCM/ASW package flown by a helicopter.',tag:'INFERRED',src:'Weapon type'},
+  'wtype:4102':{means:'Aircraft (as a store): a deployable aircraft/UAV carried and launched from a mount.',tag:'INFERRED',src:'Weapon type'},
+  'wtype:4103':{means:'Ship (as a store): a deployable boat/craft launched from a parent (e.g. a USV or landing craft).',tag:'INFERRED',src:'Weapon type'},
+  'wtype:4104':{means:'Submarine (as a store): a deployable submersible/UUV launched from a parent.',tag:'INFERRED',src:'Weapon type'},
+  'wtype:4105':{means:'Satellite (as a store): a satellite deployed by a launch vehicle.',tag:'INFERRED',src:'Weapon type'},
+  'wtype:4106':{means:'Ground unit (as a store): a deployable ground element launched/dropped from a parent.',tag:'INFERRED',src:'Weapon type'},
+  'wtype:5001':{means:'RV / MRV / MIRV: a ballistic-missile re-entry-vehicle bus carrying one or more warheads.',tag:'OBSERVED',src:'Weapon type'},
+  'wtype:5002':{means:'Pallet munition: palletised standoff munitions air-dropped from a cargo aircraft (e.g. Rapid Dragon).',tag:'INFERRED',src:'Weapon type'},
+  'wtype:6001':{means:'Laser: a directed-energy laser weapon — hits at the speed of light, needs dwell time on larger targets.',tag:'OBSERVED',src:'Manual p.292'},
+  'wtype:6002':{means:'Microwave: a directed high-power-microwave weapon (anti-electronics).',tag:'INFERRED',src:'Weapon type'},
+  'wtype:6003':{means:'Laser dazzler: a low-power laser that blinds/dazzles sensors or personnel rather than destroying.',tag:'INFERRED',src:'Weapon type'},
+  'wtype:8001':{means:'Hypersonic glide vehicle: a boosted, unpowered glider that maneuvers at hypersonic speed.',tag:'OBSERVED',src:'Manual (ballistic/HGV) p.287'},
+  'wtype:8002':{means:'Glide vehicle: an unpowered glide body released to coast to its target.',tag:'INFERRED',src:'Weapon type'},
+  'wtype:8003':{means:'Hypersonic cruise missile: a powered cruise missile sustaining hypersonic speed.',tag:'INFERRED',src:'Weapon type'},
+  'wtype:9001':{means:'Cargo: carried cargo/supplies (not a weapon).',tag:'OBSERVED',src:'Weapon type'},
+  'wtype:9002':{means:'Troops: embarked troops carried by the platform.',tag:'OBSERVED',src:'Weapon type'},
+  'wtype:9003':{means:'Paratroops: troops delivered by parachute.',tag:'OBSERVED',src:'Weapon type'},
+};
+
+let GUSE=null;
+function guse(){
+  if (GUSE) return GUSE;
+  const u={cap:{},scode:{},stype:{},wcode:{},wtarget:{},wtype:{},guid:{}};
+  const bump=(o,k)=>{ o[k]=(o[k]||0)+1; };
+  for (const [,s] of D.sensor){ for (const c of s.caps) bump(u.cap,c); for (const c of s.codes) bump(u.scode,c); bump(u.stype,s.Type); }
+  for (const [,w] of D.weapon){ for (const c of w.codes) bump(u.wcode,c); for (const t of w.targets) bump(u.wtarget,t); bump(u.wtype,w.Type); for (const g of weaponGuidanceTags(w)) bump(u.guid,g); }
+  GUSE=u; return u;
+}
+const GCATS=[
+  {key:'guid',   label:'Weapon guidance methods', route:'weapon', param:'g',   ids:()=>Object.keys(GUIDANCE).map(k=>({id:k,label:GUIDANCE[k]}))},
+  {key:'cap',    label:'Sensor capabilities — what a sensor searches for or measures', route:'sensor', param:'cap', enum:'SensorCapability'},
+  {key:'scode',  label:'Sensor features & modes', route:'sensor', param:'code', enum:'SensorCode'},
+  {key:'wcode',  label:'Weapon features & guidance codes', route:'weapon', param:'feat', enum:'WeaponCode'},
+  {key:'wtarget',label:'Weapon target classes', route:'weapon', param:'tg',  enum:'WeaponTarget'},
+  {key:'stype',  label:'Sensor types', route:'sensor', param:'t', enum:'SensorType'},
+  {key:'wtype',  label:'Weapon types', route:'weapon', param:'t', enum:'WeaponType'},
+];
+const GCAT_BY_KEY = Object.fromEntries(GCATS.map(c=>[c.key,c]));
+function gEnumList(name){ const e=D.enums[name]||{}; return Object.keys(e).map(id=>({id:+id,label:e[id]})).filter(x=>x.label&&x.label!=='None'&&x.label!=='Not Applicable (N/A)').sort((a,b)=>a.id-b.id); }
+function gTerms(cat){ return cat.ids? cat.ids() : gEnumList(cat.enum); }
+function glabel(cat,id){ if(cat==='guid') return GUIDANCE[id]||id; return E(ENUMOF[cat]||'',id); }
+function gentry(cat,id){ return GLOSSARY[cat+':'+id]||null; }
+function gtip(cat,id){ const e=gentry(cat,id); if(!e) return 'No write-up yet — click for the glossary entry'; let t=e.means||glabel(cat,id); if(t.length>170) t=t.slice(0,167)+'…'; return t; }
+/* linked, tooltip-bearing chip for use on detail pages */
+function gchip(cat,id,opts){ opts=opts||{}; const lbl=glabel(cat,id); if(lbl==null||lbl==='') return ''; return `<a class="chip gl${opts.on?' on':''}" href="#/glossary?sel=${cat}:${id}" data-tip="${esc(gtip(cat,id))}">${esc(opts.label||lbl)}</a>`; }
+function gchips(cat,ids,opts){ return (ids||[]).map(id=>gchip(cat,id,opts)).join(''); }
+
+function gtagHtml(e){ return e&&e.tag? `<span class="gtag ${e.tag}">${e.tag}</span>` : ''; }
+function gTermBlock(cat, t, q){
+  const e=gentry(cat.key,t.id);
+  const n=(guse()[cat.key]||{})[t.id]||0;
+  // filter
+  if (q){ const hay=(t.label+' '+(e?[e.means,e.requires,e.ingame,e.src].filter(Boolean).join(' '):'')).toLowerCase(); if(!hay.includes(q)) return ''; }
+  const usedLink = n? `<a class="small" href="#/${cat.route}?${cat.param}=${encodeURIComponent(t.id)}" data-tip="Show the ${n} item(s) with this">${fmt.n(n)} use${n===1?'':'s'} ›</a>` : '<span class="small" style="color:var(--text-3)">unused</span>';
+  let body;
+  if (e){
+    body = `<div style="font-size:13px;line-height:1.5;margin-top:3px">${esc(e.means)}${e.requires?` <b>Requires:</b> ${esc(e.requires)}`:''}${e.ingame?` <b>In game:</b> ${esc(e.ingame)}`:''}</div>
+      <div class="small" style="margin-top:4px;color:var(--text-3)">${gtagHtml(e)} ${esc(e.src||'')}</div>`;
+  } else {
+    body = `<div class="small" style="margin-top:3px;color:var(--text-3)">Description coming soon — the label is the database’s own; any bracketed note is the game’s shorthand.</div>`;
+  }
+  return `<div class="gterm card" id="g-${cat.key}-${t.id}" style="padding:9px 12px">
+    <div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px">
+      <div style="font-weight:600;font-size:13.5px">${esc(t.label)}</div>${usedLink}
+    </div>${body}</div>`;
+}
+function viewGlossary(params){
+  const q=(params.q||'').trim().toLowerCase();
+  const sel=params.sel||'';
+  const authored=Object.keys(GLOSSARY).length;
+  // jump bar
+  const jump=GCATS.map(c=>`<a class="chip" href="#g-cat-${c.key}">${esc(c.label.split(' — ')[0])}</a>`).join('');
+  let html=`<div class="crumbs"><a href="#/">Overview</a> › Reference</div>
+  <h2 class="title">Feature & guidance reference</h2>
+  <div class="meta">What every sensor capability, feature code and weapon-guidance method means and does in game. Hover a chip anywhere in the dashboard for the short version, or click it to land here. Guidance methods are written up from the game manual (page-cited, ${'OBSERVED/INFERRED'}-tagged); the rest is being filled in.</div>
+  <form onsubmit="setParam('q',this.gq.value.trim());return false" class="toolbar" style="margin-top:6px">
+    <input name="gq" placeholder="Search features — e.g. LPI, illumination, laser, wake" value="${esc(params.q||'')}" style="min-width:340px;padding:7px 10px;border:1px solid var(--border-2);border-radius:6px;background:var(--surface)">
+    <button class="cmpbtn" type="submit" style="padding:6px 12px">Search</button>${q?`<a class="cmpbtn" href="#/glossary" style="padding:6px 12px">clear</a>`:''}
+  </form>
+  <div class="chips" style="margin:8px 0 4px">${jump}</div>`;
+  let shown=0;
+  for (const cat of GCATS){
+    const terms=gTerms(cat);
+    const blocks=terms.map(t=>gTermBlock(cat,t,q)).filter(Boolean);
+    if (!blocks.length) continue;
+    shown+=blocks.length;
+    const authoredN=terms.filter(t=>gentry(cat.key,t.id)).length;
+    html+=`<h3 class="title" id="g-cat-${cat.key}" style="font-size:15px;margin:18px 0 6px;scroll-margin-top:12px">${esc(cat.label)}<span class="hint" style="font-weight:400;color:var(--text-3);font-size:12px"> · ${terms.length} terms${authoredN?`, ${authoredN} described`:''}</span></h3>
+      <div class="glist" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:8px">${blocks.join('')}</div>`;
+  }
+  if (!shown) html+=`<div class="card"><span class="small">No features match “${esc(params.q||'')}”.</span></div>`;
+  // highlight + scroll to a selected term (scheduled now; runs after innerHTML is set)
+  if (sel){ const anchor='g-'+sel.replace(':','-');
+    setTimeout(()=>{ const el=document.getElementById(anchor); if(el){ el.scrollIntoView({block:'center'}); el.classList.remove('flash'); void el.offsetWidth; el.classList.add('flash'); } },30);
+  }
+  return html;
+}
 </script>
 <script>
 /* ============================================================

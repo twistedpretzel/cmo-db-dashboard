@@ -61,6 +61,7 @@ When a new game/database version ships, just run it again — it always picks th
 - **Compare** up to four platforms, sensors or weapons side by side with overlaid envelopes.
 - **Systems tools:** an *Electronic Warfare* explainer (OECM/DECM), a *Detection matchup* calculator (at what range does X detect Y, by radar/IR/EO, per aspect), and *Threat rings* (a platform's search / engagement-radar / SAM envelope, scaled to a chosen target's radar cross-section).
 - **Analysis tools:** a *Trend explorer* (plot any metric against any other) and *Leaderboards* (top-N by speed, range, stealth, quietness, etc., with a service-era timeline).
+- **Feature glossary:** a searchable *Reference* page explaining every sensor capability, feature code, weapon-guidance method, target class and sensor/weapon type (251 entries). Hover any chip on a sensor or weapon page for a plain-language tooltip, or click it for the full write-up — sourced from the game manual where possible and tagged OBSERVED / INFERRED / SPECULATIVE. The complete reference is in [GLOSSARY.md](GLOSSARY.md).
 - **Light and dark themes** and shareable, bookmarkable URLs for any filtered view.
 
 Every number is extracted from the database. Where a value is a modelled estimate rather than a stored field — notably the RCS-scaled radar detection ranges — the page says so and shows the method. Treat radar/IR ranges and threat rings as **clean-air planning envelopes**: they don't account for terrain masking, jamming, or the engine's full dynamic detection model.
