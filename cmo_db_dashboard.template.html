@@ -94,6 +94,8 @@ table.list td .legend{flex-wrap:nowrap;white-space:nowrap;margin:0}
 a.chip{cursor:pointer;text-decoration:none}
 a.chip.gl{border-style:dashed}
 a.chip:hover{border-color:var(--accent);border-style:solid;color:var(--accent)}
+a.gval{color:inherit;text-decoration:none;border-bottom:1px dashed var(--border-2);cursor:pointer}
+a.gval:hover{color:var(--accent);border-bottom-color:var(--accent)}
 .gterm{scroll-margin-top:14px}
 .gterm.flash{animation:gflash 1.6s ease-out}
 @keyframes gflash{0%{background:var(--accent-soft)}100%{background:var(--surface)}}
@@ -156,8 +158,126 @@ a.chip:hover{border-color:var(--accent);border-style:solid;color:var(--accent)}
 .clc.rem{border-color:color-mix(in srgb,var(--bad) 40%,var(--border));color:var(--text-2)}
 .clc a{color:inherit}
 .clminor{font-size:11.5px;color:var(--text-3);margin-top:6px;line-height:1.45}
+/* --- Scenario ORBAT --- */
+.scen{max-width:1000px}
+.schead h2{margin:0 0 2px;font-size:20px}
+.schead .scsub{color:var(--text-2);font-size:13px}
+.schead .scnote{font-size:12px;color:var(--text-3);margin:4px 0 10px;line-height:1.5}
+.scctl{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:8px 0}
+.scctl input[type=text],.scctl input:not([type]){flex:1 1 240px;min-width:180px;padding:7px 10px;border:1px solid var(--border-2);border-radius:6px;background:var(--surface)}
+.scctl button{border:1px solid var(--border-2);background:var(--surface-2);border-radius:6px;padding:6px 12px;color:var(--text-2)}
+.scenta{width:100%;min-height:160px;box-sizing:border-box;font-family:var(--mono);font-size:12px;padding:8px;border:1px solid var(--border-2);border-radius:6px;background:var(--surface);white-space:pre;overflow:auto}
+.scsteps{margin:4px 0 10px 0;padding-left:20px;font-size:13px;color:var(--text-2);line-height:1.6}
+.scfile{font-size:12.5px;color:var(--accent);cursor:pointer;align-self:center}
+.scerr{margin-top:8px;color:var(--bad);font-size:12.5px}
+.scside{border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);margin-bottom:8px;overflow:hidden}
+.scside.muted{opacity:.6}
+.scside>summary{cursor:pointer;padding:9px 13px;list-style:none;display:flex;align-items:baseline;gap:10px;background:var(--surface-2)}
+.scside>summary::-webkit-details-marker{display:none}
+.scside>summary::before{content:"\25B8";color:var(--text-3);font-size:11px}
+.scside[open]>summary::before{content:"\25BE"}
+.scsidename{font-weight:600;font-size:14px}
+.scsiden{font-size:12px;color:var(--text-3);font-family:var(--mono)}
+/* GROUP (task group) — top-level container, collapsible, with a left accent */
+.scgrp{border-top:1px solid var(--border)}
+.scgrp>summary{cursor:pointer;list-style:none;display:flex;align-items:baseline;gap:8px;padding:8px 13px 8px 30px;position:relative;background:linear-gradient(var(--surface-2),var(--surface-2)) padding-box}
+.scgrp>summary::-webkit-details-marker{display:none}
+.scgrp>summary::before{content:"\25B8";position:absolute;left:13px;color:var(--accent);font-size:12px}
+.scgrp[open]>summary::before{content:"\25BE"}
+.scgrp>summary:hover{background:var(--surface-2)}
+.scgrpname{font-weight:700;font-size:13.5px;letter-spacing:.2px}
+.scgrpn{font-family:var(--mono);font-size:12px;color:var(--text-3)}
+.scgrpbody{border-left:2px solid var(--border);margin-left:18px}     /* the flow-down rail */
+/* CATEGORY (Aircraft / Ships / …) — nested under a group */
+.sccat{margin:0}
+.sccat>summary{cursor:pointer;list-style:none;display:flex;align-items:baseline;gap:6px;padding:4px 13px 4px 26px;position:relative;font-size:11px;color:var(--text-3)}
+.sccat>summary::-webkit-details-marker{display:none}
+.sccat>summary::before{content:"\25B8";position:absolute;left:12px;font-size:9px;color:var(--text-3)}
+.sccat[open]>summary::before{content:"\25BE"}
+.sccat>summary:hover{background:var(--surface-2)}
+.sccatname{text-transform:uppercase;letter-spacing:.4px;font-weight:600}
+.sccatn{font-family:var(--mono)}
+.sccatbody{border-left:2px solid var(--border);margin-left:20px}     /* nested rail under a category */
+.schosttag{font-size:11px;color:var(--text-3);margin-left:6px}
+a.scload{color:var(--accent)}
+.scluawrap{margin:0 0 10px;border:1px solid var(--border);border-radius:6px;background:var(--surface-2)}
+.scluawrap>summary{cursor:pointer;list-style:none;padding:7px 10px;font-size:12.5px;font-weight:600;color:var(--text-2);display:flex;align-items:center;gap:10px}
+.scluawrap>summary::-webkit-details-marker{display:none}
+.scluawrap>summary::before{content:"\25B8";color:var(--text-3);font-size:11px}
+.scluawrap[open]>summary::before{content:"\25BE"}
+.scluacopy{margin-left:auto;border:1px solid var(--border-2);background:var(--surface);border-radius:5px;padding:2px 9px;font-size:11.5px;color:var(--text-2);cursor:pointer}
+.scluapre{margin:0;padding:10px;max-height:280px;overflow:auto;font-family:var(--mono);font-size:11px;line-height:1.45;white-space:pre;border-top:1px solid var(--border);color:var(--text-2)}
+/* status dot colors */
+.scdot.airborne{background:var(--s1)} .scdot.underway{background:var(--s3)} .scdot.ready{background:var(--text-3)}
+.scdot.maint{background:var(--warn)} .scdot.dead{background:var(--bad)} .scdot.other{background:var(--text-3)}
+/* readiness roll-up chips */
+.scrollup{margin-left:auto;display:inline-flex;flex-wrap:wrap;gap:4px;justify-content:flex-end}
+.scchip{font-size:10.5px;padding:0 6px;border-radius:9px;border:1px solid var(--border);color:var(--text-2);white-space:nowrap}
+.scchip.airborne{color:var(--s1);border-color:color-mix(in srgb,var(--s1) 45%,var(--border))}
+.scchip.underway{color:var(--s3);border-color:color-mix(in srgb,var(--s3) 45%,var(--border))}
+.scchip.maint{color:var(--warn);border-color:color-mix(in srgb,var(--warn) 45%,var(--border))}
+.scchip.dead{color:var(--bad);border-color:color-mix(in srgb,var(--bad) 45%,var(--border))}
+/* aggregated type block */
+.sctype{border-top:1px solid transparent}
+.sctype>summary{cursor:pointer;list-style:none;display:flex;flex-wrap:wrap;align-items:baseline;gap:7px;padding:4px 13px 4px 24px;position:relative;font-size:13px}
+.sctype>summary::-webkit-details-marker{display:none}
+.sctype>summary::before{content:"\25B8";position:absolute;left:9px;color:var(--accent);font-size:11px}
+.sctype[open]>summary::before{content:"\25BE"}
+.sctype>summary:hover{background:var(--surface-2)}
+.sctcount{font-family:var(--mono);font-weight:700;color:var(--text)}
+.sclo{padding:3px 13px 3px 34px;font-size:12.5px;border-top:1px solid var(--border)}
+.sclon{font-family:var(--mono);color:var(--text-2);margin-right:4px}
+.sctails{font-size:11px;color:var(--text-3);padding:2px 0 0 20px;line-height:1.5}
+.scmore{color:var(--text-3);font-style:italic}
+.scclass{font-size:11.5px;color:var(--text-3)}
+.scinvper{padding:3px 13px 4px 34px;display:flex;flex-wrap:wrap;gap:4px 14px}
+.scinvunit{font-size:11.5px;color:var(--text-3)}
+.scinvunit b{font-family:var(--mono);color:var(--text-2)}
+/* force summary */
+.scsummary{border-bottom:1px solid var(--border);background:color-mix(in srgb,var(--accent-soft) 40%,var(--surface))}
+.scsummary>summary{cursor:pointer;list-style:none;display:flex;align-items:baseline;gap:10px;padding:7px 13px;font-size:12.5px}
+.scsummary>summary::-webkit-details-marker{display:none}
+.scsummary>summary::before{content:"\25B8";color:var(--text-3);font-size:11px}
+.scsummary[open]>summary::before{content:"\25BE"}
+.scsumtitle{font-weight:600}
+.scsumrow{display:flex;gap:10px;padding:5px 13px;border-top:1px solid var(--border);font-size:12px}
+.scsumcat{flex:0 0 92px;color:var(--text-3);text-transform:uppercase;letter-spacing:.4px;font-size:10.5px;font-weight:600;padding-top:2px}
+.scsumchips{display:flex;flex-wrap:wrap;gap:5px}
+.scsumchip{font-size:11.5px;padding:1px 8px;border-radius:10px;background:var(--surface);border:1px solid var(--border);color:var(--text)}
+a.scsumchip{text-decoration:none}
+a.scsumchip:hover{background:var(--accent-soft);border-color:color-mix(in srgb,var(--accent) 40%,var(--border))}
+/* airborne section */
+.scairborne>summary{background:color-mix(in srgb,var(--s1) 10%,var(--surface-2))}
+.scairborne .scgrpname{color:var(--s1)}
+.scairborne>summary::before{color:var(--s1)}
+.scflighttag{font-size:10px;color:var(--text-3);border:1px solid var(--border);border-radius:8px;padding:0 5px;white-space:nowrap}
+.scrow{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px;padding:3px 13px;font-size:13px;border-top:1px solid transparent}
+.scrow:hover{background:var(--surface-2)}
+.scmain{flex:1 1 auto;min-width:200px}
+.scright{margin-left:auto;text-align:right}
+.scdetail{flex-basis:100%;font-size:11.5px;color:var(--text-3);padding-left:18px}
+.scmeta{font-size:11px;color:var(--text-3);font-family:var(--mono);margin-left:4px}
+.scdot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;vertical-align:1px}
+.scload{font-size:12px;color:var(--text-2)}
+.scmaint{font-size:11.5px;color:var(--warn);font-weight:600}
+.schost>summary{cursor:pointer;list-style:none;display:flex;flex-wrap:wrap;align-items:baseline;gap:8px;padding:3px 13px;font-size:13px}
+.schost>summary::-webkit-details-marker{display:none}
+.schost>summary:hover{background:var(--surface-2)}
+.schost>summary::before{content:"\25B8 ";color:var(--text-3);font-size:10px;margin-right:2px}
+.schost[open]>summary::before{content:"\25BE ";}
+.sckids{font-size:11.5px;color:var(--text-3);margin-left:6px}
 .legend{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12px;color:var(--text-2);margin:6px 0 2px}
 .legend .sw{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+/* sensor coverage ring picker */
+.cvgpick{margin-top:8px;font-size:12px}
+.cvgpickhdr{font-size:11px;text-transform:uppercase;letter-spacing:.4px;color:var(--text-3);font-weight:600;display:flex;align-items:center;gap:6px;margin-bottom:4px}
+.cvgpickhdr button{border:1px solid var(--border-2);background:var(--surface-2);border-radius:5px;padding:0 7px;font-size:11px;color:var(--text-2);cursor:pointer}
+.cvgitem{display:flex;align-items:center;gap:6px;padding:2px 0;cursor:pointer}
+.cvgitem .sw{width:9px;height:9px;border-radius:2px;flex:0 0 auto}
+.cvgnm{flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cvgrng{font-family:var(--mono);font-size:11px;color:var(--text-3)}
+.cvgsolo{font-size:10.5px;color:var(--accent);cursor:pointer;opacity:.7}
+.cvgitem:hover .cvgsolo{opacity:1}
 .comp-list{display:flex;flex-direction:column;gap:6px}
 .comp{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;padding:6px 8px;border:1px solid var(--border);border-radius:6px;background:var(--surface)}
 .comp:hover{background:var(--surface-2)}
@@ -227,6 +347,7 @@ const KINDS = [
   {key:'Submarine', label:'Submarines',   img:'Submarine',  route:'sub'},
   {key:'Facility',  label:'Facilities',   img:'Facility',   route:'facility'},
   {key:'GroundUnit',label:'Ground Units', img:'GroundUnit', route:'ground'},
+  {key:'Satellite', label:'Satellites',   img:'Satellite',  route:'satellite'},
 ];
 const KIND_BY_ROUTE = Object.fromEntries(KINDS.map(k=>[k.route,k]));
 const KIND_BY_KEY = Object.fromEntries(KINDS.map(k=>[k.key,k]));
@@ -273,6 +394,7 @@ async function loadDB(){
   for (const [id,w] of D.weapon){
     w.targets = raw.weaponTargets[id]||[]; w.codes = raw.weaponCodes[id]||[]; w.warheads = raw.weaponWarheads[id]||[];
     w.sensors = raw.weaponSensors[id]||[]; w.prop = raw.weaponProp[id]||[]; w.fuel = raw.weaponFuel[id]||[]; w.sig = raw.weaponSig[id]||{}; w.wra = raw.weaponWRA[id]||[];
+    w.comms = (raw.weaponComms&&raw.weaponComms[id])||[];
     w.fam = weaponFamily(w);
   }
   for (const [id,m] of D.mount){ m.weapons = raw.mountWeapons[id]||[]; m.magWeapons = raw.mountMagWeapons[id]||[]; m.sensors = raw.mountSensors[id]||[]; m.directors = raw.mountDirectors[id]||[]; }
@@ -286,10 +408,12 @@ async function loadDB(){
       u.kind = k.key;
       u.sensors = p.sensors[id]||[]; u.mounts = p.mounts[id]||[]; u.magazines = p.magazines[id]||[]; u.loadouts = p.loadouts[id]||[];
       u.prop = p.prop[id]||[]; u.fuel = p.fuel[id]||[]; u.codes = p.codes[id]||[]; u.comms = p.comms[id]||[]; u.acfac = p.acfac[id]||[]; u.dock = p.dock[id]||[]; u.sig = p.sig[id]||{};
+      u.orbits = (p.orbits&&p.orbits[id])||[];
     }
     D.platforms[k.key] = m;
   }
   buildIndexes();
+  loadScenarioFromStore();
 }
 
 /* ---------- classification ---------- */
@@ -515,16 +639,19 @@ function coverageRings(items, opts={}){
   for (const [t,a] of lab){ const x=cx+(R+14)*Math.sin(a*Math.PI/180), y=cy-(R+14)*Math.cos(a*Math.PI/180); out.push(`<text x="${x.toFixed(1)}" y="${(y+4).toFixed(1)}" text-anchor="middle" class="lbl">${t}</text>`); }
   // items sorted so largest drawn first (bottom)
   const sorted=[...valid].sort((a,b)=>b.range-a.range);
+  const tag = opts.tagItems;   // wrap each item's shapes in a toggleable <g> keyed by its idx
   for (const it of sorted){
     const r=sc(it.range); const tip=`${it.label}\n${fmt.nm(it.range)}${it.sub?'\n'+it.sub:''}\nArcs: ${arcSummary(it.mask==null?0xFFFF:it.mask)}`;
     const dash = it.dash?` stroke-dasharray="${it.dash}"`:'';
+    const shp=[];
     if (it.mask==null || it.mask===0xFFFF){
-      out.push(`<circle cx="${cx}" cy="${cy}" r="${r.toFixed(1)}" fill="${it.color}" fill-opacity="0.10" stroke="${it.color}" stroke-width="1.6"${dash}${tipAttr(tip)}/>`);
+      shp.push(`<circle cx="${cx}" cy="${cy}" r="${r.toFixed(1)}" fill="${it.color}" fill-opacity="0.10" stroke="${it.color}" stroke-width="1.6"${dash}${tipAttr(tip)}/>`);
     } else if (it.mask===0){
-      out.push(`<circle cx="${cx}" cy="${cy}" r="${r.toFixed(1)}" fill="none" stroke="${it.color}" stroke-width="1" stroke-dasharray="2 3"${tipAttr(tip+' (no arcs set)')}/>`);
+      shp.push(`<circle cx="${cx}" cy="${cy}" r="${r.toFixed(1)}" fill="none" stroke="${it.color}" stroke-width="1" stroke-dasharray="2 3"${tipAttr(tip+' (no arcs set)')}/>`);
     } else {
-      for (const [a0,a1] of maskRuns(it.mask)) out.push(`<path d="${polarPath(cx,cy,r,a0,a1)}" fill="${it.color}" fill-opacity="0.12" stroke="${it.color}" stroke-width="1.6"${dash}${tipAttr(tip)}/>`);
+      for (const [a0,a1] of maskRuns(it.mask)) shp.push(`<path d="${polarPath(cx,cy,r,a0,a1)}" fill="${it.color}" fill-opacity="0.12" stroke="${it.color}" stroke-width="1.6"${dash}${tipAttr(tip)}/>`);
     }
+    out.push(tag!=null && it.idx!=null ? `<g class="cvgring" data-cvg="${tag}" data-r="${it.idx}">${shp.join('')}</g>` : shp.join(''));
   }
   out.push(`<circle cx="${cx}" cy="${cy}" r="3" fill="var(--text)"/>`);
   return SVG(size,size,out.join(''));
@@ -709,6 +836,7 @@ function renderNav(){
   html += item('sensor','Sensors',D.sensor.size) + item('weapon','Weapons',D.weapon.size);
   html += `<div class="group">Systems</div>` + item('ew','Electronic Warfare', null) + item('detect','Detection matchup', null) + item('threat','Threat rings', null);
   html += `<div class="group">Analysis</div>` + item('explore','Trend explorer', null) + item('tops','Leaderboards', null);
+  html += `<div class="group">Scenario</div>` + item('scenario', D.scenario?'Scenario ORBAT':'Load scenario', D.scenario?D.scenario.units.length:null);
   html += `<div class="group">Reference</div>` + item('glossary','Feature glossary', null);
   if (D.changelog) html += item('changelog','What’s new', null);
   html += `<div class="group">Tools</div>` + item('compare','Compare', null);
@@ -737,6 +865,7 @@ function render(){
     else if (parts[0]==='compare') main.innerHTML = viewCompare(params);
     else if (parts[0]==='glossary') main.innerHTML = viewGlossary(params);
     else if (parts[0]==='changelog') main.innerHTML = viewChangelog(params);
+    else if (parts[0]==='scenario') main.innerHTML = (parts[1]==='ingest') ? scenIngestPanel() : viewScenario(params);
     else main.innerHTML = '<p>Not found.</p>';
   } catch(err){ main.innerHTML = `<div class="card"><h3>Render error</h3><pre>${esc(err.stack||err)}</pre></div>`; console.error(err); }
   window.scrollTo(0,0);
@@ -777,7 +906,7 @@ function viewHome(){
 function listControls(id, params, opts){
   // opts: {placeholder, selects:[{name,label,options:[{v,l}]}], extra}
   const sel = (opts.selects||[]).map(s=>`<select onchange="setParam('${s.name}',this.value)"><option value="">${esc(s.label)}</option>${s.options.map(o=>`<option value="${esc(o.v)}"${String(params[s.name]||'')===String(o.v)?' selected':''}>${esc(o.l)}</option>`).join('')}</select>`).join('');
-  return `<div class="toolbar"><form onsubmit="applySearch(this.qbox.value);return false" style="display:contents"><input name="qbox" id="listsearch" type="search" placeholder="${esc(opts.placeholder||'Search name / comments — press Enter')}" value="${esc(params.q||'')}"><button class="cmpbtn" style="padding:6px 12px">Search</button></form>${sel}
+  return `<div class="toolbar"><form onsubmit="applySearch(this.qbox.value);return false" style="display:contents"><input name="qbox" id="listsearch" type="search" placeholder="${esc(opts.placeholder||'Search name / DBID / comments — press Enter')}" value="${esc(params.q||'')}"><button class="cmpbtn" style="padding:6px 12px">Search</button></form>${sel}
   <label class="chk"><input type="checkbox" ${state.showDep?'checked':''} onchange="state.showDep=this.checked;try{localStorage.setItem('cmo.showDep',this.checked?'1':'0')}catch(e){};render()"> show deprecated</label>
   <button class="cmpbtn" style="padding:5px 9px" onclick="resetFilters()">reset</button>
   <button class="cmpbtn" style="padding:5px 9px" onclick="exportCSV()" title="Download the filtered list as CSV">⭳ CSV</button>
@@ -797,6 +926,8 @@ function exportCSV(){
 function setParam(k,v){ const {parts,params}=route(); if (v===''||v==null) delete params[k]; else params[k]=v; delete params.p; const qs=new URLSearchParams(params).toString(); location.hash='#/'+parts.join('/')+(qs?'?'+qs:''); }
 function sortBy(col){ const {params}=route(); const cur=params.s||''; setParam('s', cur===col? '-'+col : col); }
 function matchQ(q, ...fields){ if(!q) return true; const s=q.toLowerCase(); return fields.some(f=>f&&String(f).toLowerCase().includes(s)); }
+// exact DBID match: a purely-numeric query resolves to the entity with that ID
+function idEq(q,id){ if(id==null) return false; const s=(q||'').trim(); return /^\d+$/.test(s) && String(id)===s; }
 /* build filter options from a set of id-lists present in the data */
 function presentOpts(items, getIds, enumName){ const m=new Map(); for(const it of items){ const ids=getIds(it)||[]; for(const id of ids) m.set(id,(m.get(id)||0)+1); } return [...m.entries()].map(([id,n])=>({v:id,l:E(enumName,id)+' ('+n+')'})).sort((a,b)=>a.l.localeCompare(b.l)); }
 function famPresentOpts(items, getSet, lookup){ const m=new Map(); for(const it of items){ const set=getSet(it); if(set) set.forEach(f=>m.set(f,(m.get(f)||0)+1)); } return [...m.entries()].map(([f,n])=>({v:f,l:(lookup[f]?lookup[f].label:f)+' ('+n+')'})).sort((a,b)=>a.l.localeCompare(b.l)); }
@@ -854,7 +985,7 @@ function viewPlatformList(k, params){
   const typeField = (k.key==='Facility'||k.key==='GroundUnit')?'Category':'Type';
   const decades=[]; for(let y=1940;y<=2030;y+=10) decades.push({v:y,l:y+'s'});
   const preds={
-    _base:u=>(state.showDep||!u.Deprecated) && matchQ(params.q,u.Name,u.Comments),
+    _base:u=>(state.showDep||!u.Deprecated) && (matchQ(params.q,u.Name,u.Comments)||idEq(params.q,u.ID)),
     c: u=>!params.c||u.OperatorCountry==+params.c,
     t: u=>!params.t||u[typeField]==+params.t,
     d: u=>!params.d||(u.YearCommissioned>=+params.d && u.YearCommissioned<+params.d+10),
@@ -890,7 +1021,7 @@ function viewSensorList(params){
   const all=[...D.sensor.values()];
   const bands=s=>{ const b=new Set(); for(const f of s.freqST) if(f>=1001&&f<=1013) b.add(E('SensorFrequency',f).charAt(0)); return b; };
   const preds={
-    _base:s=>(state.showDep||!s.Deprecated) && matchQ(params.q,s.Name,s.Comments),
+    _base:s=>(state.showDep||!s.Deprecated) && (matchQ(params.q,s.Name,s.Comments)||idEq(params.q,s.ID)),
     f: s=>!params.f||s.fam===params.f,
     t: s=>!params.t||s.Type==+params.t,
     r: s=>!params.r||s.Role==+params.r,
@@ -933,7 +1064,7 @@ function weaponGuidance(w){
 function viewWeaponList(params){
   const all=[...D.weapon.values()];
   const preds={
-    _base:w=>(state.showDep||!w.Deprecated) && matchQ(params.q,w.Name,w.Comments),
+    _base:w=>(state.showDep||!w.Deprecated) && (matchQ(params.q,w.Name,w.Comments)||idEq(params.q,w.ID)),
     f: w=>!params.f||w.fam===params.f,
     t: w=>!params.t||w.Type==+params.t,
     g: w=>!params.g||weaponGuidanceTags(w).has(params.g),
@@ -970,17 +1101,17 @@ function viewWeaponList(params){
 /* ---------- global search ---------- */
 function viewSearch(params){
   const q=(params.q||'').trim(); if(!q) return `<h2 class="title">Search</h2><div class="meta">Use the box at the top of the sidebar to search across every platform, sensor and weapon at once.</div>`;
-  const ql=q.toLowerCase(); const hit=(n,c)=>(n&&n.toLowerCase().includes(ql))||(c&&c.toLowerCase().includes(ql));
+  const ql=q.toLowerCase(); const hit=(n,c,id)=>(n&&n.toLowerCase().includes(ql))||(c&&c.toLowerCase().includes(ql))||idEq(q,id);
   const groups=[];
-  for(const k of KINDS){ const rows=[...D.platforms[k.key].values()].filter(u=>(state.showDep||!u.Deprecated)&&hit(u.Name,u.Comments)); if(rows.length) groups.push({label:k.label,route:k.route,rows,name:u=>u.Name,sub:u=>E('OperatorCountry',u.OperatorCountry)+' · '+fmt.yr(u)}); }
-  {const rows=[...D.sensor.values()].filter(s=>(state.showDep||!s.Deprecated)&&hit(s.Name,s.Comments)); if(rows.length) groups.push({label:'Sensors',route:'sensor',rows,name:s=>s.Name,sub:s=>FAMILY[s.fam].label+' · '+E('SensorType',s.Type)});}
-  {const rows=[...D.weapon.values()].filter(w=>(state.showDep||!w.Deprecated)&&hit(w.Name,w.Comments)); if(rows.length) groups.push({label:'Weapons',route:'weapon',rows,name:w=>w.Name,sub:w=>WFAM[w.fam].label+' · '+E('WeaponType',w.Type)});}
+  for(const k of KINDS){ const rows=[...D.platforms[k.key].values()].filter(u=>(state.showDep||!u.Deprecated)&&hit(u.Name,u.Comments,u.ID)); if(rows.length) groups.push({label:k.label,route:k.route,rows,name:u=>u.Name,sub:u=>E('OperatorCountry',u.OperatorCountry)+' · '+fmt.yr(u)}); }
+  {const rows=[...D.sensor.values()].filter(s=>(state.showDep||!s.Deprecated)&&hit(s.Name,s.Comments,s.ID)); if(rows.length) groups.push({label:'Sensors',route:'sensor',rows,name:s=>s.Name,sub:s=>FAMILY[s.fam].label+' · '+E('SensorType',s.Type)});}
+  {const rows=[...D.weapon.values()].filter(w=>(state.showDep||!w.Deprecated)&&hit(w.Name,w.Comments,w.ID)); if(rows.length) groups.push({label:'Weapons',route:'weapon',rows,name:w=>w.Name,sub:w=>WFAM[w.fam].label+' · '+E('WeaponType',w.Type)});}
   const total=groups.reduce((a,g)=>a+g.rows.length,0);
   let html=`<h2 class="title">Search: “${esc(q)}”</h2><div class="meta">${fmt.n(total)} match${total===1?'':'es'} across ${groups.length} categor${groups.length===1?'y':'ies'}</div>`;
   if(!total) return html+'<div class="card"><span class="small">No matches. Try a shorter term, or toggle "show deprecated" in a list.</span></div>';
   html+='<div class="grid c2">';
   for(const g of groups){ g.rows.sort((a,b)=>g.name(a).localeCompare(g.name(b))); const shown=g.rows.slice(0,40);
-    html+=`<div class="card"><h3>${g.label}<span class="hint">${g.rows.length} · <a href="#/${g.route}?q=${encodeURIComponent(q)}">open in list ›</a></span></h3><div class="comp-list">${shown.map(r=>`<a class="comp" href="#/${g.route}/${r.ID}" style="grid-template-columns:1fr"><span><div class="nm">${esc(g.name(r))}${flags(r)}</div><div class="sub">${esc(g.sub(r))}</div></span></a>`).join('')}${g.rows.length>40?`<a href="#/${g.route}?q=${encodeURIComponent(q)}" class="small" style="padding:4px 8px">… ${g.rows.length-40} more — open in list ›</a>`:''}</div></div>`; }
+    html+=`<div class="card"><h3>${g.label}<span class="hint">${g.rows.length} · <a href="#/${g.route}?q=${encodeURIComponent(q)}">open in list ›</a></span></h3><div class="comp-list">${shown.map(r=>`<a class="comp" href="#/${g.route}/${r.ID}" style="grid-template-columns:1fr"><span><div class="nm">${esc(g.name(r))}${flags(r)}</div><div class="sub">${esc(g.sub(r))} · #${r.ID}</div></span></a>`).join('')}${g.rows.length>40?`<a href="#/${g.route}?q=${encodeURIComponent(q)}" class="small" style="padding:4px 8px">… ${g.rows.length-40} more — open in list ›</a>`:''}</div></div>`; }
   return html+'</div>';
 }
 </script>
@@ -1035,7 +1166,7 @@ function sensorLine(o){
 }
 function unitHeader(u, k){
   const typeEnum = k.key==='Facility'?'FacilityType': k.key==='GroundUnit'?null: k.key+'Type';
-  const catEnum = k.key==='Aircraft'?'AircraftCategory': k.key==='Ship'?'ShipCategory': k.key==='Submarine'?'SubmarineCategory': k.key==='Facility'?'FacilityCategory':'GroundUnitCategory';
+  const catEnum = k.key==='Aircraft'?'AircraftCategory': k.key==='Ship'?'ShipCategory': k.key==='Submarine'?'SubmarineCategory': k.key==='Facility'?'FacilityCategory': k.key==='Satellite'?'SatelliteCategory':'GroundUnitCategory';
   const bits=[E(catEnum,u.Category), typeEnum?E(typeEnum,u.Type):null].filter(x=>x&&x!=='None');
   return `<div class="crumbs"><a href="#/">Overview</a> › <a href="#/${k.route}">${k.label}</a></div>
   <div class="hero"><div><h2 class="title">${esc(u.Name)}${flags(u)}</h2>
@@ -1106,12 +1237,21 @@ function sensorCoverageCard(u){
       items.push({label:s.Name, range:s.RangeMax, mask:o.mask, color:FAMILY[s.fam].color, sub:E('SensorRole',s.Role), s, deg:o.deg}); }
   }
   if (!items.length) return '';
+  items.forEach((it,i)=>it.idx=i);
   const fams=[...new Set(items.map(i=>i.s.fam))];
   const legend = `<div class="legend">${fams.map(f=>`<span><span class="sw" style="background:${FAMILY[f].color}"></span>${FAMILY[f].label}</span>`).join('')}</div>`;
+  // per-sensor checklist to isolate/toggle individual rings (thewood1 request)
+  const checklist = `<div class="cvgpick"><div class="cvgpickhdr">Show rings <button type="button" onclick="cvgAll(true)">all</button><button type="button" onclick="cvgAll(false)">none</button></div>`
+    + items.map(i=>`<label class="cvgitem"><input type="checkbox" checked data-r="${i.idx}" onchange="cvgSet(${i.idx},this.checked)"><span class="sw" style="background:${i.color}"></span><span class="cvgnm">${esc(i.label)}</span><span class="cvgrng">${fmt.nm(i.range)}</span> <a class="cvgsolo" onclick="cvgSolo(${i.idx});return false" title="show only this">solo</a></label>`).join('')
+    + `</div>`;
   const env = envelopeChart(items.filter(i=>i.s.fam!=='sonar'&&i.s.fam!=='mcm').map(i=>({label:i.label,color:i.color,r0:i.s.RangeMin||0,r1:i.range,a0:(i.s.AltitudeMin_ASL||i.s.AltitudeMin)||null,a1:(i.s.AltitudeMax_ASL||i.s.AltitudeMax)||null,tip:`${fmt.nm(i.range)} · alt ${fmt.altPair(i.s.AltitudeMin,i.s.AltitudeMax,i.s.AltitudeMin_ASL,i.s.AltitudeMax_ASL)}`})),{width:520,height:230});
   return `<div class="card full"><h3>Sensor coverage<span class="hint">nominal max range per sensor with fitted arcs · log radial scale</span></h3>${legend}
-  <div style="display:grid;grid-template-columns:minmax(300px,380px) 1fr;gap:16px;align-items:start"><div>${coverageRings(items,{size:380})}</div><div><div class="small" style="margin-bottom:4px">Range vs altitude envelope (air-side sensors)</div>${env}</div></div></div>`;
+  <div style="display:grid;grid-template-columns:minmax(300px,380px) 1fr;gap:16px;align-items:start"><div>${coverageRings(items,{size:380,tagItems:u.ID})}${checklist}</div><div><div class="small" style="margin-bottom:4px">Range vs altitude envelope (air-side sensors)</div>${env}</div></div></div>`;
 }
+/* sensor-ring toggles for the coverage diagram */
+function cvgSet(idx, on){ document.querySelectorAll('g.cvgring[data-r="'+idx+'"]').forEach(e=>e.style.display=on?'':'none'); }
+function cvgAll(on){ document.querySelectorAll('.cvgpick input[type=checkbox]').forEach(cb=>cb.checked=on); document.querySelectorAll('g.cvgring').forEach(e=>e.style.display=on?'':'none'); }
+function cvgSolo(idx){ document.querySelectorAll('.cvgpick input[type=checkbox]').forEach(cb=>cb.checked=(cb.dataset.r==String(idx))); document.querySelectorAll('g.cvgring').forEach(e=>e.style.display=(e.getAttribute('data-r')==String(idx))?'':'none'); }
 function loadoutSelect(u, current){
   const los = u.loadouts.map(id=>D.loadout.get(id)).filter(Boolean).sort((a,b)=>a.Name.localeCompare(b.Name));
   if (!los.length) return '';
@@ -1125,6 +1265,90 @@ function loadoutDetail(l){
   return `<div style="margin-top:8px">${kv([['Role',E('LoadoutRole',l.LoadoutRole)],['Profile',l.DefaultMissionProfile&&l.DefaultMissionProfile!==1001?E('LoadoutMissionProfile',l.DefaultMissionProfile):null],['Combat radius',l.DefaultCombatRadius?l.DefaultCombatRadius+' nm':null],['Time on station',l.DefaultTimeOnStation?l.DefaultTimeOnStation+' min':null],['Ready time',l.ReadyTime?fmt.n(l.ReadyTime/60)+' min'+(l.ReadyTime_Sustained?' (sustained '+fmt.n(l.ReadyTime_Sustained/60)+' min)':''):null],['Quick turnaround',l.QuickTurnaround?`${fmt.n(l.QuickTurnaround_ReadyTime/60)} min, max ${l.QuickTurnaround_MaxSorties} sorties`:null],['Weight/drag modifier',l.PayloadWeightDragModifier||null],['Conditions',[E('LoadoutTimeOfDay',l.TimeofDay),E('LoadoutWeather',l.Weather)].filter(x=>x&&x!=='None').join(' · ')||null],['Winchester / shotgun',l.WinchesterShotgun&&l.WinchesterShotgun!==1001?E('LoadoutWinchesterShotgun',l.WinchesterShotgun):null],['Buddy illumination',l.RequiresBuddyIllumination?'required':null]])}
   <div class="wrap" style="margin-top:8px"><table class="list"><thead><tr><th>Weapon</th><th>Qty (max)</th><th>ROF</th><th>Family</th></tr></thead><tbody>${rows||'<tr><td colspan=4 class="dim">No stores.</td></tr>'}</tbody></table></div></div>`;
 }
+function orbitCard(u){
+  const orb = u.orbits||[]; if (!orb.length) return '';
+  const rows = orb.slice(0,16).map(o=>{
+    const [plane,incl,apo,peri,period,mission,oper]=o;
+    const cells=[
+      mission?esc(mission):'—',
+      plane!=null?esc(E('SatelliteOrbitPlane',plane)):'—',
+      incl!=null?fmt.n(incl,1)+'°':'—',
+      (apo!=null||peri!=null)?(fmt.n(peri||0)+' × '+fmt.n(apo||0)):'—',
+      period!=null?fmt.n(period,1):'—',
+      oper?'yes':'—',
+    ];
+    return '<tr>'+cells.map((c,i)=>`<td${i>=2&&i<=4?' class="num"':''}>${c}</td>`).join('')+'</tr>';
+  }).join('');
+  const more = orb.length>16?`<div class="small" style="margin-top:6px">+${orb.length-16} more orbital elements</div>`:'';
+  return `<div class="card"><h3>Orbit<span class="hint">${orb.length} element${orb.length===1?'':'s'}</span></h3>`
+    + `<div class="wrap"><table class="list"><thead><tr><th>Mission</th><th>Plane</th><th>Incl.</th><th>Perigee × apogee (km)</th><th>Period (min)</th><th>Op.</th></tr></thead><tbody>${rows}</tbody></table></div>${more}</div>`;
+}
+
+/* ---------- anti-satellite (ASAT) engagement ---------- */
+let ASAT_CACHE=null;
+function asatWeapons(){ if(ASAT_CACHE) return ASAT_CACHE; ASAT_CACHE=[]; for(const [,w] of D.weapon){ if((w.targets||[]).includes(1004)) ASAT_CACHE.push(w); } ASAT_CACHE.sort((a,b)=>(b.AirRangeMax||0)-(a.AirRangeMax||0)); return ASAT_CACHE; }
+// lowest & highest altitude (km) the satellite reaches, from its orbital elements
+function satAltBandKm(u){ let lo=Infinity,hi=-Infinity; for(const o of (u.orbits||[])){ const apo=+o[2], per=+o[3]; if(per>0) lo=Math.min(lo,per); if(apo>0) hi=Math.max(hi,apo); if(apo>0&&per<=0) lo=Math.min(lo,apo); }
+  if(lo===Infinity) return null; if(hi<0) hi=lo; return [lo,hi]; }
+const ASAT_COLORS=['var(--s1)','var(--s2)','var(--s4)','var(--s3)','var(--accent)'];
+function asatCard(u){
+  const band=satAltBandKm(u); if(!band) return '';
+  const [perKm,apoKm]=band; const wl=asatWeapons(); if(!wl.length) return '';
+  const rows=wl.map(w=>{
+    const ceilKm=(w.TargetAltitudeMax_ASL||w.TargetAltitudeMax||0)/1000;
+    const rNm=w.AirRangeMax||0, rKm=rNm*1.852; const h=perKm;   // engage at the satellite's lowest pass (perigee)
+    let status,fp=null;
+    if(ceilKm && ceilKm<perKm) status='alt';
+    else if(rKm<=h) status='range';
+    else { fp=Math.sqrt(Math.max(0,rKm*rKm-h*h)); status='ok'; }
+    return {w,ceilKm,rNm,rKm,fp,status};
+  }).sort((a,b)=> ((a.status==='ok'?0:1)-(b.status==='ok'?0:1)) || ((b.fp||0)-(a.fp||0)) || (b.ceilKm-a.ceilKm));
+  const ok=rows.filter(r=>r.status==='ok');
+  const badge={ok:'<span class="badge" style="background:var(--good-soft,#e6f4ea);color:var(--good,#1a7f37)">in reach</span>',
+    alt:'<span class="badge" style="background:var(--surface-2);color:var(--text-3)">above ceiling</span>',
+    range:'<span class="badge" style="background:var(--surface-2);color:var(--text-3)">range-limited</span>'};
+  const trs=rows.map((r,i)=>{ const col=r.status==='ok'?ASAT_COLORS[ok.indexOf(r)%ASAT_COLORS.length]:'transparent';
+    return `<tr><td><span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:${col};margin-right:6px;vertical-align:middle"></span><a href="#/weapon/${r.w.ID}">${esc(r.w.Name)}</a></td>`
+      +`<td class="num">${!r.ceilKm?'—':(r.ceilKm>=100000?'no limit':fmt.n(r.ceilKm)+' km')}</td>`
+      +`<td class="num">${fmt.n(r.rNm)} nm</td>`
+      +`<td class="num">${r.fp!=null?fmt.n(r.fp)+' km':'—'}</td>`
+      +`<td>${badge[r.status]}</td></tr>`;
+  }).join('');
+  const summary = ok.length
+    ? `${ok.length} of ${wl.length} anti-satellite weapon${wl.length===1?'':'s'} can reach this orbit at perigee (${fmt.n(perKm)} km).`
+    : `None of the ${wl.length} anti-satellite weapons in the database can reach this orbit — at ${fmt.n(perKm)} km it is beyond every ASAT weapon’s altitude ceiling or effective range.`;
+  return `<div class="card full"><h3>Anti-satellite engagement<span class="hint">which ASAT weapons can reach this orbit, and from where</span></h3>`
+    + `<div class="note" style="margin-bottom:8px">${summary} A weapon can engage only when its launch platform lies within the <b>ground footprint</b> below — the area of Earth’s surface over which the satellite passes inside the weapon’s reach.</div>`
+    + `<div class="grid c2" style="align-items:start">`
+    + `<div class="wrap"><table class="list"><thead><tr><th>ASAT weapon</th><th>Altitude ceiling</th><th>Max range</th><th>Footprint radius</th><th>vs this orbit</th></tr></thead><tbody>${trs}</tbody></table></div>`
+    + asatFootprint(ok, perKm)
+    + `</div>`
+    + `<div class="small" style="margin-top:8px;color:var(--text-3)">Footprint radius = √(range² − altitude²) at the satellite’s perigee, a planar approximation that ignores Earth curvature and horizon masking — treat it as a relative reach comparison, not a targeting solution. Altitudes are above sea level; ranges are the weapon’s maximum.</div>`
+    + `</div>`;
+}
+function asatFootprint(ok, hKm){
+  if(!ok.length) return `<div class="card" style="display:flex;align-items:center;justify-content:center;min-height:220px;color:var(--text-3)"><span class="small">No weapon reaches this orbit — no footprint.</span></div>`;
+  const S=340, cx=S/2, cy=S/2, pad=30, Rpx=S/2-pad;
+  const maxFp=Math.max(...ok.map(r=>r.fp));
+  const sc=Rpx/maxFp;
+  // nice scale ring at a round number
+  const ring=[500,1000,1500,2000,3000,4000,5000].filter(v=>v<=maxFp*1.02).pop()||Math.round(maxFp);
+  let circles='';
+  ok.slice().reverse().forEach((r)=>{ const idx=ok.indexOf(r); const col=ASAT_COLORS[idx%ASAT_COLORS.length]; const rr=r.fp*sc;
+    circles+=`<circle cx="${cx}" cy="${cy}" r="${rr.toFixed(1)}" fill="${col}" fill-opacity="0.10" stroke="${col}" stroke-width="1.5"/>`;
+  });
+  // scale ring (dashed) + label
+  const ringPx=ring*sc;
+  const scaleRing=`<circle cx="${cx}" cy="${cy}" r="${ringPx.toFixed(1)}" fill="none" stroke="var(--border-2)" stroke-width="1" stroke-dasharray="3 3"/>`
+    +`<text x="${cx}" y="${(cy-ringPx-4).toFixed(1)}" text-anchor="middle" font-size="10" fill="var(--text-3)" font-family="var(--mono)">${fmt.n(ring)} km</text>`;
+  const legend=ok.map((r,i)=>`<div style="display:flex;align-items:center;gap:6px;font-size:11.5px"><span style="width:10px;height:10px;border-radius:50%;background:${ASAT_COLORS[i%ASAT_COLORS.length]};flex:none"></span><span>${esc(r.w.Name)} <span class="small" style="color:var(--text-3)">${fmt.n(r.fp)} km</span></span></div>`).join('');
+  return `<div class="card" style="padding:10px"><svg viewBox="0 0 ${S} ${S}" width="100%" style="max-width:${S}px;display:block;margin:0 auto">`
+    + scaleRing + circles
+    + `<circle cx="${cx}" cy="${cy}" r="3.5" fill="var(--text)"/>`
+    + `<text x="${cx}" y="${cy-8}" text-anchor="middle" font-size="10" fill="var(--text-2)">sub-satellite point</text>`
+    + `</svg><div style="display:flex;flex-direction:column;gap:3px;margin-top:6px">${legend}</div>`
+    + `<div class="small" style="margin-top:4px;color:var(--text-3)">Concentric ground circles: a launcher inside a weapon’s circle can engage as the satellite passes overhead (perigee ${fmt.n(hKm)} km).</div></div>`;
+}
 function viewUnit(kind, id, params){
   const u = getUnit(kind,id); const k = KIND_BY_KEY[kind];
   if (!u) return `<p>Unknown ${kind} ${id}.</p>`;
@@ -1136,8 +1360,10 @@ function viewUnit(kind, id, params){
   if (kind==='Ship'||kind==='Submarine') st.push(['Length',fmt.n(u.Length,1),'m'],['Beam',fmt.n(u.Beam,1),'m'],['Draft',fmt.n(u.Draft,1),'m'],['Displacement (full)',fmt.n(u.DisplacementFull),'t'],['Crew',fmt.n(u.Crew)],['Damage points',fmt.n(u.DamagePoints)],kind==='Submarine'?['Max depth',fmt.n(u.MaxDepth),'m']:['Missile defence',u.MissileDefense],['Combat system',E(kind+'CSGen',u.CSGen)],['Size',E((kind==='Ship'?'Ship':'Submarine')+'PhysicalSize',u.PhysicalSizeCode).split(' (')[0]],['Fuel',fuelText(u.fuel)]);
   if (kind==='Facility') st.push(['Area',u.Area?fmt.n(u.Area):null,'m²'],['Length × width',u.Length?fmt.n(u.Length)+' × '+fmt.n(u.Width):null,'m'],['Crew',u.Crew],['Armor',armorTxt(u.ArmorGeneral)],['Damage points',fmt.n(u.DamagePoints)],['Mast height',u.MastHeight,'m'],['Missile defence',u.MissileDefense],['Combat system',E('FacilityCSGen',u.CSGen)],['Aimpoint radius',u.Radius,'m']);
   if (kind==='GroundUnit') st.push(['Mass',u.Mass?fmt.n(u.Mass):null,'t'],['Crew',u.Crew],['Troops',u.TroopCapacity],['Armor',armorTxt(u.ArmorGeneral)],['Damage points',fmt.n(u.DamagePoints)],['Missile defence',u.MissileDefense],['Combat system',E('GroundUnitCSGen',u.CSGen)],['Setup time',u.Setup?u.Setup+' min':null],['Fuel',fuelText(u.fuel)]);
+  if (kind==='Satellite') st.push(['Length',u.Length?fmt.n(u.Length,2):null,'m'],['Span',u.Span?fmt.n(u.Span,2):null,'m'],['Mass (max)',u.WeightMax?fmt.n(u.WeightMax):null,'kg'],['Payload',u.WeightPayload?fmt.n(u.WeightPayload):null,'kg'],['Damage points',u.DamagePoints?fmt.n(u.DamagePoints):null],['MRV inclination',u.MRVInclination||null],['MRV apogee/perigee',u.MRVApogeePerigee||null],['Combat system',E('SatelliteCSGen',u.CSGen)]);
   st.push(['OODA (detect/target/evade)',[u.OODADetectionCycle,u.OODATargetingCycle,u.OODAEvasiveCycle].join(' / '),'s']);
   html += statTiles(st);
+  if (kind==='Satellite'){ html += orbitCard(u); html += asatCard(u); }
   // armor for ships
   html += `<div class="grid c2">`;
   html += sensorCoverageCard(u);
@@ -1171,10 +1397,18 @@ function viewUnit(kind, id, params){
   const misc=[];
   if (kind==='Ship') misc.push(['Armor (belt / bulkhead / deck / bridge / CIC / eng / rudder)',[u.ArmorBelt,u.ArmorBulkheads,u.ArmorDeck,u.ArmorBridge,u.ArmorCIC,u.ArmorEngineering,u.ArmorRudder].map(armorTxt).join(' · ')],['Sea state (FOC / max)',(u.FOCSeaState||0)+' / '+(u.MaxSeaState||0)],['Troops / cargo',(u.TroopCapacity||0)+' / '+(u.CargoCapacity||0)],['Repair capacity',u.RepairCapacity||null]);
   if (kind==='Aircraft') misc.push(['Armor (engine / fuselage / cockpit)',[u.AircraftEngineArmor,u.AircraftFuselageArmor,u.AircraftCockpitArmor].map(armorTxt).join(' · ')],['Visibility (front/side/rear)',u.Visibility],['Endurance',u.TotalEndurance?u.TotalEndurance+' min':null],['Refuel rates (off/on, probe off/on)',[u.FuelOffloadRate,u.FuelOnloadRate,u.FuelOffloadRateProbe,u.FuelOnloadRateProbe].join(' / ')]);
-  misc.push(['Autonomy',E((kind==='Aircraft'?'Aircraft':kind==='Submarine'?'Submarine':'Ship')+'AutonomousControlLevel',u.AutonomousControlLevel)],['Ergonomics',E('Ergonomics',u.Ergonomics)],['Cost',u.Cost?fmt.n(u.Cost):null]);
-  const codeEnum = kind==='Aircraft'?'AircraftCode':kind==='Ship'?'ShipCode':kind==='Submarine'?'SubmarineCode':'GroundUnitCode';
-  const codes = u.codes.map(c=>`<span class="chip">${esc(E(codeEnum,c))}</span>`).join('');
-  const comms = u.comms.map(c=>D.comm.get(c)).filter(Boolean).map(c=>`<span class="chip">${esc(c.Name)}</span>`).join('');
+  const autoEnum=(kind==='Aircraft'?'Aircraft':kind==='Submarine'?'Submarine':'Ship')+'AutonomousControlLevel';
+  const autoV=u.AutonomousControlLevel, ergoV=u.Ergonomics;
+  const autoHtml = autoV? `<a class="gval" href="#/glossary?sel=auto:${autoV}" data-tip="${esc(gtip('auto',autoV))}">${esc(E(autoEnum,autoV))}</a>` : null;
+  const ergoHtml = (ergoV!=null&&ergoV!=='')? `<a class="gval" href="#/glossary?sel=ergo:${ergoV}" data-tip="${esc(gtip('ergo',ergoV))}">${esc(E('Ergonomics',ergoV))}</a>` : null;
+  misc.push(['Autonomy',autoHtml,true],['Ergonomics',ergoHtml,true],['Cost',u.Cost?fmt.n(u.Cost):null]);
+  const codeCat = kind==='Aircraft'?'acode':kind==='Ship'?'shcode':kind==='Submarine'?'sucode':'gcode';
+  const codes = u.codes.map(c=>gchip(codeCat,c)).filter(Boolean).join('');
+  const comms = u.comms.map(c=>D.comm.get(c)).filter(Boolean).map(c=>{
+    const fam=c.Type?E('CommType',c.Type):''; const rng=c.Range?` · ${fmt.n(c.Range)} nm`:'';
+    const tip=(fam||'comm')+rng;
+    return c.Type? `<a class="chip gl" href="#/glossary?sel=commtype:${c.Type}" data-tip="${esc(tip)}">${esc(c.Name)}</a>` : `<span class="chip" data-tip="${esc(tip)}">${esc(c.Name)}</span>`;
+  }).join('');
   const acf = u.acfac.map(f=>{ const r=D.acfacility[f]; return r? `<span class="chip">${esc(E('AircraftFacilityType',r[0]))} · ${esc(E('AircraftPhysicalSize',r[1]).split(' (')[0])} · cap ${r[2]}</span>`:''; }).join('');
   html += `<div class="card"><h3>Attributes</h3>${kv(misc)}${codes?`<div style="margin-top:8px" class="chips">${codes}</div>`:''}${acf?`<h3 style="margin-top:10px">Aircraft facilities</h3><div class="chips">${acf}</div>`:''}${comms?`<h3 style="margin-top:10px">Comms</h3><div class="chips">${comms}</div>`:''}</div>`;
   html += `</div>`;
@@ -1388,9 +1622,13 @@ function seekerCard(w){
   const guidIds = w.codes.filter(c=>guidRe.test(E('WeaponCode',c)));
   const otherIds = w.codes.filter(c=>!guidIds.includes(c));
   const gtags = [...weaponGuidanceTags(w)];
-  if (!seekers.length && !w.codes.length && !gtags.length && !w.CanActAsSensor) return '';
+  const dlinks = (w.comms||[]).map(c=>D.comm.get(c)).filter(Boolean);
+  if (!seekers.length && !w.codes.length && !gtags.length && !w.CanActAsSensor && !dlinks.length) return '';
   const sk = seekers.map(({s,mask})=>`<a class="comp" href="#/sensor/${s.ID}"><span>${arcRose(mask,40,FAMILY[s.fam].color)}</span><span><div class="nm">${esc(s.Name)}</div><div class="sub">${esc(E('SensorType',s.Type))} · ${esc(E('SensorRole',s.Role))}</div></span><span class="cnt">${fmt.nm(s.RangeMax)}</span></a>`).join('');
+  const dlHtml = dlinks.map(c=>{ const fam=c.Type?E('CommType',c.Type):''; const rng=c.Range?` · ${fmt.n(c.Range)} nm`:'';
+    return c.Type? `<a class="chip gl" href="#/glossary?sel=commtype:${c.Type}" data-tip="${esc((fam||'datalink')+rng)}">${esc(c.Name)}</a>` : `<span class="chip" data-tip="${esc(rng)}">${esc(c.Name)}</span>`; }).join('');
   return `<div class="card"><h3>Seeker &amp; guidance</h3><div class="comp-list">${sk||'<span class="small">No onboard seeker'+(w.fam==='bomb'||w.fam==='gun'||w.fam==='rocket'?' (unguided or externally guided)':'')+'.</span>'}</div>
+  ${dlHtml?`<div style="font-size:12px;color:var(--text-3);text-transform:uppercase;letter-spacing:.4px;margin-top:8px">Datalink</div><div class="chips" style="margin-top:3px">${dlHtml}</div>`:''}
   ${gtags.length?`<div style="font-size:12px;color:var(--text-3);text-transform:uppercase;letter-spacing:.4px;margin-top:8px">Guidance method${gtags.length>1?'s':''}</div><div class="chips" style="margin-top:3px">${gchips('guid',gtags,{on:true})}</div>`:''}
   ${guidIds.length?`<div style="font-size:12px;color:var(--text-3);text-transform:uppercase;letter-spacing:.4px;margin-top:8px">Guidance / employment codes</div><div class="chips" style="margin-top:3px">${gchips('wcode',guidIds,{on:true})}</div>`:''}${otherIds.length?`<div class="chips" style="margin-top:6px">${gchips('wcode',otherIds)}</div>`:''}
   ${kv([['Acts as sensor',w.CanActAsSensor?'yes':null],['Buddy illumination (CEC)',w.BuddyIlluminationForCEC?'yes':null]])}</div>`;
@@ -2082,7 +2320,10 @@ function threatTgtPick(){ const inp=document.getElementById('threat_tgt'); if(!i
      commentary, paraphrased from the CMO manual (page-cited) — never verbatim — and
      epistemically tagged OBSERVED / INFERRED / SPECULATIVE.
    ============================================================ */
-const ENUMOF = {cap:'SensorCapability', scode:'SensorCode', wcode:'WeaponCode', wtarget:'WeaponTarget', stype:'SensorType', wtype:'WeaponType', sgen:'SensorGeneration', role:'SensorRole'};
+const ENUMOF = {cap:'SensorCapability', scode:'SensorCode', wcode:'WeaponCode', wtarget:'WeaponTarget', stype:'SensorType', wtype:'WeaponType', sgen:'SensorGeneration', role:'SensorRole',
+  armor:'ArmorType', ergo:'Ergonomics', auto:'AircraftAutonomousControlLevel', vis:'AircraftCockpitVisibility',
+  acode:'AircraftCode', shcode:'ShipCode', sucode:'SubmarineCode', gcode:'GroundUnitCode',
+  commcap:'CommCapability', commlat:'CommLatency', commqual:'CommQuality', commtype:'CommType'};
 
 const GLOSSARY = {
   /* ---- Weapon guidance methods (keys = weaponGuidanceTags / GUIDANCE) ---- */
@@ -2349,15 +2590,101 @@ const GLOSSARY = {
   'wtype:9001':{means:'Cargo: carried cargo/supplies (not a weapon).',tag:'OBSERVED',src:'Weapon type'},
   'wtype:9002':{means:'Troops: embarked troops carried by the platform.',tag:'OBSERVED',src:'Weapon type'},
   'wtype:9003':{means:'Paratroops: troops delivered by parachute.',tag:'OBSERVED',src:'Weapon type'},
+
+  /* ================= PLATFORM ATTRIBUTES ================= */
+  /* Ergonomics — OODA-loop modifiers (negative = faster reaction). Values from EnumErgonomics. */
+  'ergo:1000':{means:'Awful crew station / decision environment.',ingame:'Slows the OODA loop: detection +20%, targeting +30%, evasive +15% — this platform is slow to notice, lock and react.',tag:'OBSERVED',src:'EnumErgonomics (OODA mod %)'},
+  'ergo:2000':{means:'Poor ergonomics.',ingame:'OODA penalties: detection +10%, targeting +15%, evasive +5%.',tag:'OBSERVED',src:'EnumErgonomics'},
+  'ergo:3000':{means:'Average ergonomics — the baseline.',ingame:'No OODA modifier (0% across the board).',tag:'OBSERVED',src:'EnumErgonomics'},
+  'ergo:4000':{means:'Good ergonomics.',ingame:'OODA bonuses: detection −10%, targeting −15%, evasive −5% — reacts noticeably faster.',tag:'OBSERVED',src:'EnumErgonomics'},
+  'ergo:5000':{means:'Excellent crew station.',ingame:'Largest OODA bonus: detection −20%, targeting −30%, evasive −15% — quickest to observe, orient and act.',tag:'OBSERVED',src:'EnumErgonomics'},
+
+  /* Autonomy — autonomous control level for unmanned platforms; what it does on signal loss. */
+  'auto:1000':{means:'Remotely piloted / remote-controlled: flown or driven directly by an operator.',ingame:'On signal loss the platform is helpless — aircraft become a "ghost plane" flying on until they crash; ships stop to await signal; subs briefly loiter then surface.',tag:'OBSERVED',src:'Enum…AutonomousControlLevel'},
+  'auto:1500':{means:'Self-recovering: can recover itself if the datalink drops.',ingame:'On signal loss: briefly stop/loiter to await signal, then return to base.',tag:'OBSERVED',src:'Enum…AutonomousControlLevel'},
+  'auto:2000':{means:'Changeable mission: operator can re-task it, but it runs on stored orders.',ingame:'On signal loss: complete last order(s), then RTB.',tag:'OBSERVED',src:'Enum…AutonomousControlLevel'},
+  'auto:3000':{means:'Fault/event adaptive: adapts to faults and events on its own.',ingame:'On signal loss: complete last order(s) if able, then RTB.',tag:'OBSERVED',src:'Enum…AutonomousControlLevel'},
+  'auto:4000':{means:'Multi-vehicle coordination: operates as part of a coordinated group.',ingame:'On signal loss: complete last order(s) if able, then follow the leader.',tag:'OBSERVED',src:'Enum…AutonomousControlLevel'},
+  'auto:5000':{means:'Battlespace cognizant: understands the tactical situation.',ingame:'On signal loss: continue the mission (e.g. sea control, AAW patrol).',tag:'OBSERVED',src:'Enum…AutonomousControlLevel'},
+  'auto:6000':{means:'Fully autonomous: operates without supervision.',ingame:'On signal loss: engage hostile targets within the last received ROE.',tag:'OBSERVED',src:'Enum…AutonomousControlLevel'},
+
+  /* Armor — RHA-equivalent protection class. */
+  'armor:1001':{means:'No meaningful armor.',tag:'OBSERVED',src:'EnumArmorType'},
+  'armor:2004':{means:'Special (201–500mm RHA): composite/reactive frontal protection of a modern main battle tank.',ingame:'Shrugs off most autocannon and many light AT hits from the front; needs a real anti-armor warhead to defeat.',tag:'INFERRED',src:'EnumArmorType'},
+
+  /* Cockpit visibility — front/side/rear, A best → C worst. */
+  'vis:A,A,A':{means:'Observation bubbles, 360° — excellent all-round visibility.',ingame:'Best possible crew lookout in a visual-range fight.',tag:'OBSERVED',src:'EnumAircraftCockpitVisibility'},
+  'vis:C,C,C':{means:'Unmanned — no crew to see out.',ingame:'No visual-lookout contribution; relies entirely on sensors.',tag:'OBSERVED',src:'EnumAircraftCockpitVisibility'},
+
+  /* ================= COMMS ================= */
+  'commlat:1000':{means:'Slow link latency.',ingame:'Example: ELF radio to submerged submarines — a trickle, minutes per message.',tag:'OBSERVED',src:'EnumCommLatency'},
+  'commlat:2000':{means:'Normal latency.',ingame:'Example: ordinary radio.',tag:'OBSERVED',src:'EnumCommLatency'},
+  'commlat:3000':{means:'Fast (legacy datalinks).',ingame:'Example: Link 11.',tag:'OBSERVED',src:'EnumCommLatency'},
+  'commlat:4000':{means:'Near-instant (advanced datalinks, electro-optical).',ingame:'Example: Link 16, CEC.',tag:'OBSERVED',src:'EnumCommLatency'},
+  'commlat:5000':{means:'Near-instant, BMD-capable.',ingame:'Example: Engage-on-Remote (EOR) for ballistic-missile defence.',tag:'OBSERVED',src:'EnumCommLatency'},
+  'commqual:1000':{means:'General location only.',ingame:'A rough position — enough to cue a search, not to shoot. Example: radio.',tag:'OBSERVED',src:'EnumCommQuality'},
+  'commqual:2000':{means:'Tactical picture / OTH ASuW quality.',ingame:'A shareable track picture, good for over-the-horizon surface targeting. Example: Link 11.',tag:'OBSERVED',src:'EnumCommQuality'},
+  'commqual:3000':{means:'Offboard AAW quality.',ingame:'Good enough to engage air targets on someone else’s track. Example: CEC.',tag:'OBSERVED',src:'EnumCommQuality'},
+  'commqual:4000':{means:'Remote BMD quality.',ingame:'Ballistic-missile-defence-grade remote track. Example: EOR.',tag:'OBSERVED',src:'EnumCommQuality'},
+  'commqual:5000':{means:'Full-motion video.',ingame:'Live video / IRST coordination between platforms.',tag:'OBSERVED',src:'EnumCommQuality'},
+  'commcap:1450':{means:'Low probability of intercept/detection (LPI/LPD): the emission is hard to detect or locate.',ingame:'Lets a platform use the link without lighting itself up to ESM.',tag:'OBSERVED',src:'EnumCommCapability'},
+  'commcap:1500':{means:'Jam resistant: the link resists deliberate jamming.',tag:'OBSERVED',src:'EnumCommCapability'},
+  'commcap:4000':{means:'Daisy-chain capability: relays through intermediate nodes to extend reach.',tag:'INFERRED',src:'EnumCommCapability'},
+  'commcap:3004':{means:'VLF radio (3–30 kHz): very-low-frequency band.',ingame:'One of the few bands that reaches a submerged submarine.',tag:'INFERRED',src:'EnumCommCapability'},
+
+  /* ================= PLATFORM FEATURE CODES ================= */
+  /* Aircraft — signature reduction & structure jargon */
+  'acode:6004':{means:'Blip Enhance / Luneberg reflectors: deliberately enlarges the radar return.',ingame:'Makes the aircraft look bigger to radar — used to hide a stealthy jet’s true RCS in peacetime, or as a decoy.',tag:'INFERRED',src:'EnumAircraftCode'},
+  'acode:10001':{means:'RCSS — active cancellation: actively suppresses radar cross-section.',ingame:'RCSS = radar-cross-section suppression; lowers the range at which radars detect it.',tag:'INFERRED',src:'EnumAircraftCode'},
+  'acode:10101':{means:'RCSS — S-shaped intake(s): hides engine fan faces from radar.',tag:'INFERRED',src:'EnumAircraftCode'},
+  'acode:10102':{means:'RCSS — exposed fan blocker(s): screens the compressor face from radar.',tag:'INFERRED',src:'EnumAircraftCode'},
+  'acode:10201':{means:'RCSS — stealth pylons: low-RCS weapon pylons.',tag:'INFERRED',src:'EnumAircraftCode'},
+  'acode:11101':{means:'IRSS — shielded exhaust (jet deviation): reduces infrared signature.',ingame:'IRSS = infrared-signature suppression; shortens IR-seeker and IRST detection range.',tag:'INFERRED',src:'EnumAircraftCode'},
+  'acode:11102':{means:'IRSS — masked exhaust: blocks direct line of sight to the hot nozzle.',tag:'INFERRED',src:'EnumAircraftCode'},
+  'acode:11103':{means:'IRSS — heavily masked / slit-shaped exhaust: strong IR suppression.',tag:'INFERRED',src:'EnumAircraftCode'},
+  'acode:11201':{means:'IRSS — peak-temp reduction (cool-air mix): cools the exhaust plume.',tag:'INFERRED',src:'EnumAircraftCode'},
+  'acode:9101':{means:'Fuselage structure — low-subsonic fighter: sets the airframe’s structural strength / g-limits for this class and speed regime.',ingame:'One of a family of structure codes; together they define how much stress the airframe can take.',tag:'INFERRED',src:'EnumAircraftCode'},
+
+  /* Ship — quieting & construction-standard DP penalties */
+  'shcode:1011':{means:'Prairie Masker: a bubble-curtain system that masks the ship’s radiated noise.',ingame:'Makes the ship harder to detect and track on passive sonar.',tag:'INFERRED',src:'EnumShipCode'},
+  'shcode:1012':{means:'Advanced quieting: low-noise machinery and mounting.',ingame:'Reduces the range at which passive sonar can hear it.',tag:'INFERRED',src:'EnumShipCode'},
+  'shcode:4001':{means:'Low construction standards: fragile build.',ingame:'−40% damage points — takes far less punishment before it is knocked out.',tag:'OBSERVED',src:'EnumShipCode (DP penalty)'},
+  'shcode:4002':{means:'All-aluminium construction.',ingame:'−30% damage points; aluminium burns and fails sooner than steel.',tag:'OBSERVED',src:'EnumShipCode'},
+  'shcode:8101':{means:'Refuel from Port ×1 (In): one port-side fuelling-in station.',ingame:'Part of the underway-replenishment rig set — which side and how many hoses a ship can take fuel (or, for 9xxx, stores) from.',tag:'INFERRED',src:'EnumShipCode'},
+
+  /* Submarine — quieting */
+  'sucode:1003':{means:'No launch transient: can fire weapons without a tell-tale noise spike.',ingame:'Launches without giving away its position on sonar.',tag:'INFERRED',src:'EnumSubmarineCode'},
+  'sucode:1004':{means:'Shrouded propulsor: a ducted pump-jet instead of an open propeller.',ingame:'Much quieter, especially at speed.',tag:'INFERRED',src:'EnumSubmarineCode'},
+  'sucode:1005':{means:'Natural circulation: reactor cools without noisy coolant pumps at low power.',ingame:'Very quiet while loitering.',tag:'INFERRED',src:'EnumSubmarineCode'},
+
+  /* Ground — armor upgrades */
+  'gcode:3001':{means:'Reactive armour: explosive/inert bricks that defeat shaped-charge (HEAT) jets.',tag:'INFERRED',src:'EnumGroundUnitCode'},
+  'gcode:3003':{means:'Depleted-uranium armour (1st gen): dense DU armour package.',ingame:'Successive generations (2nd, 3rd) add protection.',tag:'INFERRED',src:'EnumGroundUnitCode'},
+  'gcode:3005':{means:'Depleted-uranium armour (3rd gen): the heaviest DU package modelled.',tag:'INFERRED',src:'EnumGroundUnitCode'},
 };
 
 let GUSE=null;
 function guse(){
   if (GUSE) return GUSE;
-  const u={cap:{},scode:{},stype:{},wcode:{},wtarget:{},wtype:{},guid:{}};
-  const bump=(o,k)=>{ o[k]=(o[k]||0)+1; };
+  const u={cap:{},scode:{},stype:{},wcode:{},wtarget:{},wtype:{},guid:{},
+           armor:{},ergo:{},auto:{},vis:{},acode:{},shcode:{},sucode:{},gcode:{},
+           commcap:{},commlat:{},commqual:{},commtype:{}};
+  const bump=(o,k)=>{ if(k==null||k===''||k===0) return; o[k]=(o[k]||0)+1; };
   for (const [,s] of D.sensor){ for (const c of s.caps) bump(u.cap,c); for (const c of s.codes) bump(u.scode,c); bump(u.stype,s.Type); }
-  for (const [,w] of D.weapon){ for (const c of w.codes) bump(u.wcode,c); for (const t of w.targets) bump(u.wtarget,t); bump(u.wtype,w.Type); for (const g of weaponGuidanceTags(w)) bump(u.guid,g); }
+  for (const [,w] of D.weapon){ for (const c of w.codes) bump(u.wcode,c); for (const t of w.targets) bump(u.wtarget,t); bump(u.wtype,w.Type); for (const g of weaponGuidanceTags(w)) bump(u.guid,g);
+    for (const cid of (w.comms||[])){ const c=D.comm.get(cid); if(c) bump(u.commtype,c.Type); } }
+  // platform attributes / feature codes / comms
+  const codeCat={Aircraft:'acode',Ship:'shcode',Submarine:'sucode',GroundUnit:'gcode'};
+  for (const k of KINDS){ const cc=codeCat[k.key]; const m=D.platforms[k.key]; if(!m) continue;
+    for (const [,p] of m){
+      if (cc) for (const c of (p.codes||[])) bump(u[cc],c);
+      bump(u.ergo,p.Ergonomics); bump(u.auto,p.AutonomousControlLevel);
+      if (k.key==='Aircraft'){ bump(u.vis,p.Visibility); [p.AircraftEngineArmor,p.AircraftFuselageArmor,p.AircraftCockpitArmor].forEach(a=>bump(u.armor,a)); }
+      else if (k.key==='Ship'){ [p.ArmorBelt,p.ArmorBulkheads,p.ArmorDeck,p.ArmorBridge,p.ArmorCIC,p.ArmorEngineering,p.ArmorRudder].forEach(a=>bump(u.armor,a)); }
+      else bump(u.armor,p.ArmorGeneral);
+      for (const cid of (p.comms||[])){ const c=D.comm.get(cid); if(c){ bump(u.commtype,c.Type); } }
+    }
+  }
   GUSE=u; return u;
 }
 const GCATS=[
@@ -2368,9 +2695,36 @@ const GCATS=[
   {key:'wtarget',label:'Weapon target classes', route:'weapon', param:'tg',  enum:'WeaponTarget'},
   {key:'stype',  label:'Sensor types', route:'sensor', param:'t', enum:'SensorType'},
   {key:'wtype',  label:'Weapon types', route:'weapon', param:'t', enum:'WeaponType'},
+  // ---- platform attributes ----
+  {key:'ergo',   label:'Ergonomics — crew-station OODA modifiers', enum:'Ergonomics', noUse:true,
+    note:'A single rating that speeds up or slows down a platform’s decision loop. Negative percentages are bonuses (reacts faster); positive are penalties. Targeting is the most affected axis.'},
+  {key:'auto',   label:'Autonomy — autonomous control level (unmanned platforms)', enum:'AircraftAutonomousControlLevel', noUse:true,
+    note:'How independently a drone/USV/UUV operates, and — the part that decides scenarios — what it does when it loses its control signal. A jammed low-autonomy drone becomes a liability; a high-autonomy one keeps prosecuting the mission. The ladder is shared across aircraft, ships and subs (signal-loss wording differs slightly by domain).'},
+  {key:'armor',  label:'Armor — protection class (RHA equivalent)', enum:'ArmorType', noUse:true,
+    note:'Protection expressed as rolled-homogeneous-armor equivalent — what calibre of gunfire or fragmentation the unit shrugs off. A weapon’s penetration is checked against this; below the threshold it does little. Reactive/DU upgrades appear separately as ground-unit feature codes.'},
+  {key:'vis',    label:'Cockpit visibility — front / side / rear (aircraft)', enum:'AircraftCockpitVisibility', noUse:true,
+    note:'How well the crew can see out (A best → C worst per direction). Better visibility helps a crew spot and keep tally in a within-visual-range fight; a "sunk cockpit" bomber or airliner is easy to sneak up on.'},
+  // ---- comms ----
+  {key:'commqual',label:'Comm quality — what a link can convey', enum:'CommQuality', noUse:true,
+    note:'Quality and latency together decide whether a network can support cooperative engagement — you need near-instant, AAW-or-better quality (CEC) to shoot on another unit’s track.'},
+  {key:'commlat', label:'Comm latency — how fast a link moves', enum:'CommLatency', noUse:true},
+  {key:'commcap', label:'Comm capability — link properties', enum:'CommCapability', noUse:true,
+    note:'Properties a comm link can carry: directionality, robustness (LPI/LPD, jam-resistant, secure), radio band (the very-low bands reach submerged subs), satellite BLOS, and underwater acoustic.'},
+  {key:'commtype',label:'Comm type — links, SATCOM & weapon datalinks', enum:'CommType',
+    note:'The catalog of links: tactical datalinks (Link 4/11/16/22, CEC), SATCOM families, and the large block of per-weapon guidance datalinks (AEGIS, Patriot, AIM-120, Aster, TacTom, …). The individual link name is shown on each platform and weapon card; this section is the family reference.'},
+  // ---- platform feature codes ----
+  {key:'acode',  label:'Aircraft feature codes', enum:'AircraftCode', noUse:true,
+    note:'Flight aids (fly-by-wire, terrain following, Auto-GCAS), night/targeting kit, air-to-air refueling, fuselage-structure class (sets g-limits), and signature suppression — RCSS (radar) and IRSS (infrared).'},
+  {key:'shcode', label:'Ship feature codes', enum:'ShipCode', noUse:true,
+    note:'Quieting (Prairie Masker, advanced quieting), seakeeping, construction-standard damage-point penalties (fragile hulls take less punishment), minesweeper hull types, and the underway-replenishment / refuel rig set (which side, how many stations, in vs out).'},
+  {key:'sucode', label:'Submarine feature codes', enum:'SubmarineCode', noUse:true,
+    note:'Mostly quieting and survivability: pump-jet propulsor, no-launch-transient, natural-circulation reactor, hull type and shock resistance, snorkel, Li-ion batteries.'},
+  {key:'gcode',  label:'Ground-unit feature codes', enum:'GroundUnitCode', noUse:true,
+    note:'Mobility (wheeled / half-track / tracked / amphibious), carriage (troop-carrying, open-topped), and armor upgrades (reactive, mesh skirting, depleted-uranium generations).'},
 ];
 const GCAT_BY_KEY = Object.fromEntries(GCATS.map(c=>[c.key,c]));
-function gEnumList(name){ const e=D.enums[name]||{}; return Object.keys(e).map(id=>({id:+id,label:e[id]})).filter(x=>x.label&&x.label!=='None'&&x.label!=='Not Applicable (N/A)').sort((a,b)=>a.id-b.id); }
+function gEnumList(name){ const e=D.enums[name]||{}; const num=Object.keys(e).every(k=>/^-?\d+$/.test(k));
+  return Object.keys(e).map(id=>({id:num?+id:id,label:e[id]})).filter(x=>x.label&&x.label!=='None'&&x.label!=='Not Applicable (N/A)'&&x.label!=='Undefined').sort((a,b)=>num?a.id-b.id:0); }
 function gTerms(cat){ return cat.ids? cat.ids() : gEnumList(cat.enum); }
 function glabel(cat,id){ if(cat==='guid') return GUIDANCE[id]||id; return E(ENUMOF[cat]||'',id); }
 function gentry(cat,id){ return GLOSSARY[cat+':'+id]||null; }
@@ -2385,7 +2739,9 @@ function gTermBlock(cat, t, q){
   const n=(guse()[cat.key]||{})[t.id]||0;
   // filter
   if (q){ const hay=(t.label+' '+(e?[e.means,e.requires,e.ingame,e.src].filter(Boolean).join(' '):'')).toLowerCase(); if(!hay.includes(q)) return ''; }
-  const usedLink = n? `<a class="small" href="#/${cat.route}?${cat.param}=${encodeURIComponent(t.id)}" data-tip="Show the ${n} item(s) with this">${fmt.n(n)} use${n===1?'':'s'} ›</a>` : '<span class="small" style="color:var(--text-3)">unused</span>';
+  let usedLink;
+  if (cat.noUse){ usedLink = n? `<span class="small" style="color:var(--text-3)">${fmt.n(n)} use${n===1?'':'s'}</span>` : `<span class="small" style="color:var(--text-3)">reference</span>`; }
+  else usedLink = n? `<a class="small" href="#/${cat.route}?${cat.param}=${encodeURIComponent(t.id)}" data-tip="Show the ${n} item(s) with this">${fmt.n(n)} use${n===1?'':'s'} ›</a>` : '<span class="small" style="color:var(--text-3)">unused</span>';
   let body;
   if (e){
     body = `<div style="font-size:13px;line-height:1.5;margin-top:3px">${esc(e.means)}${e.requires?` <b>Requires:</b> ${esc(e.requires)}`:''}${e.ingame?` <b>In game:</b> ${esc(e.ingame)}`:''}</div>
@@ -2419,8 +2775,9 @@ function viewGlossary(params){
     if (!blocks.length) continue;
     shown+=blocks.length;
     const authoredN=terms.filter(t=>gentry(cat.key,t.id)).length;
-    html+=`<h3 class="title" id="g-cat-${cat.key}" style="font-size:15px;margin:18px 0 6px;scroll-margin-top:12px">${esc(cat.label)}<span class="hint" style="font-weight:400;color:var(--text-3);font-size:12px"> · ${terms.length} terms${authoredN?`, ${authoredN} described`:''}</span></h3>
-      <div class="glist" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:8px">${blocks.join('')}</div>`;
+    html+=`<h3 class="title" id="g-cat-${cat.key}" style="font-size:15px;margin:18px 0 6px;scroll-margin-top:12px">${esc(cat.label)}<span class="hint" style="font-weight:400;color:var(--text-3);font-size:12px"> · ${terms.length} terms${authoredN?`, ${authoredN} described`:''}</span></h3>`;
+    if (cat.note && !q) html+=`<div class="small" style="color:var(--text-2);margin:0 0 8px;max-width:900px;line-height:1.5">${esc(cat.note)}</div>`;
+    html+=`<div class="glist" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:8px">${blocks.join('')}</div>`;
   }
   if (!shown) html+=`<div class="card"><span class="small">No features match “${esc(params.q||'')}”.</span></div>`;
   // highlight + scroll to a selected term (scheduled now; runs after innerHTML is set)
@@ -2619,6 +2976,447 @@ function viewChangelog(params){
   html += `</div>`;
   return html;
 }
+</script>
+<script>
+/* ============================================================
+   SCENARIO ORBAT  (Phase A)
+   Ingest a Lua-exported scenario snapshot (paste or file) and render a side-grouped
+   order of battle: Side → Group → category → unit, collapsed by default.
+   Runtime only — nothing is baked into the dashboard; persisted per-viewer in localStorage.
+   ============================================================ */
+
+const SCEN_KEY = 'cmo_scenario';
+const MAINT_LOADOUT = 4;  // dbid 4 = "(Maintenance [Unavailable])"
+
+const SCEN_TYPE_ROUTE = {Aircraft:'aircraft', Ship:'ship', Submarine:'sub', Facility:'facility', GroundUnit:'ground', Ground:'ground', Satellite:'satellite'};
+const SCEN_TYPE_KIND  = {Aircraft:'Aircraft', Ship:'Ship', Submarine:'Submarine', Facility:'Facility', GroundUnit:'GroundUnit', Ground:'GroundUnit', Satellite:'Satellite'};
+
+/* category buckets within a group; Installations (airfield components, bunkers) collapse by default */
+const SCEN_CATS = [
+  {k:'air',      label:'Aircraft',      open:true},
+  {k:'ad',       label:'Air defense',   open:true},
+  {k:'ship',     label:'Ships',         open:true},
+  {k:'sub',      label:'Submarines',    open:true},
+  {k:'ground',   label:'Ground units',  open:true},
+  {k:'facility', label:'Installations', open:false},
+];
+const SCEN_AD_RE = /\bSAM\b|\bSA-\d|\bAAA\b|air ?defen|Gauntlet|Gainful|Grumble|Gargoyle|Gadfly|Grizzly|Gaskin|Goa|Guideline|Flap Lid|Tombstone|Clam Shell|Straight Flush|Chop Rest|Square Tie|search radar|\bEW radar|MANPADS/i;
+function scenCat(u){
+  const t = u.type;
+  if (t==='Aircraft') return 'air';
+  if (t==='Submarine') return 'sub';
+  if (t==='Ship') return 'ship';
+  if (SCEN_AD_RE.test(u.name||'')) return 'ad';
+  if (t==='GroundUnit'||t==='Ground') return 'ground';
+  return 'facility';
+}
+
+/* the export's group can be a clean name, or (older export) the whole serialized object */
+function scenGroupName(g){
+  if (g == null || g === '') return null;
+  const s = String(g);
+  if (/^group\s*\{/.test(s)){ const m = /name\s*=\s*'([^']*)'/.exec(s); return m ? m[1] : null; }
+  return s;
+}
+
+function parseOrbat(text){
+  let raw;
+  try { raw = JSON.parse(text); }
+  catch(e){ throw new Error('Not valid JSON — paste everything between the <<<ORBAT_JSON>>> markers (and only that).'); }
+  const arr = Array.isArray(raw) ? raw : raw.units;
+  if (!Array.isArray(arr)) throw new Error('No "units" array found in the pasted data.');
+  const units = [];
+  for (const u of arr){
+    if (!u || u.type === 'Group' || u.dbid === 0) continue;   // skip group-container pseudo-units
+    units.push({
+      guid: u.guid, name: u.name || '(unnamed)', dbid: u.dbid,
+      type: u.type || '', side: u.side || 'Unknown',
+      group: scenGroupName(u.group), base: u.base || null,
+      status: u.status || null, mission: u.mission_state || null,
+      fuelstate: u.fuelstate || null, weaponstate: u.weaponstate || null,
+      loadout_dbid: u.loadout_dbid, loadout_name: u.loadout_name || null,
+      proficiency: u.proficiency || null, lat: u.lat, lon: u.lon,
+      inv: Array.isArray(u.inv) ? u.inv : [],   // [[weaponDBID, qty], ...] from mounts + magazines
+    });
+  }
+  if (!units.length) throw new Error('Parsed OK but found no units.');
+  return { meta: (raw.meta||{}), units };
+}
+
+function ingestScenario(text, source){
+  const scen = parseOrbat(text);
+  scen.source = source || 'paste'; scen.ingested = new Date().toISOString();
+  D.scenario = scen;
+  try { localStorage.setItem(SCEN_KEY, JSON.stringify(scen)); } catch(e){ /* quota/private mode: memory only */ }
+  location.hash = '#/scenario'; render();
+}
+function clearScenario(){ D.scenario = null; try { localStorage.removeItem(SCEN_KEY); } catch(e){} render(); }
+function loadScenarioFromStore(){ try { const s = localStorage.getItem(SCEN_KEY); if (s) D.scenario = JSON.parse(s); } catch(e){ D.scenario = null; } }
+function ingestFromBox(){
+  const t = (document.getElementById('scenpaste')||{}).value || '';
+  try { ingestScenario(t, 'paste'); }
+  catch(e){ const el=document.getElementById('scenerr'); if(el){ el.textContent = e.message; el.hidden=false; } }
+}
+function ingestFromFile(input){
+  const f = input.files && input.files[0]; if(!f) return;
+  const r = new FileReader();
+  r.onload = () => { try { ingestScenario(String(r.result), 'file'); }
+    catch(e){ const el=document.getElementById('scenerr'); if(el){ el.textContent=e.message; el.hidden=false; } } };
+  r.readAsText(f);
+}
+function copyScenLua(){
+  try { navigator.clipboard.writeText(SCEN_LUA); const b=document.getElementById('scenluacopy'); if(b){ const t=b.textContent; b.textContent='Copied ✓'; setTimeout(()=>b.textContent=t,1500);} }
+  catch(e){ /* clipboard blocked; the script is visible to select manually */ }
+}
+
+/* ---- build the tree: side → group → category → units ---- */
+const SCEN_IND = 'Independent / unassigned';
+function scenarioTree(scen){
+  const byGuid = new Map(scen.units.map(u=>[u.guid,u]));
+  const hostName = u => (u.base && byGuid.has(u.base)) ? byGuid.get(u.base).name : null;
+  // a unit's group from its own group name, else inherited from its host (base), else Independent
+  const bucketBase = (u, seen) => {
+    if (u.group) return u.group;
+    if (u.base && byGuid.has(u.base) && !(seen&&seen.has(u.base))){ const s=seen||new Set(); s.add(u.guid); return bucketBase(byGuid.get(u.base), s); }
+    return SCEN_IND;
+  };
+  // Pass 1: base/group bucket for every unit; index each real group's LOCATION so we can rescue
+  // co-located orphans (e.g. aircraft parked at a multi-facility airbase whose base doesn't resolve).
+  const locKey = u => (u.lat!=null && u.lon!=null) ? (Math.round(u.lat*100)/100)+','+(Math.round(u.lon*100)/100) : null;
+  const locToGroup = new Map();   // side|locKey -> group name (real groups only)
+  for (const u of scen.units){
+    u._host = hostName(u);
+    u._grp = bucketBase(u);
+    if (u._grp !== SCEN_IND){ const k=locKey(u); if (k){ const kk=u.side+'|'+k; if(!locToGroup.has(kk)) locToGroup.set(kk, u._grp); } }
+  }
+  // Pass 2: rescue Independent units that sit at the same spot as a real group (same side)
+  for (const u of scen.units){
+    if (u._grp === SCEN_IND){ const k=locKey(u); if (k){ const g=locToGroup.get(u.side+'|'+k); if (g) u._grp=g; } }
+  }
+  const muteRe = /civilian|nature|neutral|downed pilot/i;
+  const sides = new Map();
+  for (const u of scen.units){
+    let side = sides.get(u.side);
+    if (!side){ side = {name:u.side, muted:muteRe.test(u.side), total:0, airborne:[], groups:new Map()}; sides.set(u.side, side); }
+    side.total++;
+    if (scenStatusKind(u)==='airborne'){ side.airborne.push(u); continue; }   // airborne pulled into the side-level Airborne section
+    let g = side.groups.get(u._grp); if(!g){ g={name:u._grp, total:0, cats:new Map()}; side.groups.set(u._grp,g); }
+    g.total++;
+    const c = scenCat(u);
+    let arr = g.cats.get(c); if(!arr){ arr=[]; g.cats.set(c,arr); } arr.push(u);
+  }
+  return { sides };
+}
+
+/* ---- render helpers ---- */
+function scenStatusKind(u){
+  if (+u.loadout_dbid === MAINT_LOADOUT) return 'maint';
+  const c = (u.status||'').toLowerCase();
+  if (c.includes('airborne')||c.includes('taking off')) return 'airborne';
+  if (c.includes('underway')) return 'underway';
+  if (c.includes('destroy')||c.includes('sunk')||c.includes('dead')) return 'dead';
+  if (c.includes('parked')||c.includes('ready')||c.includes('docked')||c.includes('mooring')) return 'ready';
+  return 'other';
+}
+/* resolve a unit's TYPE name from the catalog by dbid (falls back to a callsign-stripped label) */
+function scenTypeName(u){
+  const kind = SCEN_TYPE_KIND[u.type];
+  const rec = kind && D.platforms[kind] && D.platforms[kind].get(+u.dbid);
+  if (rec && rec.Name) return rec.Name;
+  return (u.name||'').replace(/\s*#\s*\d+\s*$/,'').trim() || ('type #'+u.dbid);
+}
+function scenTypeKnown(u){ const k=SCEN_TYPE_KIND[u.type]; return k && D.platforms[k] && D.platforms[k].has(+u.dbid); }
+/* readiness roll-up chips for a set of units */
+function scenRollChips(units){
+  const c={airborne:0,underway:0,ready:0,maint:0,dead:0,other:0};
+  for (const u of units) c[scenStatusKind(u)]++;
+  const chip=(n,cls,lbl)=> n?`<span class="scchip ${cls}">${n} ${lbl}</span>`:'';
+  return chip(c.airborne,'airborne','airborne')+chip(c.underway,'underway','underway')
+       + chip(c.ready,'ready','ready')+chip(c.maint,'maint','maint')+chip(c.dead,'dead','lost');
+       /* 'other' (null-status installations) intentionally not charted — not informative */
+}
+/* aggregate a unit list into type groups (by dbid), largest first */
+function scenAggByType(units){
+  const m=new Map();
+  for (const u of units){ const key = u.dbid!=null?('d'+u.dbid):('n'+scenTypeName(u));
+    let g=m.get(key); if(!g){ g={dbid:u.dbid, type:u.type, name:scenTypeName(u), units:[]}; m.set(key,g); } g.units.push(u); }
+  return [...m.values()].sort((a,b)=> b.units.length-a.units.length || a.name.localeCompare(b.name));
+}
+function scenLoadoutLabel(dbid, name){
+  if (dbid==null) return '<span class="scload">—</span>';
+  if (+dbid===MAINT_LOADOUT) return '<span class="scmaint">⚙ maintenance</span>';
+  const txt=esc(name||('loadout '+dbid)), known=D.loadout&&D.loadout.has(+dbid);
+  return known ? `<a class="scload" href="#/loadout/${dbid}">${txt}</a>` : `<span class="scload">${txt}</span>`;
+}
+function scenHostTag(units){
+  const hosts=[...new Set(units.map(u=>u._host).filter(Boolean))];
+  if (!hosts.length) return '';
+  return hosts.length===1 ? `<span class="schosttag">on ${esc(hosts[0])}</span>` : `<span class="schosttag">${hosts.length} bases/hosts</span>`;
+}
+function scenTailList(units, showFlight){
+  const names=units.map(u=>{
+    let n=esc(u.name);
+    if (showFlight && u._grp && !/^Independent/.test(u._grp)) n+=` <span class="scflighttag">${esc(u._grp)}</span>`;
+    return n;
+  });
+  const cap=40, extra=names.length-cap;
+  return names.slice(0,cap).join(', ') + (extra>0?`, <span class="scmore">+${extra} more</span>`:'');
+}
+/* one row: a single unique unit (count 1) shown by its own name */
+function scenSingleRow(u){
+  const route=SCEN_TYPE_ROUTE[u.type];
+  const nameHtml = scenTypeKnown(u) ? `<a href="#/${route}/${u.dbid}">${esc(u.name)}</a>` : `<span>${esc(u.name)}</span>`;
+  const cls = scenTypeName(u)!==u.name ? `<span class="scclass">${esc(scenTypeName(u))}</span>` : '';
+  const host = u._host ? `<span class="schosttag">on ${esc(u._host)}</span>` : '';
+  const detail=[u.status?esc(u.status):null, (u.mission&&u.mission!=='Unassigned')?'mission: '+esc(u.mission):null,
+    (u.proficiency&&u.proficiency!=='Regular')?esc(u.proficiency):null].filter(Boolean).join(' · ');
+  return `<div class="scrow"><span class="scmain"><span class="scdot ${scenStatusKind(u)}"></span>${nameHtml} ${cls}${host}</span>`
+    + `<span class="scright">${scenLoadoutLabel(u.loadout_dbid,u.loadout_name)}</span>`
+    + (detail?`<span class="scdetail">${detail}</span>`:'')+`</div>`;
+}
+/* aggregated type block: "N× TypeName" → expand → loadout breakdown → tails */
+function scenTypeBlock(g, showFlight){
+  const route=SCEN_TYPE_ROUTE[g.type];
+  const nameHtml = scenTypeKnown(g.units[0]) ? `<a href="#/${route}/${g.dbid}">${esc(g.name)}</a>` : `<span>${esc(g.name)}</span>`;
+  // loadout breakdown
+  const lo=new Map();
+  for (const u of g.units){ const k=u.loadout_dbid==null?'none':('L'+u.loadout_dbid);
+    let a=lo.get(k); if(!a){ a={dbid:u.loadout_dbid, name:u.loadout_name, units:[]}; lo.set(k,a);} a.units.push(u); }
+  const loLines=[...lo.values()].sort((a,b)=>b.units.length-a.units.length).map(l=>
+    `<div class="sclo"><span class="sclon">${l.units.length}×</span> ${scenLoadoutLabel(l.dbid,l.name)}`
+    + `<div class="sctails">${scenTailList(l.units, showFlight)}</div></div>`).join('');
+  const host = showFlight ? scenHostTag(g.units).replace('on ','from ') : scenHostTag(g.units);
+  return `<details class="sctype"><summary>`
+    + `<span class="sctcount">${g.units.length}×</span> <b>${nameHtml}</b>`
+    + `<span class="scmeta">${esc(g.type)}${g.dbid?` · #${g.dbid}`:''}</span>${host}`
+    + `<span class="scrollup">${scenRollChips(g.units)}</span></summary>${loLines}</details>`;
+}
+/* render a category's units: aggregate types (count>1) as blocks, uniques as single rows */
+function scenCatBody(units, showFlight){
+  const types=scenAggByType(units);
+  return types.map(g=> g.units.length>1 ? scenTypeBlock(g, showFlight) : scenSingleRow(g.units[0])).join('');
+}
+/* Ordnance section: aggregate a group's magazine/mount inventory by weapon type,
+   with a per-unit breakdown of how many each hull carries (user spec). */
+function scenGroupUnits(g){ const a=[]; for (const arr of g.cats.values()) a.push(...arr); return a; }
+function scenOrdnance(g){
+  const m = new Map();   // weaponDBID -> {dbid, total, byUnit:[{name,qty}]}
+  for (const u of scenGroupUnits(g)){
+    for (const pair of (u.inv||[])){
+      const dbid = pair[0], qty = +pair[1]||0; if (dbid==null || !qty) continue;
+      let e = m.get(dbid); if(!e){ e={dbid, total:0, byUnit:[]}; m.set(dbid,e); }
+      e.total += qty; e.byUnit.push({name:u.name, qty});
+    }
+  }
+  if (!m.size) return '';
+  const inv = [...m.values()].sort((a,b)=> b.total-a.total);
+  const rows = inv.map(e=>{
+    const w = D.weapon.get(+e.dbid);
+    const nm = w ? w.Name : ('weapon #'+e.dbid);
+    const link = w ? `<a href="#/weapon/${e.dbid}">${esc(nm)}</a>` : `<span>${esc(nm)}</span>`;
+    e.byUnit.sort((a,b)=> b.qty-a.qty);
+    const per = e.byUnit.map(x=>`<span class="scinvunit">${esc(x.name)} <b>${fmt.n(x.qty)}</b></span>`).join('');
+    return `<details class="sctype"><summary><span class="sctcount">${fmt.n(e.total)}×</span> <b>${link}</b>`
+      + `<span class="scmeta">${e.byUnit.length} unit${e.byUnit.length===1?'':'s'}</span></summary><div class="scinvper">${per}</div></details>`;
+  }).join('');
+  return `<details class="sccat"><summary><span class="sccatname">Ordnance / inventory</span><span class="sccatn">${inv.length}</span></summary><div class="sccatbody">${rows}</div></details>`;
+}
+/* per-side force summary: type totals by category (each chip linked to its catalog card) + readiness */
+function scenSideSummary(side){
+  const all=[]; for (const g of side.groups.values()) for (const arr of g.cats.values()) all.push(...arr); all.push(...(side.airborne||[]));
+  const byCat=new Map();
+  for (const u of all){ const c=scenCat(u); let a=byCat.get(c); if(!a){a=[];byCat.set(c,a);} a.push(u); }
+  let rows='';
+  for (const cat of SCEN_CATS){ const arr=byCat.get(cat.k); if(!arr||!arr.length) continue;
+    const chips=scenAggByType(arr).map(t=>{
+      const route=SCEN_TYPE_ROUTE[t.type], label=`${t.units.length}× ${esc(t.name)}`;
+      return scenTypeKnown(t.units[0]) ? `<a class="scsumchip" href="#/${route}/${t.dbid}">${label}</a>` : `<span class="scsumchip">${label}</span>`;
+    }).join('');
+    rows+=`<div class="scsumrow"><span class="scsumcat">${esc(cat.label)}</span><span class="scsumchips">${chips}</span></div>`;
+  }
+  return `<details class="scsummary"><summary><span class="scsumtitle">Force summary</span><span class="scrollup">${scenRollChips(all)}</span></summary>${rows}</details>`;
+}
+
+function viewScenario(params){
+  const scen = D.scenario;
+  if (!scen) return scenIngestPanel();
+  const q = (params.q||'').trim().toLowerCase();
+  const tree = scenarioTree(scen);
+  const matchU = u => !q || (u.name+' '+u.type+' '+scenTypeName(u)+' '+(u.loadout_name||'')+' '+(u._host||'')).toLowerCase().includes(q);
+  const title = esc(scen.meta.scenario || 'Ingested scenario');
+  const when = scen.ingested ? new Date(scen.ingested).toLocaleString() : '';
+
+  let html = `<div class="scen">`;
+  html += `<div class="schead"><h2>Scenario ORBAT</h2>`
+    + `<div class="scsub">${title} — ${fmt.n(scen.units.length)} units${when?` · snapshot ingested ${esc(when)}`:''}</div>`
+    + `<div class="scnote">Snapshot as of export. Units are grouped by side → task group → type; a row like “12× F/A-18E” expands to its loadouts and tail numbers. Click a type for its catalog page or a loadout for that exact fit.</div>`
+    + `<div class="scctl"><input placeholder="Filter by type / name / loadout…" value="${esc(params.q||'')}" oninput="setParam('q',this.value)">`
+    + `<button onclick="clearScenario()">Clear</button>`
+    + `<button onclick="location.hash='#/scenario/ingest'">Re-ingest</button></div></div>`;
+
+  const sides = [...tree.sides.values()].sort((a,b)=> (a.muted-b.muted) || (b.total-a.total));
+  for (const side of sides){
+    const groups = [...side.groups.values()].map(g=>{
+      const cats = SCEN_CATS.map(cat=>({cat, arr:(g.cats.get(cat.k)||[]).filter(matchU)})).filter(x=>x.arr.length);
+      return {g, cats, vis:cats.reduce((n,x)=>n+x.arr.length,0)};
+    }).filter(x=>x.vis).sort((a,b)=>{
+      const ai=a.g.name.startsWith('Independent'), bi=b.g.name.startsWith('Independent');
+      return (ai-bi) || a.g.name.localeCompare(b.g.name);
+    });
+    const airborne = (side.airborne||[]).filter(matchU);
+    const shown = groups.reduce((n,x)=>n+x.vis,0) + airborne.length;
+    if (q && !shown) continue;
+    html += `<details class="scside${side.muted?' muted':''}"${q?' open':''}><summary>`
+      + `<span class="scsidename">${esc(side.name)}</span><span class="scsiden">${fmt.n(side.total)} units</span></summary>`;
+    if (!q) html += scenSideSummary(side);
+    if (airborne.length){
+      html += `<details class="scgrp scairborne" open><summary><span class="scgrpname">✈ Airborne</span><span class="scgrpn">${airborne.length}</span></summary>`
+        + `<div class="scgrpbody">` + scenCatBody(airborne, true) + `</div></details>`;
+    }
+    for (const {g, cats, vis} of groups){
+      html += `<details class="scgrp" open><summary><span class="scgrpname">${esc(g.name)}</span><span class="scgrpn">${vis}</span></summary><div class="scgrpbody">`;
+      for (const {cat, arr} of cats){
+        const open = (cat.open || q) ? ' open' : '';
+        html += `<details class="sccat"${open}><summary><span class="sccatname">${cat.label}</span><span class="sccatn">${arr.length}</span></summary>`
+          + `<div class="sccatbody">` + scenCatBody(arr) + `</div></details>`;
+      }
+      if (!q) html += scenOrdnance(g);
+      html += `</div></details>`;
+    }
+    html += `</details>`;
+  }
+  html += `</div>`;
+  return html;
+}
+
+function scenIngestPanel(){
+  const lua = (typeof SCEN_LUA==='string') ? SCEN_LUA : '';
+  return `<div class="scen"><div class="schead"><h2>Scenario ORBAT</h2>`
+    + `<div class="scnote">Load a scenario snapshot to see its order of battle here — every unit, grouped by side and task group, linked to its catalog page.</div></div>`
+    + `<div class="card"><h3>Ingest a scenario</h3>`
+    + `<ol class="scsteps"><li>In CMO, open <b>Editor ▸ Lua Script Console</b>, paste the export script below (use <b>Copy script</b>), and run it.</li>`
+    + `<li>Copy everything the console prints between <code>&lt;&lt;&lt;ORBAT_JSON&gt;&gt;&gt;</code> and <code>&lt;&lt;&lt;END_ORBAT_JSON&gt;&gt;&gt;</code>.</li>`
+    + `<li>Paste it below and press <b>Load</b> — or choose a saved <code>.json</code> file.</li></ol>`
+    + `<details class="scluawrap"><summary>CMO export script (Lua) <button id="scenluacopy" class="scluacopy" onclick="event.preventDefault();copyScenLua()">Copy script</button></summary>`
+    + `<pre class="scluapre">${esc(lua)}</pre></details>`
+    + `<textarea id="scenpaste" class="scenta" placeholder="Paste the ORBAT JSON here…"></textarea>`
+    + `<div class="scctl"><button class="cmpbtn" onclick="ingestFromBox()">Load</button>`
+    + `<label class="scfile">or load a file<input type="file" accept=".json,.txt" onchange="ingestFromFile(this)" hidden></label></div>`
+    + `<div id="scenerr" class="scerr" hidden></div></div></div>`;
+}
+
+/* the export script, shown/copyable on the ingest page (String.raw keeps Lua backslashes intact) */
+const SCEN_LUA = String.raw`--[[ CMO Scenario ORBAT export — run in Editor > Lua Script Console with a scenario open.
+     Auto-enumerates all sides, walks every unit, prints ORBAT JSON between markers.
+     io.* is sandboxed in CMO, so copy everything between <<<ORBAT_JSON>>> and <<<END_ORBAT_JSON>>>
+     and paste it into the dashboard's Ingest box. Every read is pcall-guarded. --]]
+
+local function raw(fn) local ok,v = pcall(fn); if ok then return v end; return nil end
+local function S(fn) local v=raw(fn); if v==nil then return "nil" end local ok,s=pcall(function() return tostring(v) end); return ok and s or "?" end
+local function jS(fn)
+  local v = raw(fn); if v==nil then return "null" end
+  local ok,s = pcall(function() return tostring(v) end); if not ok then return "null" end
+  s = s:gsub('\\','\\\\'):gsub('"','\\"'):gsub('[\n\r\t]',' '); return '"'..s..'"'
+end
+local function jN(fn)
+  local v = raw(fn); if type(v)=="number" then return tostring(v) end; return "null"
+end
+
+-- Inventory: weapons in a unit's mounts + magazines, summed by weapon dbid.
+-- Field names vary by build, so we try several and the probe below dumps the real structure.
+local function collectWpns(container, acc)
+  -- Documented CMO wrappers: mounts hold .mount_weapons, magazines hold .mag_weapons,
+  -- each a table of WeaponLoaded { wpn_dbid, wpn_current, wpn_maxcap, ... }.
+  for _,key in ipairs({'mount_weapons','mag_weapons'}) do
+    local l = raw(function() return container[key] end)
+    if type(l)=='table' or type(l)=='userdata' then
+      pcall(function() for _,w in pairs(l) do
+        local dbid = raw(function() return w.wpn_dbid end)
+        local cur  = raw(function() return w.wpn_current end)
+        if type(dbid)=='number' and type(cur)=='number' and cur>0 then acc[dbid] = (acc[dbid] or 0) + cur end
+      end end)
+    end
+  end
+end
+local function invOf(u)
+  local acc = {}
+  pcall(function() for _,m in pairs(u.mounts) do collectWpns(m, acc) end end)
+  pcall(function() for _,g in pairs(u.magazines) do collectWpns(g, acc) end end)
+  local p = {}
+  for dbid,qty in pairs(acc) do p[#p+1] = '['..tostring(dbid)..','..tostring(qty)..']' end
+  return '['..table.concat(p, ',')..']'
+end
+-- one-time deep structure dump so we can confirm/repair the inventory field names
+local invProbed = false
+local function invProbe(u)
+  if invProbed then return end
+  local nm = raw(function() return #u.mounts end) or 0
+  local ng = raw(function() return #u.magazines end) or 0
+  if nm==0 and ng==0 then return end
+  invProbed = true
+  print("---- INVENTORY STRUCTURE PROBE: "..S(function() return u.name end).."  (mounts="..nm..", mags="..ng..") ----")
+  local function dump(obj, label)
+    if obj==nil then return end
+    print(label.." keys:")
+    pcall(function() for k,v in pairs(obj) do
+      print("  "..tostring(k).." = "..tostring(v))
+      if type(v)=='table' or type(v)=='userdata' then
+        local first = raw(function() return v[1] end)
+        if first~=nil then pcall(function() for k2,v2 in pairs(first) do print("      ["..tostring(k).."][1] "..tostring(k2).." = "..tostring(v2)) end end) end
+      end
+    end end)
+  end
+  if nm>0 then dump(raw(function() return u.mounts[1] end), "mount[1]") end
+  if ng>0 then dump(raw(function() return u.magazines[1] end), "magazine[1]") end
+  print("---- END INVENTORY PROBE ----")
+end
+
+local parts, first = {}, true
+local function emit(s) parts[#parts+1] = s end
+emit('{"meta":{"exported":'..jS(function() return os.date("!%Y-%m-%dT%H:%M:%SZ") end)..'},"units":[')
+
+local total = 0
+for _, sObj in pairs(raw(function() return VP_GetSides() end) or {}) do
+  local sname = raw(function() return sObj.name end) or tostring(sObj)
+  local n = 0
+  local side = raw(function() return VP_GetSide({ side = sname }) end)
+  local units = side and raw(function() return side.units end)
+  if units then
+    for _, stub in ipairs(units) do
+      local u = raw(function() return ScenEdit_GetUnit({ guid = stub.guid }) end)
+      if u then
+        invProbe(u)
+        if not first then emit(",") end; first = false
+        emit('{'
+          ..'"guid":'..jS(function() return u.guid end)
+          ..',"name":'..jS(function() return u.name end)
+          ..',"dbid":'..jN(function() return u.dbid end)
+          ..',"type":'..jS(function() return u.type end)
+          ..',"side":'..jS(function() return sname end)
+          ..',"group":'..jS(function() return u.group.name end)
+          ..',"base":'..jS(function() return u.base.guid end)
+          ..',"status":'..jS(function() return u.condition end)
+          ..',"mission_state":'..jS(function() return u.unitstate end)
+          ..',"fuelstate":'..jS(function() return u.fuelstate end)
+          ..',"weaponstate":'..jS(function() return u.weaponstate end)
+          ..',"loadout_dbid":'..jN(function() return u.loadout.dbid end)
+          ..',"loadout_name":'..jS(function() return u.loadout.name end)
+          ..',"proficiency":'..jS(function() return u.proficiency end)
+          ..',"lat":'..jN(function() return u.latitude end)
+          ..',"lon":'..jN(function() return u.longitude end)
+          ..',"inv":'..invOf(u)
+          ..'}')
+        n = n + 1; total = total + 1
+      end
+    end
+  end
+  print(string.format("side %-16s : %d units", sname, n))
+end
+emit(']}')
+print("TOTAL units exported: "..total)
+print("<<<ORBAT_JSON>>>")
+print(table.concat(parts))
+print("<<<END_ORBAT_JSON>>>")`;
 </script>
 <script>
 /* ============================================================

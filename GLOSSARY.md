@@ -1,6 +1,6 @@
 # CMO Database Dashboard — Feature & Guidance Glossary
 
-This is the complete reference behind the dashboard's **Feature glossary** page — every sensor capability, feature code, weapon-guidance method, target class and sensor/weapon type explained (251 entries). It is also browsable inside the dashboard itself (**Reference → Feature glossary**), where you can hover any chip for the short version or click it for the full entry.
+This is the complete reference behind the dashboard's **Feature glossary** page — every sensor capability, feature code, weapon-guidance method, target class, sensor/weapon type, plus platform attributes (armor, ergonomics, autonomy, cockpit visibility), the communications model, and all 130 aircraft/ship/submarine/ground-unit feature codes — explained (557 entries). It is also browsable inside the dashboard itself (**Reference → Feature glossary**), where you can hover any chip for the short version or click it for the full entry.
 
 Explanations are paraphrased from the *Command: Modern Operations* manual where it covers a term (page-cited); they are **not** verbatim — this is our own commentary, not game data. Each entry is epistemically tagged: **OBSERVED** = stated in the manual or directly observed; **INFERRED** = standard real-world/behavioural meaning, not spelled out in the manual; **SPECULATIVE** = uncertain how the engine models it.
 
@@ -291,4 +291,395 @@ Explanations are paraphrased from the *Command: Modern Operations* manual where 
 | **Paratroops** | — | troops delivered by parachute. | OBSERVED | Weapon type |
 
 
-_251 terms._
+## Platform attributes — ergonomics
+
+*A single rating that speeds up or slows a platform’s decision (OODA) loop. Negative percentages are bonuses; positive are penalties.*
+
+| Term | In game | Tag | Source |
+|---|---|---|---|
+| **Awful** | Slows the OODA loop — detection +20%, targeting +30%, evasive +15%. | OBSERVED | EnumErgonomics |
+| **Poor** | OODA penalties — detection +10%, targeting +15%, evasive +5%. | OBSERVED | EnumErgonomics |
+| **Average** | Baseline — no OODA modifier. | OBSERVED | EnumErgonomics |
+| **Good** | OODA bonuses — detection −10%, targeting −15%, evasive −5%. | OBSERVED | EnumErgonomics |
+| **Excellent** | Largest OODA bonus — detection −20%, targeting −30%, evasive −15%. | OBSERVED | EnumErgonomics |
+
+## Platform attributes — autonomy (autonomous control level)
+
+*How independently an unmanned platform operates, and what it does when it loses its control signal. The same ladder is used for aircraft, ships and subs (signal-loss wording differs slightly by domain).*
+
+| Term | In game | Tag | Source |
+|---|---|---|---|
+| **Remotely Piloted** | On signal loss: aircraft fly on as a "ghost plane" until they crash; ships stop; subs loiter then surface. | OBSERVED | Enum…AutonomousControlLevel |
+| **Self-Recovering** | On signal loss: briefly loiter to await signal, then RTB. | OBSERVED | Enum…AutonomousControlLevel |
+| **Changeable Mission** | On signal loss: complete last order(s), then RTB. | OBSERVED | Enum…AutonomousControlLevel |
+| **Fault/Event Adaptive** | On signal loss: complete last order(s) if able, then RTB. | OBSERVED | Enum…AutonomousControlLevel |
+| **Multi-Vehicle Coordination** | On signal loss: complete last order(s) if able, then follow the leader. | OBSERVED | Enum…AutonomousControlLevel |
+| **Battlespace Cognizant** | On signal loss: continue the mission (e.g. sea control, AAW patrol). | OBSERVED | Enum…AutonomousControlLevel |
+| **Fully Autonomous** | On signal loss: engage hostile targets within the last received ROE. | OBSERVED | Enum…AutonomousControlLevel |
+
+## Platform attributes — armor
+
+*Protection expressed as rolled-homogeneous-armor equivalent. A weapon’s penetration is checked against this.*
+
+| Term | In game | Tag | Source |
+|---|---|---|---|
+| **Light (Handgun Resistant)** |  | DB | EnumArmorType |
+| **Light (Assault Rifle Resistant)** |  | DB | EnumArmorType |
+| **Light (HMG Resistant)** |  | DB | EnumArmorType |
+| **Light (20-25mm RHA)** |  | DB | EnumArmorType |
+| **Light (26-30mm RHA)** |  | DB | EnumArmorType |
+| **Light (31-35mm RHA)** |  | DB | EnumArmorType |
+| **Light (36-40mm RHA)** |  | DB | EnumArmorType |
+| **Light (41-90mm RHA)** |  | DB | EnumArmorType |
+| **Medium (91-140mm RHA)** |  | DB | EnumArmorType |
+| **Heavy (141-200mm RHA)** |  | DB | EnumArmorType |
+| **Special (201-500mm RHA)** |  | DB | EnumArmorType |
+
+## Platform attributes — cockpit visibility (aircraft)
+
+*How well the crew can see out (front / side / rear, A best → C worst). Feeds visual detection and within-visual-range performance.*
+
+| Term | In game | Tag | Source |
+|---|---|---|---|
+| **Observation Bubbles, 360-deg - Excellent visibility** |  | DB | EnumAircraftCockpitVisibility |
+| **Bubble Canopy, 4th Gen Fighters (F-14, F-15, F-16) - Excellent visibility** |  | DB | EnumAircraftCockpitVisibility |
+| **Forward Razorback Canopy (A-4, Su-25, Jaguar, helicopters) - Good front downward visibility** |  | DB | EnumAircraftCockpitVisibility |
+| **Glass Front, Fair Side Vision (helicopters)** |  | DB | EnumAircraftCockpitVisibility |
+| **Glass Front, Limited Side Vision (helicopters)** |  | DB | EnumAircraftCockpitVisibility |
+| **Aft Razorback Canopy - Limited front downward visibility (F-4, MiG-21, MiG-23, WW2 fighters)** |  | DB | EnumAircraftCockpitVisibility |
+| **Bombers /w Manned Gun Turrets** |  | DB | EnumAircraftCockpitVisibility |
+| **Bombers, Attack A/C - Sunk cockpit** |  | DB | EnumAircraftCockpitVisibility |
+| **Airliner - Very Limited Visibility** |  | DB | EnumAircraftCockpitVisibility |
+| **Unmanned** |  | DB | EnumAircraftCockpitVisibility |
+
+## Communications — quality
+
+*What a link can convey. Quality + latency together decide whether a network can support cooperative engagement (e.g. CEC).*
+
+| Term | In game | Tag | Source |
+|---|---|---|---|
+| **GLoc** | Rough position — cue a search, not a shot. e.g. radio. | OBSERVED | EnumCommQuality |
+| **TacP** | Shareable track picture; OTH surface targeting. e.g. Link 11. | OBSERVED | EnumCommQuality |
+| **AAW** | Engage air targets on another unit’s track. e.g. CEC. | OBSERVED | EnumCommQuality |
+| **BMD** | Ballistic-missile-defence-grade remote track. e.g. EOR. | OBSERVED | EnumCommQuality |
+| **FMV** | Live video / IRST coordination. | OBSERVED | EnumCommQuality |
+
+## Communications — latency
+
+*How fast a link moves data.*
+
+| Term | In game | Tag | Source |
+|---|---|---|---|
+| **Slow** | e.g. ELF to submerged subs. | OBSERVED | EnumCommLatency |
+| **Norm** | e.g. radio. | OBSERVED | EnumCommLatency |
+| **Fast** | e.g. Link 11. | OBSERVED | EnumCommLatency |
+| **Instnt** | e.g. Link 16, CEC. | OBSERVED | EnumCommLatency |
+| **BMD** | e.g. Engage-on-Remote (BMD). | OBSERVED | EnumCommLatency |
+
+## Communications — capability
+
+*Properties a comm link can carry — directionality, robustness (LPI/LPD, jam-resistant, secure), radio band, satellite BLOS, and underwater acoustic.*
+
+| Term | In game | Tag | Source |
+|---|---|---|---|
+| **Send Only** |  | DB | EnumCommCapability |
+| **Receive Only** |  | DB | EnumCommCapability |
+| **LOS Limited** |  | DB | EnumCommCapability |
+| **Degrades With Range** |  | DB | EnumCommCapability |
+| **Secure** |  | DB | EnumCommCapability |
+| **Broadcast** |  | DB | EnumCommCapability |
+| **Low Probability of Intercept/Detection (LPI/LPD)** |  | DB | EnumCommCapability |
+| **Phased Array Antenna** |  | DB | EnumCommCapability |
+| **Jam Resistant** |  | DB | EnumCommCapability |
+| **ELF Radio (3-30 Hz)** |  | DB | EnumCommCapability |
+| **SLF Radio (30-300 Hz)** |  | DB | EnumCommCapability |
+| **ULF Radio (300-3000 Hz)** |  | DB | EnumCommCapability |
+| **VLF Radio (3-30 KHz)** |  | DB | EnumCommCapability |
+| **LF Radio (30-300 KHz)** |  | DB | EnumCommCapability |
+| **MF Radio (300-3000 KHz)** |  | DB | EnumCommCapability |
+| **HF Radio (3-30 MHz)** |  | DB | EnumCommCapability |
+| **VHF Radio (30-300 MHz)** |  | DB | EnumCommCapability |
+| **UHF Radio (300-3000 MHz)** |  | DB | EnumCommCapability |
+| **SHF Radio (3-30 GHz)** |  | DB | EnumCommCapability |
+| **EHF Radio (30-300 GHz)** |  | DB | EnumCommCapability |
+| **BLOS-LEO** |  | DB | EnumCommCapability |
+| **BLOS-MEO** |  | DB | EnumCommCapability |
+| **Acoustic (0-1 kHz)** |  | DB | EnumCommCapability |
+| **Acoustic (1-10 kHz)** |  | DB | EnumCommCapability |
+| **Acoustic (10-100 kHz)** |  | DB | EnumCommCapability |
+| **Daisy Chain Capability** |  | DB | EnumCommCapability |
+
+## Communications — type (links, SATCOM & weapon datalinks)
+
+*The catalog of links: tactical datalinks (Link 4/11/16/22, CEC), SATCOM families, and the block of per-weapon guidance datalinks. The individual link name is shown on each platform and weapon card.*
+
+| Term | In game | Tag | Source |
+|---|---|---|---|
+| **Commercial SATCOM** |  | DB | EnumCommType |
+| **FLTSATCOM** |  | DB | EnumCommType |
+| **MILSTAR SATCOM** |  | DB | EnumCommType |
+| **AFSATCOM** |  | DB | EnumCommType |
+| **Skynet SATCOM** |  | DB | EnumCommType |
+| **Big Ball SATCOM** |  | DB | EnumCommType |
+| **Satellite Downlink** |  | DB | EnumCommType |
+| **Punch Bowl SATCOM** |  | DB | EnumCommType |
+| **SATCOM** |  | DB | EnumCommType |
+| **Visual Comm** |  | DB | EnumCommType |
+| **Laser Comm** |  | DB | EnumCommType |
+| **Land Line** |  | DB | EnumCommType |
+| **Link 4** |  | DB | EnumCommType |
+| **Link 10** |  | DB | EnumCommType |
+| **Link 11** |  | DB | EnumCommType |
+| **Link 16** |  | DB | EnumCommType |
+| **Link 14** |  | DB | EnumCommType |
+| **Link 11B** |  | DB | EnumCommType |
+| **Link 22** |  | DB | EnumCommType |
+| **CEC** |  | DB | EnumCommType |
+| **Link Y** |  | DB | EnumCommType |
+| **Link T** |  | DB | EnumCommType |
+| **LAMPS Datalink** |  | DB | EnumCommType |
+| **A346Z Datalink** |  | DB | EnumCommType |
+| **ELF Link (Submarine)** |  | DB | EnumCommType |
+| **Radio** |  | DB | EnumCommType |
+| **Two-Way Wire Guidance** |  | DB | EnumCommType |
+| **NATO Sonobuoy Link** |  | DB | EnumCommType |
+| **Generic Sonobuoy Link** |  | DB | EnumCommType |
+| **AEGIS Weapon Link** |  | DB | EnumCommType |
+| **Generic Weapon Link** |  | DB | EnumCommType |
+| **NTU Weapon Link** |  | DB | EnumCommType |
+| **NASAMS Weapon Link** |  | DB | EnumCommType |
+| **AGM-142 Weapon Link** |  | DB | EnumCommType |
+| **Patriot Weapon Link** |  | DB | EnumCommType |
+| **Rapier Weapon Link** |  | DB | EnumCommType |
+| **AIM-120 Weapon Link** |  | DB | EnumCommType |
+| **Roland Weapon Link** |  | DB | EnumCommType |
+| **AN/AAW-9/13 Weapon Link** |  | DB | EnumCommType |
+| **SA-12 Weapon Link** |  | DB | EnumCommType |
+| **AJ.168 Weapon Link** |  | DB | EnumCommType |
+| **AS.11/12 Weapon Wire** |  | DB | EnumCommType |
+| **SA-10/SA-N-6 Weapon Link** |  | DB | EnumCommType |
+| **HUMRAAM Weapon Link** |  | DB | EnumCommType |
+| **AS.30 Weapon Link** |  | DB | EnumCommType |
+| **HOT Weapon Link** |  | DB | EnumCommType |
+| **APK-8/9 Weapon Link** |  | DB | EnumCommType |
+| **IKARA Weapon Link** |  | DB | EnumCommType |
+| **AS-7 Weapon Link** |  | DB | EnumCommType |
+| **MICA Weapon Link** |  | DB | EnumCommType |
+| **Aster Weapon Link** |  | DB | EnumCommType |
+| **Otomat Weapon Link** |  | DB | EnumCommType |
+| **GBU-15 Weapon Link** |  | DB | EnumCommType |
+| **RBS-15 Weapon Link** |  | DB | EnumCommType |
+| **ABM Weapon Link** |  | DB | EnumCommType |
+| **ADATS Weapon Link** |  | DB | EnumCommType |
+| **Arrow Weapon Link** |  | DB | EnumCommType |
+| **AT-2/3/6/11/12/16 Weapon Link** |  | DB | EnumCommType |
+| **Bamse Weapon Link** |  | DB | EnumCommType |
+| **Blowpipe Weapon Link** |  | DB | EnumCommType |
+| **Bullpup Weapon Link** |  | DB | EnumCommType |
+| **C-701 Weapon Link** |  | DB | EnumCommType |
+| **ASM/SSM Weapon Link (Soviet/Russia)** |  | DB | EnumCommType |
+| **EFOGM Weapon Link** |  | DB | EnumCommType |
+| **Gabriel Weapon Link** |  | DB | EnumCommType |
+| **Marte/Sea Killer Weapon Link** |  | DB | EnumCommType |
+| **SAM-1 Weapon Link** |  | DB | EnumCommType |
+| **SAM-4 Weapon Link** |  | DB | EnumCommType |
+| **Sea Cat Weapon Link** |  | DB | EnumCommType |
+| **Sky Bow Weapon Link** |  | DB | EnumCommType |
+| **Starstreak Weapon Link** |  | DB | EnumCommType |
+| **THAAD Weapon Link** |  | DB | EnumCommType |
+| **TOW Weapon Link** |  | DB | EnumCommType |
+| **AA-10/12 Weapon Link** |  | DB | EnumCommType |
+| **AA-9/13 Weapon Link** |  | DB | EnumCommType |
+| **AA-5 Weapon Link** |  | DB | EnumCommType |
+| **AA-6 Weapon Link** |  | DB | EnumCommType |
+| **AAM-4 Weapon Link** |  | DB | EnumCommType |
+| **Sky Sword II Weapon Link** |  | DB | EnumCommType |
+| **RBS 70/90 Weapon Link** |  | DB | EnumCommType |
+| **Derby Weapon Link** |  | DB | EnumCommType |
+| **TacTom Weapon Link** |  | DB | EnumCommType |
+| **SA-17/SA-N-12 Weapon Link** |  | DB | EnumCommType |
+| **Hakim Weapon Link** |  | DB | EnumCommType |
+| **Sea Dart ADIMP Link** |  | DB | EnumCommType |
+| **PL-15 Weapon Link** |  | DB | EnumCommType |
+| **DART/DAVIDE Link** |  | DB | EnumCommType |
+| **Stunner Weapon Link** |  | DB | EnumCommType |
+| **MHTK Weapon Link** |  | DB | EnumCommType |
+| **SPICE Weapon Link** |  | DB | EnumCommType |
+| **AARGM Weapon Link** |  | DB | EnumCommType |
+| **R-27R Weapon Link** |  | DB | EnumCommType |
+| **Blackwing Weapon Link** |  | DB | EnumCommType |
+| **Qaem Weapon Link** |  | DB | EnumCommType |
+| **Swingfire Weapon Link** |  | DB | EnumCommType |
+| **HISAR Weapon Link** |  | DB | EnumCommType |
+| **SSM-2 Weapon Link** |  | DB | EnumCommType |
+| **Nag Weapon Link** |  | DB | EnumCommType |
+| **FIM-92K Weapon Link** |  | DB | EnumCommType |
+| **Chungum Weapon Link** |  | DB | EnumCommType |
+| **AD-200 Weapon Link** |  | DB | EnumCommType |
+| **TSCE Weapon Link** |  | DB | EnumCommType |
+| **Atmaca Weapon Link** |  | DB | EnumCommType |
+| **IRIS-T SL Weapon Link** |  | DB | EnumCommType |
+| **Astra Weapon Link** |  | DB | EnumCommType |
+| **Shahed-136 Weapon Link** |  | DB | EnumCommType |
+| **Gungnir Weapon Link** |  | DB | EnumCommType |
+
+## Aircraft feature codes
+
+*Flight aids, night/targeting kit, air-to-air refueling, fuselage-structure class (sets g-limits), and signature suppression — RCSS (radar) and IRSS (infrared).*
+
+| Term | In game | Tag | Source |
+|---|---|---|---|
+| **Supermanouverability (5th Gen Fighters)** |  | DB | EnumAircraftCode |
+| **HIFR Capable** |  | DB | EnumAircraftCode |
+| **Nap-of-the-Earth (NOE)** |  | DB | EnumAircraftCode |
+| **Auto-GCAS (Ground Collision Avoidance System)** |  | DB | EnumAircraftCode |
+| **Terrain Avoidance (Land: 300ft [91.4m], Sea: 100ft [30.5m])** |  | DB | EnumAircraftCode |
+| **Terrain Following (Land: 200ft [60.9m], Sea: 100ft [30.5m])** |  | DB | EnumAircraftCode |
+| **Fly-by-Wire** |  | DB | EnumAircraftCode |
+| **Blip Enhance / Luneberg Reflectors** |  | DB | EnumAircraftCode |
+| **Night Navigation (Ferry, Air-to-Air, Air-to-Surface Missiles)** |  | DB | EnumAircraftCode |
+| **Night Navigation/Attack (Incl. Bomb, Rocket Delivery)** |  | DB | EnumAircraftCode |
+| **Bombsight - Basic** |  | DB | EnumAircraftCode |
+| **Bombsight - Ballistic Computing** |  | DB | EnumAircraftCode |
+| **Bombsight - Advanced Computing** |  | DB | EnumAircraftCode |
+| **Bombsight - Advanced Navigation (INS/GPS)** |  | DB | EnumAircraftCode |
+| **Helmet Mounted Sight / Display (HMS/HMD)** |  | DB | EnumAircraftCode |
+| **Probe Refueling** |  | DB | EnumAircraftCode |
+| **Boom Refueling** |  | DB | EnumAircraftCode |
+| **Centerline Drogue** |  | DB | EnumAircraftCode |
+| **Wing Drogue** |  | DB | EnumAircraftCode |
+| **Centerline Boom** |  | DB | EnumAircraftCode |
+| **Fuselage Structure - Low Subsonic Fighter** |  | DB | EnumAircraftCode |
+| **Fuselage Structure - High Subsonic Fighter** |  | DB | EnumAircraftCode |
+| **Fuselage Structure - Low Supersonic Fighter** |  | DB | EnumAircraftCode |
+| **Fuselage Structure - High Supersonic Fighter** |  | DB | EnumAircraftCode |
+| **Fuselage Structure - Low Subsonic Attack Aircraft** |  | DB | EnumAircraftCode |
+| **Fuselage Structure - High Subsonic Attack Aircraft** |  | DB | EnumAircraftCode |
+| **Fuselage Structure - Low Supersonic Attack Aircraft** |  | DB | EnumAircraftCode |
+| **Fuselage Structure - High Supersonic Attack Aircraft** |  | DB | EnumAircraftCode |
+| **Fuselage Structure - Low Subsonic Bomber** |  | DB | EnumAircraftCode |
+| **Fuselage Structure - High Subsonic Bomber** |  | DB | EnumAircraftCode |
+| **Fuselage Structure - Low Supersonic Bomber** |  | DB | EnumAircraftCode |
+| **Fuselage Structure - High Supersonic Bomber** |  | DB | EnumAircraftCode |
+| **Fuselage Structure - High-Altitude Slow-Speed Recon** |  | DB | EnumAircraftCode |
+| **Fuselage Structure - High-Altitude High-Speed Recon** |  | DB | EnumAircraftCode |
+| **Fuselage Structure - Low Subsonic, Civilian Standards** |  | DB | EnumAircraftCode |
+| **Fuselage Structure - High Subsonic, Civilian Standards** |  | DB | EnumAircraftCode |
+| **Fuselage Structure - Airship** |  | DB | EnumAircraftCode |
+| **RCSS - Active Cancellation** |  | DB | EnumAircraftCode |
+| **RCSS - S-Shaped Intake(s)** |  | DB | EnumAircraftCode |
+| **RCSS - Exposed Fan Blocker(s)** |  | DB | EnumAircraftCode |
+| **RCSS - Stealth Pylons** |  | DB | EnumAircraftCode |
+| **IRSS - Shielded Exhaust (Jet Deviation)** |  | DB | EnumAircraftCode |
+| **IRSS - Masked Exhaust** |  | DB | EnumAircraftCode |
+| **IRSS - Heavily Masked / Slit-Shaped Exhaust** |  | DB | EnumAircraftCode |
+| **IRSS - Peak Temp Reduction (Cool-Air Mix)** |  | DB | EnumAircraftCode |
+
+## Ship feature codes
+
+*Quieting, seakeeping, construction-standard damage-point penalties (fragile hulls take less punishment), minesweeper hull types, and the underway-replenishment / refuel rig set.*
+
+| Term | In game | Tag | Source |
+|---|---|---|---|
+| **Nuclear Shock Resistant** |  | DB | EnumShipCode |
+| **Prairie Masker** |  | DB | EnumShipCode |
+| **Advanced Quieting** |  | DB | EnumShipCode |
+| **Waterjet Propulsion** |  | DB | EnumShipCode |
+| **Helo In-Flight Refuel Capable (HIFR)** |  | DB | EnumShipCode |
+| **Can Deploy Amphibious Vehicles From Cargo** |  | DB | EnumShipCode |
+| **Passive or Single Stabilizers** |  | DB | EnumShipCode |
+| **Dual or Triple Stabilizers** |  | DB | EnumShipCode |
+| **Has Lateral Thrusters** |  | DB | EnumShipCode |
+| **Low Construction Standards (-40% DP Penalty)** |  | DB | EnumShipCode |
+| **All Aluminum Construction (-30% DP Penalty)** |  | DB | EnumShipCode |
+| **Aluminum Superstructure Only (-20% DP Penalty)** |  | DB | EnumShipCode |
+| **Wooden Hull Construction (-30% DP Penalty)** |  | DB | EnumShipCode |
+| **Glass Reinforced Polyester (GRP) Construction (-20% DP Penalty)** |  | DB | EnumShipCode |
+| **Hovercraft/SES (-40% DP Penalty)** |  | DB | EnumShipCode |
+| **Catamaran/Trimaran Multihull (-30% DP Penalty)** |  | DB | EnumShipCode |
+| **Laid Down Before 1930 (-20% DP Penalty)** |  | DB | EnumShipCode |
+| **Built to Mercantile Standards (-30% DP Penalty)** |  | DB | EnumShipCode |
+| **Degaussed Steel Hull** |  | DB | EnumShipCode |
+| **Onboard Degaussing Gear (Magnetometer) [Minesweeper]** |  | DB | EnumShipCode |
+| **Wooden Hull [Minesweeper]** |  | DB | EnumShipCode |
+| **Glass Reinforced Polyester (GRP) Hull [Minesweeper]** |  | DB | EnumShipCode |
+| **Refuel to Port x 1 (Out)** |  | DB | EnumShipCode |
+| **Refuel to Port x 2 (Out)** |  | DB | EnumShipCode |
+| **Refuel to Port x 3 (Out)** |  | DB | EnumShipCode |
+| **Refuel to Port x 4 (Out)** |  | DB | EnumShipCode |
+| **Refuel to Starboard x 1 (Out)** |  | DB | EnumShipCode |
+| **Refuel to Starboard x 2 (Out)** |  | DB | EnumShipCode |
+| **Refuel to Starboard x 3 (Out)** |  | DB | EnumShipCode |
+| **Refuel to Starboard x 4 (Out)** |  | DB | EnumShipCode |
+| **Refuel to Astern x 1 (Out)** |  | DB | EnumShipCode |
+| **Refuel to Astern x 2 (Out)** |  | DB | EnumShipCode |
+| **Refuel from Port x 1 (In)** |  | DB | EnumShipCode |
+| **Refuel from Port x 2 (In)** |  | DB | EnumShipCode |
+| **Refuel from Port x 3 (In)** |  | DB | EnumShipCode |
+| **Refuel from Port x 4 (In)** |  | DB | EnumShipCode |
+| **Refuel from Port x 5 (In)** |  | DB | EnumShipCode |
+| **Refuel from Starboard x 1 (In)** |  | DB | EnumShipCode |
+| **Refuel from Starboard x 2 (In)** |  | DB | EnumShipCode |
+| **Refuel from Starboard x 3 (In)** |  | DB | EnumShipCode |
+| **Refuel from Starboard x 4 (In)** |  | DB | EnumShipCode |
+| **Refuel from Starboard x 5 (In)** |  | DB | EnumShipCode |
+| **Refuel from Astern x 1 (In)** |  | DB | EnumShipCode |
+| **Refuel from Astern x 2 (In)** |  | DB | EnumShipCode |
+| **Replenish to Port x 1 (Out)** |  | DB | EnumShipCode |
+| **Replenish to Port x 2 (Out)** |  | DB | EnumShipCode |
+| **Replenish to Port x 3 (Out)** |  | DB | EnumShipCode |
+| **Replenish to Port x 4 (Out)** |  | DB | EnumShipCode |
+| **Replenish to Starboard x 1 (Out)** |  | DB | EnumShipCode |
+| **Replenish to Starboard x 2 (Out)** |  | DB | EnumShipCode |
+| **Replenish to Starboard x 3 (Out)** |  | DB | EnumShipCode |
+| **Replenish to Starboard x 4 (Out)** |  | DB | EnumShipCode |
+| **Replenish from Port x 1 (In)** |  | DB | EnumShipCode |
+| **Replenish from Port x 2 (In)** |  | DB | EnumShipCode |
+| **Replenish from Port x 3 (In)** |  | DB | EnumShipCode |
+| **Replenish from Port x 4 (In)** |  | DB | EnumShipCode |
+| **Replenish from Starboard x 1 (In)** |  | DB | EnumShipCode |
+| **Replenish from Starboard x 2 (In)** |  | DB | EnumShipCode |
+| **Replenish from Starboard x 3 (In)** |  | DB | EnumShipCode |
+| **Replenish from Starboard x 4 (In)** |  | DB | EnumShipCode |
+
+## Submarine feature codes
+
+*Mostly quieting and survivability: pump-jet propulsor, no-launch-transient, natural-circulation reactor, hull type/shock resistance, snorkel, Li-ion batteries.*
+
+| Term | In game | Tag | Source |
+|---|---|---|---|
+| **Nonmagnetic Hull** |  | DB | EnumSubmarineCode |
+| **No Launch Transient** |  | DB | EnumSubmarineCode |
+| **Shrouded Propulsor** |  | DB | EnumSubmarineCode |
+| **Natural Circulation** |  | DB | EnumSubmarineCode |
+| **Double Hull** |  | DB | EnumSubmarineCode |
+| **Shock Resistant** |  | DB | EnumSubmarineCode |
+| **Has Lateral Thrusters** |  | DB | EnumSubmarineCode |
+| **Low Construction Standards (-40% DP Penalty)** |  | DB | EnumSubmarineCode |
+| **Titanium Hull (+20% DP)** |  | DB | EnumSubmarineCode |
+| **Laid Down Before 1930 (-20% DP Penalty)** |  | DB | EnumSubmarineCode |
+| **Double Hull (+20% DP)** |  | DB | EnumSubmarineCode |
+| **Lithium-Ion Batteries** |  | DB | EnumSubmarineCode |
+| **Snorkel** |  | DB | EnumSubmarineCode |
+
+## Ground-unit feature codes
+
+*Mobility (wheeled / half-track / tracked / amphibious), carriage, and armor upgrades (reactive, mesh skirting, depleted-uranium generations).*
+
+| Term | In game | Tag | Source |
+|---|---|---|---|
+| **Troop Carrying** |  | DB | EnumGroundUnitCode |
+| **Open Topped** |  | DB | EnumGroundUnitCode |
+| **Amphibious** |  | DB | EnumGroundUnitCode |
+| **Combat Swimmer** |  | DB | EnumGroundUnitCode |
+| **Reactive Armor** |  | DB | EnumGroundUnitCode |
+| **Mesh Skirting** |  | DB | EnumGroundUnitCode |
+| **Depleted Uranium Armor (1st Gen)** |  | DB | EnumGroundUnitCode |
+| **Depleted Uranium Armor (2nd Gen)** |  | DB | EnumGroundUnitCode |
+| **Depleted Uranium Armor (3rd Gen)** |  | DB | EnumGroundUnitCode |
+| **Wheeled Vehicle** |  | DB | EnumGroundUnitCode |
+| **Half-Track Vehicle** |  | DB | EnumGroundUnitCode |
+| **Tracked Vehicle** |  | DB | EnumGroundUnitCode |
+
+_557 terms._
+

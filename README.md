@@ -1,6 +1,6 @@
 # CMO Database Dashboard
 
-A single-file, offline HTML dashboard for browsing and analysing the **Command: Modern Operations** unit database — every aircraft, ship, submarine, facility, ground unit, sensor and weapon, with type-specific visualisations and comparison tools.
+A single-file, offline HTML dashboard for browsing and analysing the **Command: Modern Operations** unit database — every aircraft, ship, submarine, facility, ground unit, satellite, sensor and weapon, with type-specific visualisations and comparison tools.
 
 You run one small tool against the database from **your own CMO install** and it generates a self-contained `.html` file you can open in any modern browser. No internet, no server, no accounts.
 
@@ -62,13 +62,15 @@ When a new game/database version ships, just run it again — it always picks th
 
 ## What the dashboard does
 
-- **Browse** all five platform types plus sensors and weapons, with fast search, sortable columns, and rich filters (guidance, features, damage points, target class, sensor capability/band, "carries weapon family", operator, era, and more). One-click **CSV export** of any filtered list.
+- **Browse** all six platform types (aircraft, ships, submarines, facilities, ground units and satellites) plus sensors and weapons, with fast search **by name or DBID**, sortable columns, and rich filters (guidance, features, damage points, target class, sensor capability/band, "carries weapon family", operator, era, and more). One-click **CSV export** of any filtered list.
 - **Detail pages** with type-aware visualisations — radar frequency strips and detection envelopes, optics/IR zoom, sonar depth envelopes, ESM direction-finding, weapon engagement envelopes and warhead breakdowns, per-aspect signatures, propulsion speed-by-altitude curves, and the mounts, magazines and loadouts each platform carries (including radars mounted on launcher vehicles).
 - **Compare** up to four platforms, sensors or weapons side by side with overlaid envelopes.
 - **Systems tools:** an *Electronic Warfare* explainer (OECM/DECM), a *Detection matchup* calculator (at what range does X detect Y, by radar/IR/EO, per aspect), and *Threat rings* (a platform's search / engagement-radar / SAM envelope, scaled to a chosen target's radar cross-section).
 - **Analysis tools:** a *Trend explorer* (plot any metric against any other) and *Leaderboards* (top-N by speed, range, stealth, quietness, etc., with a service-era timeline).
+- **Scenario ORBAT:** ingest a snapshot of a scenario (exported with the one-click Lua script shown on the page) to see its full order of battle inside the dashboard — grouped by side → task group → platform type, with per-type totals, a rolled-up "Airborne" picture, a per-side force summary, live status/loadout/readiness, loadout links to the exact fit, and **aggregated ordnance** (each group totals its magazines by weapon type, e.g. "142× UGM-109E Tomahawk Blk IV TACTOM", and expands to the count each hull carries). Sides are collapsed on open so it's spoiler-safe.
+- **Satellites & anti-satellite engagement:** satellites are a full platform type with orbital elements; each satellite card shows which of the database's ASAT weapons can reach that orbit (filtered by altitude ceiling and range) and a ground-footprint diagram of the area from which each weapon could engage.
 - **What's new:** when you build with a previous database to compare against (see below), a *Reference* page shows the full database-to-database changelog — units, weapons and sensors added, retired (deprecated) or removed, and the exact fields (ranges, kill probabilities, service dates, and more) and components (mounts, sensors, loadouts) that changed on each existing entry, every one deep-linked to its detail page.
-- **Feature glossary:** a searchable *Reference* page explaining every sensor capability, feature code, weapon-guidance method, target class and sensor/weapon type (251 entries). Hover any chip on a sensor or weapon page for a plain-language tooltip, or click it for the full write-up — sourced from the game manual where possible and tagged OBSERVED / INFERRED / SPECULATIVE. The complete reference is in [GLOSSARY.md](GLOSSARY.md).
+- **Feature glossary:** a searchable *Reference* page explaining every sensor capability, feature code, weapon-guidance method, target class and sensor/weapon type, plus platform attributes (armor, ergonomics, autonomy, cockpit visibility), the communications model, and all 130 aircraft/ship/submarine/ground-unit feature codes (557 entries). Hover any chip on a detail page for a plain-language tooltip, or click it for the full write-up — sourced from the game manual where possible and tagged OBSERVED / INFERRED / SPECULATIVE. The complete reference is in [GLOSSARY.md](GLOSSARY.md).
 - **Light and dark themes** and shareable, bookmarkable URLs for any filtered view.
 
 Every number is extracted from the database. Where a value is a modelled estimate rather than a stored field — notably the RCS-scaled radar detection ranges — the page says so and shows the method. Treat radar/IR ranges and threat rings as **clean-air planning envelopes**: they don't account for terrain masking, jamming, or the engine's full dynamic detection model.
@@ -79,7 +81,7 @@ Every number is extracted from the database. Where a value is a modelled estimat
 
 The tool opens the database **read-only**, pulls the tables the dashboard needs into a compact JSON structure, compresses it (raw `deflate`), base64-encodes it, and substitutes it into the template at a marker. The result is one self-contained HTML file (~5 MB) that carries a compressed copy of *your* database inside it and needs nothing else at runtime — the page decompresses its data in the browser using the built-in `DecompressionStream` (Chrome/Edge 80+, Firefox 113+, Safari 16.4+).
 
-The dashboard stores three small preferences (theme, "show deprecated", the compare tray) in your browser's `localStorage`. That data lives only in your browser and is never transmitted anywhere.
+The dashboard stores a few small items (theme, "show deprecated", the compare tray, and any scenario snapshot you ingest into the Scenario ORBAT page) in your browser's `localStorage`. That data lives only in your browser and is never transmitted anywhere.
 
 ---
 

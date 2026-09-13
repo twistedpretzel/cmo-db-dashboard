@@ -160,6 +160,7 @@ class Extractor:
         out['weaponFuel'] = self.grouped('DataWeaponFuel')
         out['weaponSig'] = self.signatures('DataWeaponSignatures')
         out['weaponWRA'] = self.grouped('DataWeaponWRA', fn=lambda r: [rc(r,'CodeID'), rc(r,'WeaponQty'), rc(r,'ShooterQty'), rc(r,'AutoFireRange'), rc(r,'SelfDefenceRange')])
+        out['weaponComms'] = self.grouped('DataWeaponComms') if self.has('DataWeaponComms') else {}
         out['warhead'] = self.table('DataWarhead')
         out['weaponRecord'] = {r['ID']: [rc(r,'ComponentID'), rc(r,'DefaultLoad'), rc(r,'MaxLoad'), rc(r,'ROF'), rc(r,'Multiple')]
                                for r in self.con.execute('select * from DataWeaponRecord')}
@@ -178,8 +179,13 @@ class Extractor:
         out['comm'] = self.table('DataComm', drop=('Comments',))
         out['acfacility'] = {r['ID']: [rc(r,'Type'), rc(r,'PhysicalSize'), rc(r,'Capacity'), rc(r,'RunwayLength')] for r in self.con.execute('select * from DataAircraftFacility')}
         out['dockfacility'] = self.table('DataDockingFacility') if self.has('DataDockingFacility') else None
-        for kind in ['Aircraft', 'Ship', 'Submarine', 'Facility', 'GroundUnit']:
+        for kind in ['Aircraft', 'Ship', 'Submarine', 'Facility', 'GroundUnit', 'Satellite']:
             out[kind] = self.platform(kind)
+        # satellites carry orbital elements (their propulsion/loadouts tables don't exist, so platform() leaves those empty)
+        if self.has('DataSatelliteOrbits'):
+            out['Satellite']['orbits'] = self.grouped('DataSatelliteOrbits', fn=lambda r: [
+                rc(r, 'Plane'), norm(rc(r, 'Inclination')), norm(rc(r, 'Apogee')), norm(rc(r, 'Perigee')),
+                norm(rc(r, 'OrbitalPeriod')), rc(r, 'MissonName'), rc(r, 'Operational')])
         out['meta']['extracted'] = time.strftime('%Y-%m-%d %H:%M:%S')
         out['meta']['seconds'] = round(time.time() - t0, 1)
         return out
