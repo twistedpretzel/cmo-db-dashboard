@@ -104,6 +104,58 @@ a.chip:hover{border-color:var(--accent);border-style:solid;color:var(--accent)}
 :root[data-theme="dark"] .gtag.OBSERVED{background:#16321f;color:#5fcf88}
 :root[data-theme="dark"] .gtag.INFERRED{background:#332810;color:#f0c060}
 :root[data-theme="dark"] .gtag.SPECULATIVE{background:#301a2c;color:#e089d0}
+/* --- What's new / changelog --- */
+.cl{max-width:960px}
+.clhead h2{margin:0 0 2px;font-size:20px}
+.clhead .clsub{color:var(--text-2);font-size:13px;margin-bottom:10px}
+.clstats{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.clstat{font-size:12.5px;padding:3px 10px;border-radius:14px;background:var(--surface-2);border:1px solid var(--border);color:var(--text-2)}
+.clstat b{font-family:var(--mono);color:var(--text)}
+.clstat.add b{color:var(--good)} .clstat.chg b{color:var(--accent)}
+.clstat.dep b{color:var(--warn)} .clstat.rem b{color:var(--bad)}
+.clstat.minor{color:var(--text-3)}
+.clctl{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;margin-bottom:8px}
+.clctl input[type=text],.clctl input:not([type]){flex:1 1 220px;min-width:180px;padding:7px 10px;border:1px solid var(--border-2);border-radius:6px;background:var(--surface)}
+.clchk{font-size:12.5px;color:var(--text-2);display:flex;align-items:center;gap:6px;white-space:nowrap}
+.clnote{font-size:12px;color:var(--text-3);margin:2px 0 14px;line-height:1.5}
+.clsec{border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);margin-bottom:10px;overflow:hidden}
+.clsec>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;align-items:baseline;gap:12px;background:var(--surface-2)}
+.clsec>summary::-webkit-details-marker{display:none}
+.clsec>summary::before{content:"\25B8";color:var(--text-3);font-size:11px}
+.clsec[open]>summary::before{content:"\25BE"}
+.cltitle{font-weight:600;font-size:14px}
+.clsumm{font-size:12.5px;color:var(--text-3)}
+.clhid{color:var(--text-3);opacity:.8}
+.clgrp{padding:10px 14px;border-top:1px solid var(--border)}
+.clgrp h4{margin:0 0 8px;font-size:11.5px;text-transform:uppercase;letter-spacing:.5px;color:var(--text-3);font-weight:600}
+.clgrp h4 .cln{font-family:var(--mono);color:var(--text-3);margin-left:4px}
+.clgrp h4.add{color:var(--good)} .clgrp h4.dep{color:var(--warn)} .clgrp h4.rem{color:var(--bad)} .clgrp h4.chg{color:var(--accent)}
+.clchips{display:flex;flex-wrap:wrap;gap:5px}
+.clpill{font-size:12px;padding:2px 9px;border-radius:12px;border:1px solid var(--border);background:var(--surface-2);color:var(--text)}
+.clpill.add{border-color:color-mix(in srgb,var(--good) 45%,var(--border))}
+.clpill.dep{border-color:color-mix(in srgb,var(--warn) 45%,var(--border))}
+.clpill.rem{border-color:color-mix(in srgb,var(--bad) 45%,var(--border))}
+.clpill:hover{background:var(--surface);text-decoration:none}
+.clcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:8px}
+.clcard{border:1px solid var(--border);border-radius:8px;padding:8px 10px;background:var(--surface-2)}
+.clcard .clname{font-weight:600;font-size:13px;display:inline}
+.clbadge{font-size:10px;font-weight:700;letter-spacing:.4px;padding:0 5px;border-radius:4px;margin-left:6px;vertical-align:middle}
+.clbadge.restored{background:#dff3e4;color:#1c6b3a}
+:root[data-theme="dark"] .clbadge.restored{background:#16321f;color:#5fcf88}
+.clf{display:flex;align-items:baseline;gap:6px;font-size:12px;margin-top:5px;flex-wrap:wrap}
+.clf .clk{color:var(--text-3);min-width:96px}
+.clv{font-family:var(--mono);font-size:11.5px}
+.clv.old{color:var(--text-3);text-decoration:line-through;text-decoration-thickness:1px}
+.clv.new{color:var(--text)}
+.clar{color:var(--text-3)}
+.clcomp{display:flex;gap:6px;font-size:12px;margin-top:5px;flex-wrap:wrap}
+.clcomp .clk{color:var(--text-3);min-width:96px}
+.clcs{display:flex;flex-wrap:wrap;gap:4px}
+.clc{font-size:11.5px;padding:1px 7px;border-radius:10px;border:1px solid var(--border);background:var(--surface)}
+.clc.add{border-color:color-mix(in srgb,var(--good) 40%,var(--border))}
+.clc.rem{border-color:color-mix(in srgb,var(--bad) 40%,var(--border));color:var(--text-2)}
+.clc a{color:inherit}
+.clminor{font-size:11.5px;color:var(--text-3);margin-top:6px;line-height:1.45}
 .legend{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12px;color:var(--text-2);margin:6px 0 2px}
 .legend .sw{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px}
 .comp-list{display:flex;flex-direction:column;gap:6px}
@@ -208,7 +260,7 @@ async function loadDB(){
   const bytes = b64ToBytes(DB_BLOB);
   const text = await inflate(bytes);
   const raw = JSON.parse(text);
-  D.raw = raw; D.enums = raw.enums; D.meta = raw.meta;
+  D.raw = raw; D.enums = raw.enums; D.meta = raw.meta; D.changelog = raw.changelog || null;
   D.sensor = tableToMap(raw.sensor); D.weapon = tableToMap(raw.weapon); D.warhead = tableToMap(raw.warhead);
   D.mount = tableToMap(raw.mount); D.magazine = tableToMap(raw.magazine); D.loadout = tableToMap(raw.loadout);
   D.propulsion = tableToMap(raw.propulsion); D.comm = tableToMap(raw.comm);
@@ -658,6 +710,7 @@ function renderNav(){
   html += `<div class="group">Systems</div>` + item('ew','Electronic Warfare', null) + item('detect','Detection matchup', null) + item('threat','Threat rings', null);
   html += `<div class="group">Analysis</div>` + item('explore','Trend explorer', null) + item('tops','Leaderboards', null);
   html += `<div class="group">Reference</div>` + item('glossary','Feature glossary', null);
+  if (D.changelog) html += item('changelog','What’s new', null);
   html += `<div class="group">Tools</div>` + item('compare','Compare', null);
   html += `<div class="foot"><button onclick="toggleTheme()">Toggle theme</button><div style="margin-top:8px">Extracted ${esc(D.meta.extracted||'')}</div></div>`;
   $('#nav').innerHTML = html;
@@ -683,6 +736,7 @@ function render(){
     else if (parts[0]==='detect') main.innerHTML = viewDetect(params);
     else if (parts[0]==='compare') main.innerHTML = viewCompare(params);
     else if (parts[0]==='glossary') main.innerHTML = viewGlossary(params);
+    else if (parts[0]==='changelog') main.innerHTML = viewChangelog(params);
     else main.innerHTML = '<p>Not found.</p>';
   } catch(err){ main.innerHTML = `<div class="card"><h3>Render error</h3><pre>${esc(err.stack||err)}</pre></div>`; console.error(err); }
   window.scrollTo(0,0);
@@ -2373,6 +2427,196 @@ function viewGlossary(params){
   if (sel){ const anchor='g-'+sel.replace(':','-');
     setTimeout(()=>{ const el=document.getElementById(anchor); if(el){ el.scrollIntoView({block:'center'}); el.classList.remove('flash'); void el.offsetWidth; el.classList.add('flash'); } },30);
   }
+  return html;
+}
+</script>
+<script>
+/* ============================================================
+   WHAT'S NEW — database-to-database changelog
+   Renders D.changelog (built by `build_dashboard.py --vs PREV.db3`).
+   The delta carries only IDs; names of changed components are resolved here
+   against the main embedded database, and every entry deep-links to its detail page.
+   ============================================================ */
+
+const CL_ROUTES = [
+  {r:'aircraft',  label:'Aircraft',      detail:'aircraft'},
+  {r:'ship',      label:'Ships',         detail:'ship'},
+  {r:'sub',       label:'Submarines',    detail:'sub'},
+  {r:'facility',  label:'Facilities',    detail:'facility'},
+  {r:'ground',    label:'Ground units',  detail:'ground'},
+  {r:'sensor',    label:'Sensors',       detail:'sensor'},
+  {r:'weapon',    label:'Weapons',       detail:'weapon'},
+];
+const CL_LABEL = Object.fromEntries(CL_ROUTES.map(x=>[x.r,x.label]));
+
+// enum-backed fields, so raw IDs resolve to labels
+const CL_ENUMF = {
+  aircraft:{Category:'AircraftCategory', Type:'AircraftType'},
+  ship:{Category:'ShipCategory', Type:'ShipType'},
+  sub:{Category:'SubmarineCategory', Type:'SubmarineType'},
+  facility:{Category:'FacilityCategory', Type:'FacilityType'},
+  ground:{Category:'GroundUnitCategory'},
+  sensor:{Type:'SensorType', Role:'SensorRole', Generation:'SensorGeneration'},
+  weapon:{Type:'WeaponType', Generation:'WeaponGeneration'},
+};
+
+// fields surfaced prominently; everything else that changed is a "minor data revision"
+const CL_NOTABLE = {
+  aircraft:new Set(['Name','Category','Type','YearCommissioned','YearDecommissioned','Hypothetical','Agility','Crew','DamagePoints','Cost','Comments']),
+  ship:new Set(['Name','Category','Type','YearCommissioned','YearDecommissioned','Hypothetical','Crew','DamagePoints','Cost','Comments']),
+  sub:new Set(['Name','Category','Type','YearCommissioned','YearDecommissioned','Hypothetical','MaxDepth','Crew','DamagePoints','Cost','Comments']),
+  facility:new Set(['Name','Category','Type','YearCommissioned','YearDecommissioned','Hypothetical','DamagePoints','Cost','Comments']),
+  ground:new Set(['Name','Category','YearCommissioned','YearDecommissioned','Hypothetical','DamagePoints','Cost','Comments']),
+  sensor:new Set(['Name','Type','Role','Generation','RangeMax','AltitudeMax','MaxContactsAir','ResolutionHeight','Hypothetical','Comments']),
+  weapon:new Set(['Name','Type','Generation','AirRangeMax','SurfaceRangeMax','LandRangeMax','SubsurfaceRangeMax','AirPoK','SurfacePoK','LandPoK','SubsurfacePoK','CEP','MaxFlightTime','Weight','Cost','Comments','Hypothetical']),
+};
+
+const CL_FIELD_LABEL = {
+  YearCommissioned:'Year commissioned', YearDecommissioned:'Year decommissioned',
+  DamagePoints:'Damage points', MaxDepth:'Max depth', MaxContactsAir:'Max air contacts',
+  ResolutionHeight:'Height resolution', RangeMax:'Max range', AltitudeMax:'Max altitude',
+  AirRangeMax:'Air range (max)', SurfaceRangeMax:'Surface range (max)',
+  LandRangeMax:'Land range (max)', SubsurfaceRangeMax:'Subsurface range (max)',
+  AirPoK:'Air PoK', SurfacePoK:'Surface PoK', LandPoK:'Land PoK', SubsurfacePoK:'Subsurface PoK',
+  MaxFlightTime:'Max flight time',
+};
+function clFieldLabel(f){
+  if (CL_FIELD_LABEL[f]) return CL_FIELD_LABEL[f];
+  return f.replace(/_/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/^./,c=>c.toUpperCase());
+}
+function clFmtVal(route, field, v){
+  if (v==null || v==='') return '—';
+  const em = CL_ENUMF[route]||{};
+  if (em[field]) return esc(E(em[field], v));
+  if (field==='Hypothetical' || field==='Deprecated') return v ? 'yes' : 'no';
+  if (typeof v === 'string') return esc(v);
+  if (/(RangeMax|RangeMin)$/.test(field) || /^Torpedo?Range/.test(field)) return fmt.nm(v);
+  if (/PoK$/.test(field)) return fmt.pct(v);
+  if (/(Weight|_Mass|^Mass$)/.test(field)) return fmt.kg(v);
+  if (/^Cost$/.test(field)) return fmt.n(v);
+  if (/^Year/.test(field)) return v ? String(v) : '—';
+  if (/(Depth$|Altitude|MastHeight)/.test(field)) return fmt.mShort(v);
+  return esc(fmt.n(v, 2));
+}
+function clFieldRow(route, f){
+  return `<div class="clf"><span class="clk">${esc(clFieldLabel(f[0]))}</span>`
+       + `<span class="clv old">${clFmtVal(route,f[0],f[1])}</span>`
+       + `<span class="clar">→</span>`
+       + `<span class="clv new">${clFmtVal(route,f[0],f[2])}</span></div>`;
+}
+
+// resolve a component id to a display chip/link by its type
+function clComp(t, id){
+  const link=(route,txt)=>`<a href="#/${route}/${id}">${esc(txt)}</a>`;
+  let m;
+  if (t==='mount'){ m=D.mount.get(id); return m? link('mount', m.Name) : '#'+id; }
+  if (t==='sensor'){ m=D.sensor.get(id); return m? link('sensor', m.Name) : '#'+id; }
+  if (t==='loadout'){ m=D.loadout.get(id); return m? link('loadout', m.Name) : 'Loadout #'+id; }
+  if (t==='magazine'){ m=D.magazine.get(id); return m? esc(m.Name) : 'Magazine #'+id; }
+  if (t==='warhead'){ m=D.warhead.get(id); return m? esc(m.Name||('Warhead #'+id)) : 'Warhead #'+id; }
+  if (t==='cap' || t==='scode' || t==='wcode' || t==='wtarget'){ const c=gchip(t,id); return c || esc(String(id)); }
+  return esc(String(id));
+}
+const CL_COMP_LABEL = {mounts:'Mounts', sensors:'Sensors', loadouts:'Loadouts', magazines:'Magazines',
+  codes:'Features', targets:'Target classes', warheads:'Warheads', caps:'Capabilities'};
+function clCompBlock(c){
+  const one=(arr,cls,sign)=> arr.map(([id,n])=>`<span class="clc ${cls}">${sign}${clComp(c.t,id)}${n>1?' ×'+n:''}</span>`).join('');
+  const parts=[];
+  if (c.add && c.add.length) parts.push(one(c.add,'add','+'));
+  if (c.rem && c.rem.length) parts.push(one(c.rem,'rem','−'));
+  return `<div class="clcomp"><span class="clk">${esc(CL_COMP_LABEL[c.k]||c.k)}</span><span class="clcs">${parts.join('')}</span></div>`;
+}
+
+function clParts(routeKey, rec){
+  const notableSet = CL_NOTABLE[routeKey] || new Set();
+  const notable=[], minor=[];
+  for (const f of (rec.f||[])) (notableSet.has(f[0]) ? notable : minor).push(f);
+  const comps = rec.c || [];
+  return {notable, minor, comps, significant: notable.length>0 || comps.length>0};
+}
+
+function clItemLink(route, id, name){ return `<a class="clname" href="#/${route}/${id}">${esc(name)}</a>`; }
+
+function clChangedCard(routeKey, detail, rec){
+  const p = clParts(routeKey, rec);
+  let body = '';
+  for (const f of p.notable) body += clFieldRow(routeKey, f);
+  for (const c of p.comps) body += clCompBlock(c);
+  if (p.minor.length){
+    const names = p.minor.map(f=>esc(clFieldLabel(f[0]))).join(', ');
+    body += `<div class="clminor">${p.minor.length} minor data field${p.minor.length===1?'':'s'}: ${names}</div>`;
+  }
+  const tag = rec.restored ? `<span class="clbadge restored">un-deprecated</span>` : '';
+  return `<div class="clcard">${clItemLink(detail, rec.id, rec.n)}${tag}${body}</div>`;
+}
+
+function viewChangelog(params){
+  const cl = D.changelog;
+  if (!cl) return `<div class="card"><h3>What’s new</h3><p>This dashboard was built without a comparison database, so there’s no changelog. Rebuild with <code>build_dashboard.py --vs &lt;previous&gt;.db3</code> (or <code>--vs auto</code>) to add one.</p></div>`;
+  const meta = cl.meta||{};
+  const q = (params.q||'').trim().toLowerCase();
+  const showMinor = params.minor==='1';
+  const matchQ = name => !q || String(name).toLowerCase().includes(q);
+
+  // totals
+  let tAdd=0,tDep=0,tRem=0,tSig=0,tMinor=0;
+  for (const {r} of CL_ROUTES){ const e=cl.entities[r]; if(!e) continue;
+    tAdd+=e.added.length; tDep+=e.deprecated.length; tRem+=e.removed.length;
+    for (const rec of e.changed){ if (clParts(r,rec).significant) tSig++; else tMinor++; } }
+
+  let html = `<div class="cl">`;
+  html += `<div class="clhead"><h2>What’s new</h2>`
+        + `<div class="clsub">Database changes from <b>${esc(meta.from||'?')}</b> to <b>${esc(meta.to||'?')}</b></div>`
+        + `<div class="clstats">`
+        + `<span class="clstat add"><b>${fmt.n(tAdd)}</b> added</span>`
+        + `<span class="clstat chg"><b>${fmt.n(tSig)}</b> changed</span>`
+        + (tDep?`<span class="clstat dep"><b>${fmt.n(tDep)}</b> deprecated</span>`:'')
+        + (tRem?`<span class="clstat rem"><b>${fmt.n(tRem)}</b> removed</span>`:'')
+        + `<span class="clstat minor">${fmt.n(tMinor)} minor-only</span>`
+        + `</div></div>`;
+
+  html += `<div class="clctl">`
+        + `<input placeholder="Filter by name…" value="${esc(params.q||'')}" oninput="setParam('q',this.value)">`
+        + `<label class="clchk"><input type="checkbox" ${showMinor?'checked':''} onchange="setParam('minor',this.checked?'1':'')"> show entries with only minor data revisions</label>`
+        + `</div>`;
+
+  html += `<p class="clnote">Additions and changes are keyed on each entity’s stable database ID. “Removed” means an ID is gone entirely (rare — the game normally retires an entity by marking it <i>deprecated</i>, which keeps old scenarios working). Click any name to open its detail page.</p>`;
+
+  let any=false;
+  for (const {r, detail} of CL_ROUTES){
+    const e = cl.entities[r]; if (!e) continue;
+    const added = e.added.filter(x=>matchQ(x[1]));
+    const deprecated = e.deprecated.filter(x=>matchQ(x[1]));
+    const removed = e.removed.filter(x=>matchQ(x[1]));
+    const changedSig = [], changedMin = [];
+    for (const rec of e.changed){ if(!matchQ(rec.n)) continue; (clParts(r,rec).significant?changedSig:changedMin).push(rec); }
+    const changedShown = showMinor ? changedSig.concat(changedMin) : changedSig;
+    const total = added.length + deprecated.length + removed.length + changedShown.length;
+    if (!total) continue;
+    any=true;
+
+    const summ = [];
+    if (added.length) summ.push(`${added.length} added`);
+    if (changedSig.length) summ.push(`${changedSig.length} changed`);
+    if (deprecated.length) summ.push(`${deprecated.length} deprecated`);
+    if (removed.length) summ.push(`${removed.length} removed`);
+    const hiddenMin = changedMin.length && !showMinor ? ` <span class="clhid">(+${changedMin.length} minor-only)</span>` : '';
+
+    html += `<details class="clsec" open><summary><span class="cltitle">${esc(CL_LABEL[r])}</span><span class="clsumm">${summ.join(' · ')}${hiddenMin}</span></summary>`;
+
+    const chipList = (arr, cls) => `<div class="clchips">` + arr.map(([id,n])=>`<a class="clpill ${cls}" href="#/${detail}/${id}">${esc(n)}</a>`).join('') + `</div>`;
+    if (added.length){ html += `<div class="clgrp"><h4 class="add">Added <span class="cln">${added.length}</span></h4>${chipList(added,'add')}</div>`; }
+    if (deprecated.length){ html += `<div class="clgrp"><h4 class="dep">Newly deprecated <span class="cln">${deprecated.length}</span></h4>${chipList(deprecated,'dep')}</div>`; }
+    if (removed.length){ html += `<div class="clgrp"><h4 class="rem">Removed <span class="cln">${removed.length}</span></h4>${chipList(removed,'rem')}</div>`; }
+    if (changedShown.length){
+      html += `<div class="clgrp"><h4 class="chg">Changed <span class="cln">${changedShown.length}</span></h4><div class="clcards">`;
+      for (const rec of changedShown) html += clChangedCard(r, detail, rec);
+      html += `</div></div>`;
+    }
+    html += `</details>`;
+  }
+  if (!any) html += `<div class="card"><p>No entries match “${esc(params.q||'')}”.</p></div>`;
+  html += `</div>`;
   return html;
 }
 </script>

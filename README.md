@@ -21,11 +21,15 @@ You run one small tool against the database from **your own CMO install** and it
 
 That's the whole process — no Python, no command line, nothing to type.
 
+If the folder also contains an *older* database version (e.g. both `DB3K_517.db3` and `DB3K_518.db3` are present), the tool automatically adds a **"What's new"** page listing everything that changed between them — new and retired units, weapons and sensors, and the specific stats and loadouts that were adjusted. It compares whichever database it builds against the next-older one of the same kind in the folder, so this works both when you double-click (newest vs. the one before it) and when you drop a specific database on the tool (that database vs. the one before *it*). Keep your last database around and each update comes with its own changelog. (Don't want it? See "just build one database" below.)
+
 **First run: a blue "Windows protected your PC" box may appear.** That's SmartScreen being cautious about a new file from an unknown indie author — it is expected here and does not mean anything is wrong. Click **More info → Run anyway**. If you'd like to confirm the download first, each release includes a `build_dashboard.exe.sha256` checksum you can verify.
 
 The generated `DB3K_517_dashboard.html` is **saved right next to the game's database** — it's a permanent file, not just a browser view. Keep it in the `DB` folder (so it can find the unit photos) and **double-click that `.html`, or bookmark it, to reopen any time** — you don't need to rebuild. Only re-run the tool when your game database updates.
 
-**Want an older database?** Double-clicking always builds the newest. To build a specific one instead, **drag its `.db3` file onto `build_dashboard.exe`** (or, from a terminal, `build_dashboard.exe DB3K_515.db3`). The dashboard is written next to whichever database you pick.
+**Want an older database?** Double-clicking always builds the newest. To build a specific one instead, **drag its `.db3` file onto `build_dashboard.exe`** (or, from a terminal, `build_dashboard.exe DB3K_515.db3`). The dashboard is written next to whichever database you pick — and it gets its own "What's new" page comparing it against the next-older database in the folder, just like the double-click path.
+
+**Just build one database, no changelog?** Run it from a terminal with `--no-changelog` (e.g. `build_dashboard.exe DB3K_518.db3 --no-changelog`). The tool then builds only that dashboard and skips the comparison.
 
 ---
 
@@ -43,9 +47,11 @@ Then either:
 - **Any OS, from a terminal in that folder:**
 
   ```bash
-  python build_dashboard.py                 # auto-detects the newest DB3K_*.db3 here
-  python build_dashboard.py CWDB_517.db3     # or name a specific database
+  python build_dashboard.py                 # newest DB3K_*.db3 here, + changelog vs the one before it
+  python build_dashboard.py CWDB_517.db3     # a specific database, + changelog vs the one before it
   python build_dashboard.py --no-open        # build without launching a browser
+  python build_dashboard.py --no-changelog   # build just this database, skip the "What's new" page
+  python build_dashboard.py DB3K_518.db3 --vs DB3K_505.db3    # compare against a *specific* older DB
   ```
 
   Type that at a **Command Prompt / PowerShell / terminal** — *not* at the Python `>>>` prompt. If you see `>>>`, you're inside Python; type `exit()` first. (Getting `SyntaxError: invalid syntax` on the command almost always means it was typed at the `>>>` prompt.)
@@ -61,6 +67,7 @@ When a new game/database version ships, just run it again — it always picks th
 - **Compare** up to four platforms, sensors or weapons side by side with overlaid envelopes.
 - **Systems tools:** an *Electronic Warfare* explainer (OECM/DECM), a *Detection matchup* calculator (at what range does X detect Y, by radar/IR/EO, per aspect), and *Threat rings* (a platform's search / engagement-radar / SAM envelope, scaled to a chosen target's radar cross-section).
 - **Analysis tools:** a *Trend explorer* (plot any metric against any other) and *Leaderboards* (top-N by speed, range, stealth, quietness, etc., with a service-era timeline).
+- **What's new:** when you build with a previous database to compare against (see below), a *Reference* page shows the full database-to-database changelog — units, weapons and sensors added, retired (deprecated) or removed, and the exact fields (ranges, kill probabilities, service dates, and more) and components (mounts, sensors, loadouts) that changed on each existing entry, every one deep-linked to its detail page.
 - **Feature glossary:** a searchable *Reference* page explaining every sensor capability, feature code, weapon-guidance method, target class and sensor/weapon type (251 entries). Hover any chip on a sensor or weapon page for a plain-language tooltip, or click it for the full write-up — sourced from the game manual where possible and tagged OBSERVED / INFERRED / SPECULATIVE. The complete reference is in [GLOSSARY.md](GLOSSARY.md).
 - **Light and dark themes** and shareable, bookmarkable URLs for any filtered view.
 

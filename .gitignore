@@ -22,6 +22,10 @@ build/
 dist/
 *.manifest
 
+# --- Google Drive sync scratch files (repo lives in a Drive-synced folder) ---
+.tmp.driveupload/
+.tmp.drivedownload/
+
 # --- OS / editor cruft ---
 .DS_Store
 Thumbs.db
