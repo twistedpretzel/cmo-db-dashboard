@@ -4,7 +4,7 @@ A single-file, offline HTML dashboard for browsing and analysing the **Command: 
 
 You run one small tool against the database from **your own CMO install** and it generates a self-contained `.html` file you can open in any modern browser. No internet, no server, no accounts.
 
-> **This project contains only the generator and an HTML template — no game data.** Each user builds the dashboard from the database in their own copy of the game. See [Sharing & licensing](#sharing--licensing).
+> **This project contains only the generator, an HTML template and documentation — no game data beyond the database's own term and code identifiers, which the glossary explains in its own words.** No ranges, kill probabilities, signatures or loadouts appear anywhere in this repository. Each user builds the dashboard from the database in their own copy of the game. See [Sharing & licensing](#sharing--licensing).
 
 ---
 
@@ -71,9 +71,38 @@ When a new game/database version ships, just run it again — it always picks th
 - **Satellites & anti-satellite engagement:** satellites are a full platform type with orbital elements; each satellite card shows which of the database's ASAT weapons can reach that orbit (filtered by altitude ceiling and range) and a ground-footprint diagram of the area from which each weapon could engage.
 - **What's new:** when you build with a previous database to compare against (see below), a *Reference* page shows the full database-to-database changelog — units, weapons and sensors added, retired (deprecated) or removed, and the exact fields (ranges, kill probabilities, service dates, and more) and components (mounts, sensors, loadouts) that changed on each existing entry, every one deep-linked to its detail page.
 - **Feature glossary:** a searchable *Reference* page explaining every sensor capability, feature code, weapon-guidance method, target class and sensor/weapon type, plus platform attributes (armor, ergonomics, autonomy, cockpit visibility), the communications model, and all 130 aircraft/ship/submarine/ground-unit feature codes (557 entries). Hover any chip on a detail page for a plain-language tooltip, or click it for the full write-up — sourced from the game manual where possible and tagged OBSERVED / INFERRED / SPECULATIVE. The complete reference is in [GLOSSARY.md](GLOSSARY.md).
+- **AAR — message log reader:** load a CMO message log (`AALog.txt`) and the dashboard reads it back as an after-action review, across six tabs. **Overview** — what the log contains, an activity timeline, and how each weapon that reached an endgame actually ended (impact, spoofed, malfunction, or simply out of energy). **Weapons** — every weapon resolved against the loaded database, with hit rates carrying 95% confidence intervals, the logged base probability checked against the database's own `PoK`, expandable per target class and speed band, and a list of engagements fought beyond the weapon's rated `TargetSpeedMax`. **Mechanics** — probability against crossing rate, modifier incidence, worked engagement chains as the engine wrote them, and soft-kill systems compared declared-against-realised. **Losses** — losses by cause (including units lost to fuel rather than enemy fire), and which impacts actually did damage as against which struck a target that was already finished. **ORBAT** — with a scenario snapshot also loaded, damage taken read against the class's database damage points, expenditure against magazine contents, and losses against the roster. Everything exports to CSV; the log is read entirely in your browser and never leaves it.
 - **Light and dark themes** and shareable, bookmarkable URLs for any filtered view.
 
 Every number is extracted from the database. Where a value is a modelled estimate rather than a stored field — notably the RCS-scaled radar detection ranges — the page says so and shows the method. Treat radar/IR ranges and threat rings as **clean-air planning envelopes**: they don't account for terrain masking, jamming, or the engine's full dynamic detection model.
+
+---
+
+## Reading a message log (AAR)
+
+CMO writes a running message log while a scenario plays. The dashboard's **AAR log** page reads
+one, parses it into typed records, and reports on it. Nothing is uploaded — parsing happens in
+your browser, and the log never leaves your machine.
+
+1. Save a copy of the log aside. CMO overwrites it each session.
+2. Open **AAR log** in the dashboard and choose the file, or paste its contents.
+3. One log at a time — loading another replaces it. Export first if you want to keep one; the
+   exported JSON loads straight back in.
+
+**Message Log settings matter.** In CMO, under *Options ▸ Message Log*, the analysis needs
+**Weapon Endgame Calculations**, **Unguided Weapon Accuracy Modifiers**, **Weapon Damage**,
+**Unit Damage**, **Unit Lost** and **Point Defence**. Turning **Scenario Events**, **Unit AI**,
+**Debug** and **User Interface** off cuts the file size substantially without losing anything the
+page uses. The Load page lists this too, and the page tells you when a measure is unavailable
+because the records it needs aren't in the file, rather than quietly reporting zero.
+
+Date formats differ by Windows regional settings; the reader detects the format from the file and
+shows which one it used. Records that several sides could see are written once per side, and those
+duplicates are merged so counts aren't doubled.
+
+[LOG_GRAMMAR.md](LOG_GRAMMAR.md) documents every record pattern the reader recognises, how it was
+derived, and what is deliberately *not* claimed from the data. `log_grammar_probe.py` runs the same
+grammar over a folder of logs from the command line if you want to check coverage on your own files.
 
 ---
 
@@ -103,7 +132,7 @@ The Windows executable is built automatically by GitHub Actions (`.github/workfl
 
 ## Sharing & licensing
 
-- **The generator, template, and build files in this repository contain no game data** and are provided under the MIT [LICENSE](LICENSE).
+- **The generator, template, documentation and build files in this repository contain no game data** — beyond the database's own enum identifiers used as keys for the glossary's original write-ups — and are provided under the MIT [LICENSE](LICENSE).
 - **The generated `*_dashboard.html` is different:** it embeds a complete copy of the CMO database, which is proprietary content owned by Slitherine / WarfareSims and covered by the game's End User Licence Agreement (which defines the databases and artwork as protected "Property" and forbids distributing, publishing, copying or publicly displaying them without written permission). **Do not redistribute the generated HTML, or the game's `Images/`, publicly.** Share this tool instead and let other owners generate their own — which is the whole point of a data-free release.
 - This project is an unofficial, fan-made utility. It is **not affiliated with, endorsed by, or supported by Slitherine or WarfareSims.** "Command: Modern Operations" and all database content and trademarks belong to their respective owners.
 - The tool is provided **as-is, without warranty**, for personal use with a game you own.

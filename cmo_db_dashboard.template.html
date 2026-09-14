@@ -323,6 +323,103 @@ details.raw pre{font-size:11px;background:var(--surface-2);padding:8px;border-ra
 .home-cards .big{font-size:26px;font-weight:700;font-family:var(--mono)}
 .home-cards .l{color:var(--text-3);font-size:12px;text-transform:uppercase;letter-spacing:.4px}
 @media (max-width:900px){#app{grid-template-columns:1fr}#nav{position:static;height:auto;border-right:none;border-bottom:1px solid var(--border)}}
+/* --- AAR message log (Phase 1) --- */
+.aarwarn{border:1px solid color-mix(in srgb,var(--warn) 45%,var(--border));background:color-mix(in srgb,var(--warn) 9%,var(--surface));border-radius:var(--radius);padding:9px 12px;font-size:12.5px;color:var(--text-2);line-height:1.55;margin:10px 0}
+.aarchip{display:inline-block;font-size:11.5px;padding:1px 8px;border-radius:10px;background:var(--surface);border:1px solid var(--border);margin:0 2px}
+.aarchip b{font-family:var(--mono)}
+.aarkpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:12px 0}
+.aarkpi{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:10px 12px}
+.aarkv{font-family:var(--mono);font-size:22px;line-height:1.15;color:var(--text)}
+.aarkl{font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--text-3);margin-top:2px}
+.aarks{font-size:11.5px;color:var(--text-2);margin-top:4px}
+.aartl{width:100%;height:92px;display:block}
+.aartlx{display:flex;justify-content:space-between;align-items:baseline;font-size:11px;color:var(--text-3);margin-top:2px;gap:10px}
+.aartlnote{text-align:center;flex:1 1 auto}
+.aartlkey{color:var(--accent)}
+.aarbar{display:flex;flex-wrap:wrap;align-items:center;gap:4px 10px;padding:3px 0;font-size:12.5px}
+.aarbl{flex:0 0 230px;color:var(--text-2)}
+.aarbl.hit{color:var(--good)}
+.aarbl.miss{color:var(--text-2)}
+.aarbt{flex:1 1 auto;background:var(--surface-2);border-radius:3px;height:10px;overflow:hidden}
+.aarbt i{display:block;height:100%;background:var(--border-2);border-radius:3px}
+.aarbl.hit+.aarbt i{background:color-mix(in srgb,var(--good) 55%,var(--border-2))}
+.aarbn{flex:0 0 52px;text-align:right;font-family:var(--mono);font-size:12px;color:var(--text-2)}
+.aartier{font-size:10.5px;text-transform:uppercase;letter-spacing:.5px;color:var(--text-3);font-weight:600;margin:12px 0 5px;display:flex;justify-content:space-between;border-bottom:1px solid var(--border);padding-bottom:3px}
+.aartier span{font-family:var(--mono);letter-spacing:0}
+.aarcls{display:flex;flex-wrap:wrap;gap:5px}
+.aarcl{font-size:11.5px;padding:1px 8px;border-radius:10px;background:var(--surface-2);border:1px solid var(--border);color:var(--text-2)}
+.aarcl b{font-family:var(--mono);color:var(--text);font-weight:400;margin-right:6px}
+.aarunm{margin-top:12px;font-size:12.5px;border-radius:6px;padding:7px 10px}
+.aarunm.ok{color:var(--good);background:color-mix(in srgb,var(--good) 8%,var(--surface-2))}
+.aarunm.bad{color:var(--text);background:color-mix(in srgb,var(--warn) 14%,var(--surface-2));border:1px solid color-mix(in srgb,var(--warn) 45%,var(--border))}
+.aarunmd{margin-top:8px;font-size:12px}
+.aarunmd summary{cursor:pointer;color:var(--text-2)}
+.aarunmd pre{background:var(--surface-2);border:1px solid var(--border);border-radius:6px;padding:8px;overflow:auto;max-height:260px;font-size:11.5px;white-space:pre-wrap}
+.aarcfg{font-size:12.5px;color:var(--text-2);line-height:1.6;padding:4px 2px}
+.aarcfg p{margin:4px 0}
+.aarnext{font-size:11.5px;color:var(--text-3);font-style:italic;margin:14px 0 4px}
+.aarno{color:var(--warn)}
+@media (max-width:700px){.aarbl{flex:1 1 100%}.aarbn{flex-basis:auto}.aarbx{flex:1 1 100%}.aarreason{max-width:none}}
+.aartlt{font-family:var(--mono);font-size:10.5px;color:var(--text-3);white-space:nowrap}
+.aarft td,.aarft th{font-size:12.5px}
+.aarft tbody td:first-child{max-width:300px}
+.aargood{color:var(--good);font-weight:600}
+.aarbad{color:var(--bad);font-weight:600}
+/* the grid item must be allowed to shrink, or an overflow container never clips */
+.aarftw{overflow-x:auto;max-width:100%;min-width:0}
+#main{min-width:0}
+.aarftw table{min-width:640px}
+/* --- AAR phase 2 --- */
+.aartabs{display:flex;flex-wrap:wrap;gap:2px;margin:12px 0 6px;border-bottom:1px solid var(--border)}
+.aartab{padding:6px 12px;font-size:13px;color:var(--text-2);border:1px solid transparent;border-bottom:none;border-radius:6px 6px 0 0;margin-bottom:-1px}
+.aartab:hover{background:var(--surface-2);text-decoration:none}
+.aartab.active{background:var(--surface);border-color:var(--border);color:var(--text);font-weight:600}
+.aarnote{font-size:12px;color:var(--text-2);background:var(--surface-2);border:1px solid var(--border);border-radius:6px;padding:6px 9px;margin:8px 0}
+.aarwt td,.aarwt th{font-size:12.5px}
+.aarwrow{cursor:pointer}
+.aarchev{color:var(--text-3);font-size:10px}
+.aarsub td{background:var(--surface-2);padding:0!important}
+.aarsubt{width:100%;border-collapse:collapse}
+.aarsubt td{padding:3px 9px 3px 26px;font-size:12px;border-bottom:1px solid var(--border);color:var(--text-2)}
+.aarsubt td.num{text-align:right;font-family:var(--mono);white-space:nowrap}
+.aarpk{font-weight:600}
+.aarpk.low{color:var(--text-3);font-weight:400}
+.aarci{font-size:10.5px;color:var(--text-3);margin-left:5px;font-family:var(--mono)}
+.aarero{color:var(--bad)}
+.aarflag{font-size:10.5px;padding:0 6px;border-radius:9px;border:1px solid var(--border);white-space:nowrap}
+.aarflag.bad{color:var(--bad);border-color:color-mix(in srgb,var(--bad) 45%,var(--border))}
+.aarflag.warn{color:var(--warn);border-color:color-mix(in srgb,var(--warn) 45%,var(--border))}
+.aarx{font-size:10px;color:var(--text-3);margin-left:3px}
+.aarbadn{color:var(--bad);font-weight:600}
+.aarbx{font-size:11.5px;color:var(--text-2);flex:1 1 auto;min-width:0}
+.aarreason{font-size:12px;max-width:420px;line-height:1.5}
+/* --- AAR phase 3 --- */
+.aarsc{width:100%;height:300px;display:block}
+.aaraxt{font-size:10px;fill:var(--text-3);font-family:var(--mono)}
+.aaraxl{font-size:11px;fill:var(--text-3)}
+.aarsn{font-size:11px;color:var(--text-3);margin-top:2px}
+.aarlegend{display:flex;gap:16px;font-size:12px;color:var(--text-2);margin:2px 0 6px}
+.aarsw{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px;vertical-align:-1px}
+.aarsw.hit{background:var(--good)}
+.aarsw.miss{border:1.5px solid var(--bad)}
+.aarchain{border:1px solid var(--border);border-radius:var(--radius);padding:9px 11px;margin:10px 0;background:var(--surface-2)}
+.aarchainhd{font-size:13px;margin-bottom:5px}
+.aarchaint{float:right;font-size:11px;color:var(--text-3);font-family:var(--mono)}
+.aarchainkpi{display:flex;flex-wrap:wrap;gap:4px 16px;font-size:12.5px;color:var(--text-2);margin-bottom:7px}
+.aarchaint2{width:100%;border-collapse:collapse}
+.aarchaint2 td{padding:2px 6px;font-size:12px;border-top:1px solid var(--border);vertical-align:top}
+.aarchaint2 td.num{text-align:right;font-family:var(--mono);white-space:nowrap;width:70px}
+.aarraw{font-size:11px;line-height:1.45}
+.aarchainnote{font-size:11.5px;color:var(--text-3);margin-top:7px;line-height:1.5;font-style:italic}
+@media (max-width:700px){.aarraw{display:none}}
+/* --- AAR layout: use the window, keep prose readable --- */
+.aarpage{max-width:1600px}
+.aarpage p.small,.aarpage .scnote,.aarpage .aarwarn,.aarpage .aarnote{max-width:96ch}
+.aarpage .aarkpis{grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
+.aarftw table{width:100%}
+.aarul{font-size:12.5px;color:var(--text-2);line-height:1.6;margin:6px 0 10px;padding-left:20px;max-width:96ch}
+.aarul li{margin:3px 0}
+.aardot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--good);margin-left:6px;vertical-align:2px}
 </style>
 </head>
 <body>
@@ -414,6 +511,7 @@ async function loadDB(){
   }
   buildIndexes();
   loadScenarioFromStore();
+  loadAARFromStore();
 }
 
 /* ---------- classification ---------- */
@@ -837,6 +935,7 @@ function renderNav(){
   html += `<div class="group">Systems</div>` + item('ew','Electronic Warfare', null) + item('detect','Detection matchup', null) + item('threat','Threat rings', null);
   html += `<div class="group">Analysis</div>` + item('explore','Trend explorer', null) + item('tops','Leaderboards', null);
   html += `<div class="group">Scenario</div>` + item('scenario', D.scenario?'Scenario ORBAT':'Load scenario', D.scenario?D.scenario.units.length:null);
+  html += item('aar', D.aar?'AAR log':'Load log', D.aar?D.aar.records:null);
   html += `<div class="group">Reference</div>` + item('glossary','Feature glossary', null);
   if (D.changelog) html += item('changelog','What’s new', null);
   html += `<div class="group">Tools</div>` + item('compare','Compare', null);
@@ -846,6 +945,7 @@ function renderNav(){
 window.addEventListener('hashchange', ()=>{ state.page=0; render(); });
 
 function render(){
+  uisBeforeRender();
   renderNav();
   const {parts, params} = route();
   const main = $('#main');
@@ -866,9 +966,10 @@ function render(){
     else if (parts[0]==='glossary') main.innerHTML = viewGlossary(params);
     else if (parts[0]==='changelog') main.innerHTML = viewChangelog(params);
     else if (parts[0]==='scenario') main.innerHTML = (parts[1]==='ingest') ? scenIngestPanel() : viewScenario(params);
+    else if (parts[0]==='aar') main.innerHTML = (parts[1]==='ingest') ? aarIngestPanel() : viewAAR(params, parts[1]||'');
     else main.innerHTML = '<p>Not found.</p>';
   } catch(err){ main.innerHTML = `<div class="card"><h3>Render error</h3><pre>${esc(err.stack||err)}</pre></div>`; console.error(err); }
-  window.scrollTo(0,0);
+  uisAfterRender();
   renderTray();
 }
 /* ---------- tooltip ---------- */
@@ -3417,6 +3518,1593 @@ print("TOTAL units exported: "..total)
 print("<<<ORBAT_JSON>>>")
 print(table.concat(parts))
 print("<<<END_ORBAT_JSON>>>")`;
+</script>
+<script>
+/* ============================================================
+   AAR — MESSAGE LOG READER  (Phase 1)
+   Ingest one CMO message log (AALog.txt), parse it into typed records, and render an
+   overview. Grammar per LOG_GRAMMAR.md v0.2 (100% coverage over a 5-log / 4,731-record
+   corpus). One log at a time: a new ingest REPLACES the previous one. Export is how you
+   keep a log — exported JSON is re-importable.
+   Runtime only — nothing is baked into the dashboard; persisted per-viewer in localStorage.
+   ============================================================ */
+
+const AAR_KEY  = 'cmo_aar';
+const AAR_FMT  = 'cmo-aar/1';
+const AAR_FLOOR = 5;      // engine clamps final PH at 5% (LOG_GRAMMAR F8)
+
+const AAR_SIDE = /^\[([^\]]+)\] ?([\s\S]*)$/;
+
+/* ---------- timestamp formats ----------
+   CMO writes the log in the machine's regional format, so the leading stamp differs between
+   installs. The format is detected ONCE from the whole file rather than guessed per line:
+   a per-line "try them all" scheme silently mis-dates ambiguous stamps. */
+const AAR_MONTHS = {jan:0,feb:1,mar:2,apr:3,may:4,jun:5,jul:6,aug:7,sep:8,oct:9,nov:10,dec:11};
+const AAR_TS_FORMATS = [
+  { key:'MDY12',  label:'M/D/YYYY h:mm:ss AM',
+    re:/^(\d{1,2})\/(\d{1,2})\/(\d{4}) (\d{1,2}):(\d{2}):(\d{2}) ([AP])M - ([\s\S]*)$/,
+    build:m=>{ let h=+m[4]%12; if(m[7]==='P') h+=12; return {t:Date.UTC(+m[3],+m[1]-1,+m[2],h,+m[5],+m[6]), rest:m[8]}; } },
+  { key:'DMY12',  label:'D/M/YYYY h:mm:ss AM',
+    re:/^(\d{1,2})\/(\d{1,2})\/(\d{4}) (\d{1,2}):(\d{2}):(\d{2}) ([AP])M - ([\s\S]*)$/,
+    build:m=>{ let h=+m[4]%12; if(m[7]==='P') h+=12; return {t:Date.UTC(+m[3],+m[2]-1,+m[1],h,+m[5],+m[6]), rest:m[8]}; } },
+  { key:'MDY24',  label:'M/D/YYYY HH:mm:ss',
+    re:/^(\d{1,2})\/(\d{1,2})\/(\d{4}) (\d{1,2}):(\d{2}):(\d{2}) - ([\s\S]*)$/,
+    build:m=>({t:Date.UTC(+m[3],+m[1]-1,+m[2],+m[4],+m[5],+m[6]), rest:m[7]}) },
+  { key:'DMY24',  label:'D/M/YYYY HH:mm:ss',
+    re:/^(\d{1,2})\/(\d{1,2})\/(\d{4}) (\d{1,2}):(\d{2}):(\d{2}) - ([\s\S]*)$/,
+    build:m=>({t:Date.UTC(+m[3],+m[2]-1,+m[1],+m[4],+m[5],+m[6]), rest:m[7]}) },
+  { key:'DMMMY',  label:'DD-MMM-YY HH:mm:ss',
+    re:/^(\d{1,2})-([A-Za-z]{3})-(\d{2}) (\d{1,2}):(\d{2}):(\d{2}) - ([\s\S]*)$/,
+    build:m=>{ const mo=AAR_MONTHS[m[2].toLowerCase()]; if(mo==null) return null;
+      const yy=+m[3], y = yy<50 ? 2000+yy : 1900+yy;
+      return {t:Date.UTC(y,mo,+m[1],+m[4],+m[5],+m[6]), rest:m[7]}; } },
+  { key:'DMMMY4', label:'DD-MMM-YYYY HH:mm:ss',
+    re:/^(\d{1,2})-([A-Za-z]{3})-(\d{4}) (\d{1,2}):(\d{2}):(\d{2}) - ([\s\S]*)$/,
+    build:m=>{ const mo=AAR_MONTHS[m[2].toLowerCase()]; if(mo==null) return null;
+      return {t:Date.UTC(+m[3],mo,+m[1],+m[4],+m[5],+m[6]), rest:m[7]}; } },
+  { key:'ISO',    label:'YYYY-MM-DD HH:mm:ss',
+    re:/^(\d{4})-(\d{2})-(\d{2}) (\d{1,2}):(\d{2}):(\d{2}) - ([\s\S]*)$/,
+    build:m=>({t:Date.UTC(+m[1],+m[2]-1,+m[3],+m[4],+m[5],+m[6]), rest:m[7]}) },
+];
+const AAR_ANYTS = /^(?:\d{1,2}[\/-][A-Za-z0-9]{1,4}[\/-]\d{2,4}|\d{4}-\d{2}-\d{2}) \d{1,2}:\d{2}:\d{2}(?: [AP]M)? - /;
+
+/* Decide the format from the file, and for slash dates decide M/D vs D/M by evidence:
+   a value above 12 in either position settles it. If nothing settles it (a single-day log),
+   fall back to M/D and say so. */
+function aarDetectFormat(lines){
+  const counts = new Map(); let a=0, b=0;
+  const slash = /^(\d{1,2})\/(\d{1,2})\/\d{4} /;
+  let sampled=0;
+  for (const line of lines){
+    if (!AAR_ANYTS.test(line)) continue;
+    sampled++;
+    for (const f of AAR_TS_FORMATS){
+      if (f.key==='DMY12' || f.key==='DMY24') continue;         // resolved by evidence below
+      if (f.re.test(line)){ counts.set(f.key,(counts.get(f.key)||0)+1); break; }
+    }
+    const sm = slash.exec(line);
+    if (sm){ if (+sm[1]>12) b++; if (+sm[2]>12) a++; }
+    if (sampled>20000) break;
+  }
+  let best=null, n=-1;
+  for (const [k,v] of counts) if (v>n){ n=v; best=k; }
+  if (!best) return {fmt:null, ambiguous:false, sampled};
+  let ambiguous=false;
+  if (best==='MDY12' || best==='MDY24'){
+    if (b>a) best = best==='MDY12' ? 'DMY12' : 'DMY24';         // day-first proven
+    else if (a===0 && b===0) ambiguous=true;                    // nothing above 12 anywhere
+  }
+  return {fmt:AAR_TS_FORMATS.find(f=>f.key===best), ambiguous, sampled};
+}
+
+/* Ordered record grammar — FIRST MATCH WINS, so order is load-bearing.
+   Mirrors log_grammar_probe.py exactly; the two are cross-checked. */
+const AAR_PATTERNS = [
+  ['ENG_MISSILE',       /^(?<w>.+?) #(?<sn>\d+) (?<res>HIT|MISS): Weapon: .+? is attacking (?<tgt>.+?) with a base PH of (?<bph>[\d.]+)%\.(?<mods>[\s\S]*?)Final PH: (?<fph>[\d.]+)% *Result: (?<roll>\d+) - (?<r2>HIT|MISS)(?<tail>[^\n]*)/],
+  ['ENG_GUN',           /^(?<gun>.+?) (?<res>HIT|MISS): Gun \(.+?\) is attacking (?<tgt>.+?) with a base-Ph of (?<bph>[\d.]+)%\.(?<mods>[\s\S]*?)Final Ph: (?<fph>[\d.]+)% *Result: (?<roll>\d+) - (?<r2>HIT|MISS)(?<tail>[^\n]*)/],
+  ['FIRE_POH',          /^(?<plat>.+?) attacks with weapon: (?<w>.+?)\. Nominal PoH: (?<nom>[\d.]+)%\.(?<mods>[\s\S]*?)Final PoH at fire\/launch point: (?<fin>[\d.]+)%/],
+  ['FIRE_CEP',          /^(?<plat>.+?) attacks with weapon: (?<w>.+?)\. Nominal CEP: (?<nom>[\d.]+)(?<u>m|ft|nm)\.(?<mods>[\s\S]*?)Final CEP at fire\/launch point: (?<fin>[\d.]+)(?<u2>m|ft|nm)/],
+  ['SOFTKILL',          /^(?<kind>Decoy|Defensive jammer|Offensive jammer) \((?<sys>.+?); Tech: (?<tech>.+?)\) (?:from|on) (?<plat>.+?) is attempting to (?<verb>seduce|spoof|jam) sensor: (?<sensor>.+?) \(Tech: (?<stech>.+?)\)\((?:Guiding weapon|Of): (?<wpn>.+?)\)\. Final probability: (?<p>[\d.]+)%\. Result: (?<roll>\d+) - (?<r>SUCCESS|FAILURE)/],
+  ['FUEL_LOSS',         /^(?<unit>.+?) has run out of fuel and crashed!/],
+  ['ABANDONED',         /^(?<unit>.+?) has no functioning engines and is being abandoned/],
+  ['CREW_INCAP',        /^Cockpit & crew incapacitated - aircraft is out of control!/],
+  ['COMPONENT_HIT',     /^(?<comp>[A-Z][\w &]*?) hit - penetration (?<pct>[\d.]+)%/],
+  ['DMG_COMP_DEGRADE',  /^(?<unit>.+?) damage report: (?<comp>.+?) has (?:been (?:lightly|moderately|heavily) damaged|suffered additional (?:light |moderate |heavy )?damage)/],
+  ['TERM_NOSENSOR',     /^(?<w>.+?) #(?<sn>\d+) (?<res>MISS): Weapon: .+? has no functioning sensors/],
+  ['GROUP_DISSOLVE',    /^(?<g>.+?) has no units left; dissolving/],
+  ['FLIGHT_ASSEMBLED',  /^Flight (?<f>.+?) has finished assembling/],
+  ['HOSTED',            /^(?<unit>.+?) was hosted in (?<where>[\s\S]+)$/],
+  ['PATHEVAL',          /^(?:The unit )?(?<u>.+?) (?:will wait until path evaluation|path evaluation terminated)/],
+  ['TERM',              /^(?<w>.+?) (?:#(?<sn>\d+) )?(?<res>HIT|MISS): (?<detail>(?!Weapon:|Gun \()[\s\S]*)$/],
+  ['DMG_DP',            /^(?<unit>.+?) has suffered (?<type>weapon|blast|underground shock|fragmentation|fire|flooding) damage: (?<dp>[\d.]+) DPs/],
+  ['DMG_COMPONENT',     /^(?<unit>.+?) damage report: (?<comp>.+?) has been destroyed[!.]/],
+  ['SINKING',           /^(?<unit>.+?) is sinking!!!/],
+  ['BDA_REPORT',        /^(?<by>.+?) reports BDA status change on contact: (?<c>[\s\S]+)$/],
+  ['DMG_STATE',         /^(?<unit>.+?) has (?:a )?(?:severe |major |moderate |light |minor )?(?<state>flooding|fire|structural damage)/],
+  ['FIRE_OUT',          /^(?<unit>.+?) has extinguished all fires/],
+  ['CONTROLS_LOST',     /^(?<unit>.+?) has its flight controls knocked out/],
+  ['CABIN_HIT',         /^(?<unit>.+?) suffered penetration on pressurized cabin/],
+  ['REPAIR_DONE',       /^(?<unit>.+?)(?:: structural integrity fully restored!| damage report: *(?<c2>.*?) has been fully repaired\.)/],
+  ['REPAIRING',         /^(?<unit>.+?) damage report: *(?<comp>.*?) is being repaired \((?<lvl>[^)]+)\)/],
+  ['FIRE_WARN',         /^WARNING: (?<unit>.+?) is risking uncontrollable fires!/],
+  ['REPAIR',            /^(?<unit>.+?): structural damage being repaired, now at (?<pct>[\d.]+)%/],
+  ['DESTROYED',         /^(?<unit>.+?) has been destroyed!/],
+  ['PENETRATION',       /^(?<pct>\d+)% penetration achieved/],
+  ['NEARMISS',          /^Weapon: (?<w>.+?) #(?<sn>\d+) missed (?<tgt>.+?) by (?<d>[\d.]+)(?<u>ft|m|nm)/],
+  ['CEP_UPDATE',        /^Weapon: (?<w>.+?) #(?<sn>\d+) has a (?<rate>\d+)% rate on recent GNSS updates - CEP adjusted to: (?<cep>[\d.]+)/],
+  ['SEEKER_DETECT',     /^(?:.+?Seeker|Multiple sensors) on (?<w>.+?) detected new potential target (?<tgt>[\s\S]+)$/],
+  ['LOCKON',            /^(?<w>.+?) has locked on to (?<tgt>[\s\S]+)$/],
+  ['IMPACT',            /^Weapon: (?<w>.+?) has impacted (?<tgt>[\s\S]+)$/],
+  ['WPN_NOUPDATE',      /^Weapon: (?<w>.+?) is not receiving firm target updates from parent unit/],
+  ['WPN_NOREFLECT',     /^Weapon: (?<w>.+?) can no longer see reflected energy from target/],
+  ['WPN_LOGIC',         /^Weapon: (?<w>.+?) (?:is running blind|overshot|has no eligible|has only one|has been redirected)/],
+  ['GODSEYE',           /^GOD'S EYE (?<state>ENABLED|DISABLED)\./],
+  ['AIRFIELD_SPOT_NEW', /^New aircraft spotted on (?<loc>.+?) \((?<cap>[^)]+)\) by (?<by>.+?) \(Sensor: (?<sensor>.+?)\)\./],
+  ['AIRFIELD_SPOT_ID',  /^Aircraft previously spotted on (?<loc>.+?) \((?<cap>[^)]+)\) has been (?:identified|type-classified) as: (?<cls>.+?) \(recon by: (?<by>.+?) - Sensor: (?<sensor>.+?)\)\./],
+  ['DOCTRINE',          /^The Unit (?<u>.+?) cannot fire against (?<tgt>.+?) with weapon (?<w>.+?)(?:\. REASON: (?<reason>[\s\S]*))?$/],
+  ['CONTACT_NEW',       /^(?:NEW DELAYED CONTACT|New contact!)/],
+  ['CONTACT_PROBABLE',  /^New probable (?<what>\w+) contact!/],
+  ['CONTACT_ID',        /^Contact:? *(?<c>[\s\S]*?) has been (?:type-classified|classified|positively identified) as: (?<cls>[\s\S]+)$/],
+  ['CONTACT_RENAME',    /^Contact:? (?<c>.+?) is now known as: (?<n>[\s\S]+)$/],
+  ['CONTACT_HOSTILE',   /^Contact:? (?<c>.+?) was observed attacking a friendly unit/],
+  ['CONTACT_MANUAL',    /^Contact:? (?<c>.+?) has been manually marked as hostile!/],
+  ['CONTACT_ATTRIB',    /^Contact:? (?<c>.+?) is the most likely firing unit of(?<of>[\s\S]*?) and is now considered as hostile!/],
+  ['CONTACT_UPDATE',    /^Updating data for contact: (?<c>.+?), based on new information by: (?<by>[\s\S]+)$/],
+  ['CONTACT_LOST_PRIV', /^(?<holder>.+?): Private contact ?(?<c>[\s\S]*?) has been lost\./],
+  ['CONTACT_LOST',      /^(?:(?<holder>\S+) ?:)?Contact:? ?(?<c>[\s\S]*?) has been lost\./],
+  ['COMMS',             /(?:rejoined the communications network|has lost communications)/],
+  ['SIDE_SWITCH',       /^Switched side to: (?<side>[\s\S]+)$/],
+  ['POSTURE',           /^Side '(?<a>.+?)' is now considered (?<p>\w+) to (?<b>[\s\S]+)$/],
+  ['EVENT',             /^Event: '(?<ev>.+?)' has been fired\./],
+  // NOT a catch-all. It previously matched any "word: value" line and silently absorbed
+  // 82 real records across the corpus. Restricted to actual markup/stylesheet fragments.
+  ['SPECIAL_MSG',       /^\s*(?:<|@import\b|\{|\}|(?:font|background|color|margin|padding|border|display|text|line|width|height|max|min|flex|grid|position|top|left|right|bottom|letter|box|opacity|z-index)[\w-]*\s*:\s*\S)/],
+];
+
+/* which classes belong to which tier — drives the overview grouping */
+const AAR_TIER = {
+  ENG_MISSILE:1, ENG_GUN:1, FIRE_POH:1, FIRE_CEP:1, SOFTKILL:1, TERM:1, TERM_NOSENSOR:1, IMPACT:1, PENETRATION:1, NEARMISS:1,
+  DMG_DP:2, DMG_COMP_DEGRADE:2, DMG_COMPONENT:2, DMG_STATE:2, SINKING:2, DESTROYED:2, CEP_UPDATE:2,
+  SEEKER_DETECT:2, LOCKON:2, DOCTRINE:2, BDA_REPORT:2, COMMS:2, POSTURE:2, SIDE_SWITCH:2, GROUP_DISSOLVE:2,
+  AIRFIELD_SPOT_NEW:2, AIRFIELD_SPOT_ID:2, GODSEYE:2, CONTACT_MANUAL:2, CONTACT_ATTRIB:2,
+  FUEL_LOSS:2, ABANDONED:2, CREW_INCAP:2, COMPONENT_HIT:2, FIRE_OUT:2, FIRE_WARN:2, REPAIR:2,
+  CONTROLS_LOST:2, CABIN_HIT:2, REPAIR_DONE:2, REPAIRING:2,
+  CONTACT_PROBABLE:2, HOSTED:2,
+  CONTACT_NEW:2, CONTACT_ID:2, CONTACT_RENAME:2, CONTACT_HOSTILE:2, CONTACT_UPDATE:2, CONTACT_LOST:2, CONTACT_LOST_PRIV:2,
+  EVENT:3, WPN_LOGIC:3, WPN_NOUPDATE:3, WPN_NOREFLECT:3, PATHEVAL:3, SPECIAL_MSG:3, FLIGHT_ASSEMBLED:3,
+};
+const AAR_TIER_LABEL = {1:'Scored events', 2:'Effects & context', 3:'Noise'};
+
+/* The unit a terminal record acted on. "Has impacted X, No other units affected" /
+   "Missed X by 39ft, The explosion affected X" / "Has impacted X." — X is what we want. */
+function aarTermTarget(detail){
+  const d = String(detail||'');
+  // Unit names contain their own commas - "Bridge (Two-Lane, 60 Tons)" - so stopping at the
+  // first comma splits one unit into two. Stop only at a comma that begins a known trailing
+  // clause, or at the end of the record.
+  const TAIL = ', (?:No other units|No units|The explosion|Has detonated|Has malfunctioned|Will )';
+  let m = new RegExp('^Has impacted (.+?)(?:' + TAIL + '|\\.?\\s*$)').exec(d);
+  if (m) return m[1].trim().replace(/[.,]+$/,'');
+  m = /^Missed (.+?) by [\d.]+\s*(?:ft|m|nm)/.exec(d);
+  if (m) return m[1].trim().replace(/[.,]+$/,'');
+  m = new RegExp('^The explosion(?: also)? affected (.+?)(?:' + TAIL + '|\\.?\\s*$)').exec(d);
+  if (m) return m[1].trim().replace(/[.,]+$/,'');
+  return null;
+}
+
+/* terminal miss/hit mode classification (LOG_GRAMMAR F5) */
+function aarTermMode(res, detail){
+  const d = detail || '';
+  if (res === 'HIT') return /Missed .+ by /i.test(d) ? 'near-miss detonation' : 'impact';
+  if (/run out of energy/i.test(d))       return 'out of energy';
+  if (/seekers were spoofed/i.test(d))    return 'seduced / spoofed';
+  if (/malfunction/i.test(d))             return 'malfunction';
+  if (/Impact(?:ed|s)? surface/i.test(d)) return 'impacted surface';
+  if (/no functioning sensors/i.test(d))  return 'lost terminal homing';
+  if (/cannot have its target illuminated/i.test(d)) return 'no illumination';
+  if (/Has detonated/i.test(d))           return 'detonated off target';
+  if (/^Missed .+ by /i.test(d))          return 'near-miss, no effect';
+  if (/^No units affected by explosion/i.test(d)) return 'no effect';
+  return 'other';
+}
+
+/* Split raw text into records using the detected format. A line without a timestamp
+   continues the previous record. Returns [{t, ts, body}] plus the format that was used. */
+function aarSplitRecords(text){
+  const lines = String(text).split('\n');
+  const det = aarDetectFormat(lines);
+  const recs = [];
+  if (!det.fmt) return Object.assign(recs, {format:null, ambiguous:false});
+  let cur = null;
+  for (const line of lines){
+    const m = det.fmt.re.exec(line);
+    if (m){
+      const v = det.fmt.build(m);
+      if (v){ if (cur) recs.push(cur); cur = {t:v.t, ts:line.slice(0, line.indexOf(' - ')), body:v.rest}; continue; }
+    }
+    if (cur) cur.body += '\n' + line;
+  }
+  if (cur) recs.push(cur);
+  recs.format = det.fmt; recs.ambiguous = det.ambiguous;
+  return recs;
+}
+
+/* ---------- side mirroring ----------
+   A record visible to several sides is written once per side: same timestamp, same body,
+   different [Side] prefix. Those are ONE event. But a side can also legitimately log the
+   same body twice in the same second ("100% penetration achieved"), and those are separate
+   events — collapsing them destroys real data. So the number of real events is the largest
+   count any SINGLE side reports, and the surviving records are that side's. */
+function aarDedupeSides(recs){
+  const groups = new Map();
+  for (const r of recs){
+    const sm = AAR_SIDE.exec(r.body);
+    r.side = sm ? sm[1].trim() : null;
+    r.core = (sm ? sm[2] : r.body).trim();
+    const k = r.t + '\u0000' + r.core;
+    let g = groups.get(k); if (!g){ g = new Map(); groups.set(k, g); }
+    const sk = r.side == null ? '\u0001none' : r.side;
+    g.set(sk, (g.get(sk)||0) + 1);
+  }
+  const keep = new Map();      // key -> {side, n}
+  for (const [k,g] of groups){
+    let bs=null, bn=0;
+    for (const [sk,n] of g) if (n>bn){ bn=n; bs=sk; }
+    keep.set(k, {side:bs, n:bn});
+  }
+  const out = []; const used = new Map(); let dropped = 0;
+  for (const r of recs){
+    const k = r.t + '\u0000' + r.core;
+    const kp = keep.get(k);
+    const sk = r.side == null ? '\u0001none' : r.side;
+    const u = used.get(k) || 0;
+    if (sk === kp.side && u < kp.n){ used.set(k, u+1); out.push(r); }
+    else dropped++;
+  }
+  out.mirrored = dropped;
+  return out;
+}
+
+function aarNumList(mods, re){ const m = re.exec(mods||''); return m ? m.slice(1).map(Number) : null; }
+
+/* pull the typed modifier chain out of an engagement's free-text middle */
+function aarMods(mods){
+  const out = [];
+  const push = (name, v, raw) => out.push({name, v, raw});
+  let m;
+  if ((m = /Target speed modifier: (-?[\d.]+)%/.exec(mods)))            push('Target speed', +m[1], m[0]);
+  if ((m = /PH adjusted for weapon speed: ([\d.]+)%/.exec(mods)))       push('Weapon speed', +m[1], m[0]);
+  if ((m = /Base-Ph adjusted for distance: ([\d.]+)%/.exec(mods)))      push('Distance', +m[1], m[0]);
+  if ((m = /Target signature modifier: (-?[\d.]+)%/.exec(mods)))        push('Target signature', +m[1], m[0]);
+  if ((m = /Sea-skimmer modifier: (-?[\d.]+)%/.exec(mods)))             push('Sea-skimmer', +m[1], m[0]);
+  if ((m = /Proximity fuze \(.+?\) - Ph increased by ([\d.]+)x/.exec(mods))) push('Proximity fuze', +m[1], m[0]);
+  if ((m = /PH reduced by (-?[\d.]+)%/.exec(mods)))                     push('Kinematic penalty', -Math.abs(+m[1]), m[0]);
+  if ((m = /Final agility modifier: (-?[\d.]+)%/.exec(mods)))           push('Agility', +m[1], m[0]);
+  if (/random terminal manouver|zig-zag terminal manouver/.test(mods))  push('Terminal manoeuvre', null, (/Target is missile with [^.]+\./.exec(mods)||[''])[0]);
+  if ((m = /Target is at Mach ([\d.]+)/.exec(mods)))                    push('Target Mach', +m[1], m[0]);
+  return out;
+}
+
+/* CEP chain terms. Polarity is the opposite of PH: a SMALLER CEP is better. */
+const AAR_SALVO = {slightly:1, measurably:2, substantially:3, tremendously:4};
+function aarCepMods(mods){
+  const out=[]; let m;
+  if ((m=/Director \((?<d>.+?)\) is (?<how>[^;]+); accuracy (?:decreased by (?<pct>[\d.]+)%|unaffected)/.exec(mods)))
+    out.push({name:'Director', v:m.groups.pct?-Math.abs(+m.groups.pct):0, detail:m.groups.d, raw:m[0]});
+  if ((m=/(?<lad>A few|Some|Quite a few|Lots)(?: of| \(less than \d+\))? rounds already fired in salvo; accuracy improving (?<adv>\w+)/.exec(mods)))
+    out.push({name:'Salvo warming', v:AAR_SALVO[m.groups.adv]||null, detail:m.groups.adv, raw:m[0]});
+  if ((m=/Sea state (?<ss>[\d-]+)[^.]*?accuracy (?:decreased by (?<pct2>[\d.]+)%|unaffected)/.exec(mods)))
+    out.push({name:'Sea state', v:m.groups.pct2?-Math.abs(+m.groups.pct2):0, detail:m.groups.ss, raw:m[0]});
+  return out;
+}
+
+function parseAAR(text, name){
+  const raw = aarSplitRecords(text);
+  if (!raw.length || !raw.format) throw new Error(
+    'No timestamped records found. CMO writes the log in your machine\'s regional date format; '
+    + 'this file uses one the reader does not recognise yet. Recognised: '
+    + AAR_TS_FORMATS.map(f=>f.label).join(' · ') + '.');
+  const recs = aarDedupeSides(raw);
+
+  const out = {
+    format: AAR_FMT, name: name || '(pasted log)',
+    classes: {}, sides: {}, engagements: [], unguided: [], softkill: [],
+    terminal: [], damage: [], denied: [], isr: [], unmatched: [], godseye: [],
+    times: [],                                  // every record's timestamp — drives the activity chart
+    records: recs.length, blank: 0, span: {start:null, end:null},
+    tsFormat: raw.format.label, tsAmbiguous: !!raw.ambiguous,
+    rawRecords: raw.length, mirrored: recs.mirrored || 0,
+  };
+  const bump = k => out.classes[k] = (out.classes[k]||0) + 1;
+
+  for (const rec of recs){
+    const t = rec.t, ts = rec.ts, side = rec.side, body = rec.core;
+    if (t != null){
+      out.times.push(t);
+      if (out.span.start==null||t<out.span.start) out.span.start=t;
+      if (out.span.end==null||t>out.span.end) out.span.end=t;
+    }
+    if (side) out.sides[side] = (out.sides[side]||0) + 1;
+    if (!body){ out.blank++; continue; }
+
+    let hit = null, g = null;
+    for (const [nm, re] of AAR_PATTERNS){
+      const mm = re.exec(body);
+      if (mm){ hit = nm; g = mm.groups || {}; break; }
+    }
+    if (!hit){
+      if (out.unmatched.length < 500) out.unmatched.push({t, ts, side, body: body.split('\n')[0].slice(0,200)});
+      bump('UNMATCHED'); continue;
+    }
+    bump(hit);
+
+    if (hit === 'ENG_MISSILE' || hit === 'ENG_GUN'){
+      const kin  = aarNumList(g.mods, /Intercept angle (\d+) deg, tgt (\d+) kts, intc (\d+) kts/);
+      const los  = aarNumList(g.mods, /LOS rate ([\d.]+) deg\/s/);
+      const fin  = +g.fph;
+      out.engagements.push({
+        t, ts, kind: hit==='ENG_GUN' ? 'gun' : 'missile',
+        weapon: (g.gun || g.w || '').trim(), serial: g.sn ? +g.sn : null,
+        target: (g.tgt||'').replace(/ #\d+$/,'').trim(), targetSerial: (/#(\d+)$/.exec(g.tgt||'')||[])[1] || null,
+        base: +g.bph, final: fin, roll: +g.roll, result: g.r2,
+        floored: fin <= AAR_FLOOR,          // F8: the engine gave up, it did not compute 5%
+        note: (g.tail||'').replace(/^[,.\s]+|[.\s]+$/g,'') || null,   // e.g. "Hit-To-Kill warhead: Target destroyed outright" 
+        angle: kin?kin[0]:null, tgtKts: kin?kin[1]:null, intcKts: kin?kin[2]:null,
+        los: los?los[0]:null, mods: aarMods(g.mods||''),
+      });
+    } else if (hit === 'FIRE_POH'){
+      // probability-of-hit fire (air/point-defence): HIGHER is better, units are %
+      out.unguided.push({t, ts, side, metric:'PoH', unit:'%',
+        platform:(g.plat||'').trim(), weapon:(g.w||'').trim(),
+        nominal:+g.nom, final:+g.fin, mods: aarMods(g.mods||''), raw:(g.mods||'').trim()});
+    } else if (hit === 'FIRE_CEP'){
+      // circular-error-probable fire (surface/land direct fire): LOWER is better, units are length
+      out.unguided.push({t, ts, side, metric:'CEP', unit:g.u||'m',
+        platform:(g.plat||'').trim(), weapon:(g.w||'').trim(),
+        nominal:+g.nom, final:+g.fin, mods: aarCepMods(g.mods||''), raw:(g.mods||'').trim()});
+    } else if (hit === 'IMPACT'){
+      // a round that impacted without an endgame record — a terminal outcome all the same
+      out.terminal.push({t, ts, side, weapon:(g.w||'').trim(), serial:null,
+        result:'HIT', detail:'Has impacted '+(g.tgt||'').trim(), mode:'impact',
+        target:(g.tgt||'').trim().replace(/[.,]$/,''), unscored:true});
+    } else if (hit === 'GODSEYE'){
+      out.godseye.push({t, ts, side, state:g.state});
+    } else if (hit === 'SOFTKILL'){
+      out.softkill.push({t, ts, side, kind:g.kind, system:(g.sys||'').trim(), tech:g.tech,
+        platform:(g.plat||'').trim(), verb:g.verb, sensor:(g.sensor||'').trim(), sensorTech:g.stech,
+        weapon:(g.wpn||'').replace(/ #\d+$/,'').trim(), prob:+g.p, roll:+g.roll, result:g.r});
+    } else if (hit === 'TERM' || hit === 'TERM_NOSENSOR'){
+      const detail = hit==='TERM_NOSENSOR' ? 'Has no functioning sensors for terminal homing' : (g.detail||'').trim();
+      out.terminal.push({t, ts, side, weapon:(g.w||'').trim(), serial:g.sn?+g.sn:null,
+        result:g.res, detail, mode: aarTermMode(g.res, detail), target: aarTermTarget(detail)});
+    } else if (hit === 'DMG_DP'){
+      out.damage.push({t, ts, side, unit:(g.unit||'').trim(), kind:'dp', dtype:g.type, dp:+g.dp});
+    } else if (hit === 'DMG_COMPONENT' || hit === 'DMG_COMP_DEGRADE'){
+      out.damage.push({t, ts, side, unit:(g.unit||'').trim(), kind: hit==='DMG_COMPONENT'?'component-destroyed':'component-damaged', component:(g.comp||'').trim()});
+    } else if (hit === 'FUEL_LOSS' || hit === 'ABANDONED'){
+      out.damage.push({t, ts, side, unit:(g.unit||'').trim(),
+        kind:'lost', cause: hit==='FUEL_LOSS' ? 'out of fuel' : 'engines lost / abandoned'});
+    } else if (hit === 'DESTROYED' || hit === 'SINKING' || hit === 'DMG_STATE'){
+      out.damage.push({t, ts, side, unit:(g.unit||'').trim(),
+        kind: hit==='DESTROYED' ? 'destroyed' : hit==='SINKING' ? 'sinking' : 'state', state:g.state||null});
+    } else if (hit === 'DOCTRINE'){
+      out.denied.push({t, ts, side, unit:(g.u||'').trim(), target:(g.tgt||'').trim(),
+        weapon:(g.w||'').trim(), reason:(g.reason||'').trim()||null});
+    } else if (hit === 'AIRFIELD_SPOT_NEW' || hit === 'AIRFIELD_SPOT_ID'){
+      out.isr.push({t, ts, side, loc:(g.loc||'').trim(), cap:g.cap,
+        cls: g.cls ? g.cls.trim() : null, by:(g.by||'').trim(), sensor:(g.sensor||'').trim()});
+    }
+  }
+  out.coverage = out.records ? (out.records - (out.classes.UNMATCHED||0)) / out.records : 1;
+  return out;
+}
+
+/* ---------- store: one log at a time, replace on ingest ---------- */
+function ingestAAR(text, source, name){
+  let a;
+  if (/"format"\s*:\s*"cmo-aar\//.test(text)){        // re-import of our own export
+    a = JSON.parse(text);
+    if (a.format !== AAR_FMT) throw new Error('That export is format "'+a.format+'"; this dashboard reads '+AAR_FMT+'.');
+  } else {
+    a = parseAAR(text, name);
+  }
+  a.source = source || 'paste'; a.ingested = new Date().toISOString();
+  D.aar = a;
+  try { localStorage.setItem(AAR_KEY, JSON.stringify(a)); }
+  catch(e){ a.notPersisted = true; }                   // quota/private mode: memory only
+  location.hash = '#/aar'; render();
+}
+function clearAAR(){ D.aar = null; try { localStorage.removeItem(AAR_KEY); } catch(e){} location.hash='#/aar'; render(); }
+function loadAARFromStore(){ try { const s = localStorage.getItem(AAR_KEY); if (s) D.aar = JSON.parse(s); } catch(e){ D.aar = null; } }
+function aarIngestFromBox(){
+  const t = (document.getElementById('aarpaste')||{}).value || '';
+  try { ingestAAR(t, 'paste'); }
+  catch(e){ const el=document.getElementById('aarerr'); if(el){ el.textContent=e.message; el.hidden=false; } }
+}
+function aarIngestFromFile(input){
+  const f = input.files && input.files[0]; if(!f) return;
+  const r = new FileReader();
+  r.onload = () => { try { ingestAAR(String(r.result), 'file', f.name); }
+    catch(e){ const el=document.getElementById('aarerr'); if(el){ el.textContent=e.message; el.hidden=false; } } };
+  r.readAsText(f);
+}
+
+/* ---------- export ---------- */
+function aarDownload(filename, text, mime){
+  const blob = new Blob([text], {type:(mime||'text/plain')+';charset=utf-8'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = filename; document.body.appendChild(a); a.click();
+  setTimeout(()=>{ document.body.removeChild(a); URL.revokeObjectURL(url); }, 0);
+}
+function aarStem(){
+  const a = D.aar; if (!a) return 'aar';
+  return String(a.name||'aar').replace(/\.[^.]+$/,'').replace(/[^\w.-]+/g,'_') || 'aar';
+}
+function aarExportJSON(){
+  if (!D.aar) return;
+  aarDownload(aarStem()+'_aar.json', JSON.stringify(D.aar), 'application/json');
+}
+function aarCSV(rows, cols){
+  const q = v => { const s = v==null?'':String(v); return /[",\n]/.test(s) ? '"'+s.replace(/"/g,'""')+'"' : s; };
+  return [cols.join(',')].concat(rows.map(r=>cols.map(c=>q(r[c])).join(','))).join('\r\n');
+}
+function aarExportEngagementsCSV(){
+  const a = D.aar; if (!a) return;
+  const rows = a.engagements.map(e=>({
+    time:e.ts, kind:e.kind, weapon:e.weapon, serial:e.serial, target:e.target,
+    base_ph:e.base, final_ph:e.final, floored:e.floored?1:0, roll:e.roll, result:e.result,
+    intercept_angle_deg:e.angle, target_kts:e.tgtKts, interceptor_kts:e.intcKts, los_deg_s:e.los,
+    modifiers:(e.mods||[]).map(m=>m.name+(m.v==null?'':'='+m.v)).join('; '),
+  }));
+  aarDownload(aarStem()+'_engagements.csv',
+    aarCSV(rows, ['time','kind','weapon','serial','target','base_ph','final_ph','floored','roll','result',
+                  'intercept_angle_deg','target_kts','interceptor_kts','los_deg_s','modifiers']), 'text/csv');
+}
+function aarExportTerminalCSV(){
+  const a = D.aar; if (!a) return;
+  const rows = a.terminal.map(t=>({time:t.ts, side:t.side, weapon:t.weapon, serial:t.serial, result:t.result, mode:t.mode, detail:t.detail}));
+  aarDownload(aarStem()+'_terminal.csv', aarCSV(rows, ['time','side','weapon','serial','result','mode','detail']), 'text/csv');
+}
+
+/* ============================================================
+   UI STATE - collapsible sections and scroll position across navigation
+
+   render() rebuilds #main wholesale on every hash change, so every <details>
+   and every expandable AAR row reverts to its authored default. That makes the
+   back button destructive: open three levels of a scenario ORBAT, click into a
+   platform, come back, and the whole tree is shut again.
+
+   Keys are derived from the DOM after each render rather than authored into
+   each view, so no view function has to know this exists. A key is the route
+   plus the chain of <summary> labels from the outermost <details> inward -
+   "#/scenario | Blue Force > TF 60 > Surface ships" - which survives sorting,
+   filtering and paging, because it does not depend on element position.
+   Repeated label chains are disambiguated by order of appearance.
+
+   State lives for the life of the page only. It is deliberately not persisted
+   to localStorage: a tree restored from a session three days ago, against a
+   scenario that has since been replaced, is confusing rather than helpful.
+   ============================================================ */
+
+const UIS = {
+  open: new Map(),      // key -> boolean          (details / expandable rows)
+  scroll: new Map(),    // history entry -> scrollY
+  seq: null,            // history entry on screen, so scroll is filed correctly
+  next: 0,              // counter handing out history-entry numbers
+  quiet: false,         // set while re-applying, so restores do not re-record
+};
+const UIS_MAX = 5000;   // a long session should not grow without bound
+const SEP='~|~', SUB='~>~', DUP='~#~', ROW='~row~';   // separators no <summary> label contains
+
+function uisRoute(){ return location.hash.split('?')[0] || '#/'; }
+
+/* Which history entry are we on, and have we been on it before?
+
+   Not popstate: Chromium fires popstate on EVERY fragment navigation, forward
+   ones included, so it cannot tell a click from a back button. Instead stamp
+   each entry with a number the first time it is rendered. An entry that already
+   carries a number is one the reader has been on before - a back or forward -
+   and only then is a scroll position restored. */
+function uisEntry(){
+  const st = history.state;
+  if (st && typeof st.uisSeq === 'number') return {seq: st.uisSeq, fresh: false};
+  const seq = ++UIS.next;
+  try { history.replaceState(Object.assign({}, st, {uisSeq: seq}), ''); }
+  catch(e){ return {seq: null, fresh: true}; }
+  return {seq, fresh: true};
+}
+
+function uisRemember(k, v){
+  if (k == null) return;
+  if (UIS.open.size > UIS_MAX) UIS.open.clear();
+  UIS.open.set(k, v);
+}
+
+function uisLabel(d){
+  const s = d.firstElementChild;
+  if (!s || s.tagName !== 'SUMMARY') return '';
+  return s.textContent.replace(/\s+/g, ' ').trim().slice(0, 80);
+}
+
+/* Assign every collapsible in #main a stable key, then re-apply what we know
+   about it. Anything we have never seen keeps the author's default. */
+function uisIndex(){
+  const main = document.getElementById('main');
+  if (!main) return;
+  const route = uisRoute(), seen = new Map();
+  UIS.quiet = true;
+
+  for (const d of main.querySelectorAll('details')){
+    const chain = [];
+    for (let n = d; n && n !== main; n = n.parentElement)
+      if (n.tagName === 'DETAILS') chain.push(uisLabel(n));
+    let k = route + SEP + chain.reverse().join(SUB);
+    const n = seen.get(k) || 0; seen.set(k, n + 1);
+    if (n) k += DUP + n;
+    d.__uisk = k;
+    const v = UIS.open.get(k);
+    if (v !== undefined && d.open !== v) d.open = v;
+  }
+
+  /* AAR expandable rows are not <details> - they are a hidden sibling <tr>
+     driven by aarTog(), keyed by an id already derived from the row's name. */
+  for (const r of main.querySelectorAll('tr.aarsub[id]')){
+    const k = route + SEP + ROW + r.id;
+    r.__uisk = k;
+    const v = UIS.open.get(k);
+    if (v === undefined) continue;
+    r.hidden = !v;
+    const c = document.getElementById(r.id + 'c');
+    if (c) c.textContent = v ? '▾' : '▸';
+  }
+
+  UIS.quiet = false;
+}
+
+/* toggle does not bubble, so listen in the capture phase. */
+document.addEventListener('toggle', e => {
+  const d = e.target;
+  if (UIS.quiet || !d || d.tagName !== 'DETAILS') return;
+  uisRemember(d.__uisk, d.open);
+}, true);
+
+/* The browser does its own scroll restoration on history navigation,
+   asynchronously and after ours. Take it over so there is one owner. */
+try { if (history.scrollRestoration) history.scrollRestoration = 'manual'; } catch(e){}
+
+window.addEventListener('scroll', () => {
+  if (UIS.seq != null) UIS.scroll.set(UIS.seq, window.scrollY);
+}, {passive: true});
+
+/* Called at the top of render(), before #main is replaced. This is the last
+   moment the outgoing page is still on screen, so it is where the reader's
+   position is filed. Going to the top here rather than after the swap also
+   keeps the browser from anchoring the new content to the old offset.
+   UIS.seq goes null so the scroll events this causes are not filed anywhere. */
+function uisBeforeRender(){
+  if (UIS.seq != null) UIS.scroll.set(UIS.seq, window.scrollY);
+  UIS.seq = null;                 // ignore the scroll events the next line causes
+  window.scrollTo(0, 0);
+}
+
+/* Called at the end of render(), in place of the old unconditional
+   scrollTo(0,0). A fresh navigation still lands at the top; only back and
+   forward restore where the reader was. */
+function uisAfterRender(){
+  const e = uisEntry();
+  uisIndex();
+  const y = e.fresh ? 0 : (UIS.scroll.get(e.seq) || 0);
+  window.scrollTo(0, y);
+  if (y) requestAnimationFrame(() => window.scrollTo(0, y));   // after late layout
+  UIS.seq = e.seq;
+}
+
+/* ---------- overview ---------- */
+function aarFmtSpan(a){
+  if (a.span.start==null) return '—';
+  const d = t => new Date(t).toISOString().replace('T',' ').replace(/\.\d+Z$/,'');
+  const mins = (a.span.end - a.span.start)/60000;
+  return d(a.span.start) + ' → ' + d(a.span.end).slice(11) + ' Z  ·  ' + (mins>=60 ? fmt.n(mins/60,1)+' h' : fmt.n(mins,0)+' min');
+}
+
+/* activity histogram + engagement rail. One series each, directly labelled — no legend needed. */
+function aarTimeline(a){
+  if (a.span.start==null || a.span.end<=a.span.start) return '';
+  const W=880, H=92, PAD=4, RAIL=14, BODY=H-RAIL-16;
+  const NB=72, t0=a.span.start, span=a.span.end-t0, bw=(W-PAD*2)/NB;
+  const bins=new Array(NB).fill(0), ebins=new Array(NB).fill(0);
+  const idx = t => Math.min(NB-1, Math.max(0, Math.floor((t-t0)/span*NB)));
+  // activity = EVERY timestamped record, not only the typed-payload ones: a detection-only
+  // log (no engagements at all) must still draw a timeline.
+  const times = Array.isArray(a.times) && a.times.length ? a.times
+    : [].concat(a.engagements, a.terminal, a.softkill, a.damage, a.denied, a.isr).map(r=>r.t);
+  for (const t of times) if (t!=null) bins[idx(t)]++;
+  for (const e of a.engagements) if (e.t!=null) ebins[idx(e.t)]++;
+  const max=Math.max(1,...bins);
+  const minsPer = span/NB/60000;
+  let bars='';
+  for (let i=0;i<NB;i++){
+    const h = bins[i] ? Math.max(2, Math.round(bins[i]/max*BODY)) : 0;
+    if (!h) continue;
+    const lbl = `${fmt.n(bins[i])} record${bins[i]===1?'':'s'}${ebins[i]?` · ${ebins[i]} scored engagement${ebins[i]===1?'':'s'}`:''} — +${fmt.n(i*minsPer,0)} min`;
+    bars += `<rect x="${(PAD+i*bw).toFixed(1)}" y="${PAD+BODY-h}" width="${Math.max(1,bw-2).toFixed(1)}" height="${h}" rx="2" fill="var(--border-2)" data-tip="${esc(lbl)}"></rect>`;
+    if (ebins[i]) bars += `<rect x="${(PAD+i*bw).toFixed(1)}" y="${PAD+BODY+4}" width="${Math.max(1,bw-2).toFixed(1)}" height="${RAIL-6}" rx="1.5" fill="var(--accent)" data-tip="${esc(lbl)}"></rect>`;
+  }
+  const clock = t => new Date(t).toISOString().slice(11,19) + 'Z';
+  return `<div class="card"><h3>Activity</h3>`
+    + `<svg class="aartl" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" role="img" aria-label="Log activity over time">`
+    + `<line x1="${PAD}" y1="${PAD+BODY+.5}" x2="${W-PAD}" y2="${PAD+BODY+.5}" stroke="var(--axis)" stroke-width="1"></line>${bars}</svg>`
+    + `<div class="aartlx"><span class="aartlt">${esc(clock(t0))}</span>`
+    + `<span class="aartlnote">bars: all records per ${fmt.n(minsPer,1)} min`
+    + (a.engagements.length ? ` · <b class="aartlkey">blue rail</b>: scored engagements` : '')
+    + `</span><span class="aartlt">${esc(clock(a.span.end))}</span></div>`
+    + `</div>`;
+}
+
+function aarKPI(a){
+  const scored=a.engagements.length, expended=a.terminal.length;
+  const hits=a.engagements.filter(e=>e.result==='HIT').length;
+  const tile=(v,l,sub,cls)=>`<div class="aarkpi ${cls||''}"><div class="aarkv">${v}</div><div class="aarkl">${l}</div>${sub?`<div class="aarks">${sub}</div>`:''}</div>`;
+  return `<div class="aarkpis">`
+    + tile(fmt.n(a.records), 'records', (a.coverage>=1?'100%':fmt.n(a.coverage*100,2)+'%')+' classified')
+    + tile(fmt.n(scored), 'scored engagements', scored?`${fmt.n(hits)} hit · ${fmt.n(100*hits/scored,0)}%`:'no shots resolved')
+    // scored engagements and terminal records are two different record classes, not a
+    // subset relationship — a weapon can be scored without a separate terminal record.
+    // Only state the ratio when it is actually a ratio.
+    + tile(fmt.n(expended), 'weapons to endgame',
+        !expended ? ''
+        : !scored ? 'none scored — see unguided fire'
+        : scored <= expended ? `${fmt.n(100*scored/expended,0)}% reached a PH roll`
+        : 'more scored than terminal — see record classes')
+    + tile(fmt.n(a.softkill.length), 'soft-kill attempts', a.softkill.length?`${fmt.n(a.softkill.filter(s=>s.result==='SUCCESS').length)} succeeded`:'')
+    + tile(fmt.n(a.damage.length), 'damage events', a.damage.length?`${fmt.n(a.damage.filter(d=>d.kind==='destroyed'||d.kind==='sinking').length)} kills / sinkings`:'')
+    + tile(fmt.n(a.denied.length), 'denied shots', a.denied.filter(d=>d.reason).length?`${fmt.n(a.denied.filter(d=>d.reason).length)} with a stated reason`:'')
+    + `</div>`;
+}
+
+/* F5: two denominators. Rounds that reached an endgame vs rounds that got a PH roll. */
+function aarMissModes(a){
+  if (!a.terminal.length) return '';
+  const by=new Map();
+  for (const t of a.terminal){ const k=(t.result==='HIT'?'HIT · ':'MISS · ')+t.mode; by.set(k,(by.get(k)||0)+1); }
+  const rows=[...by.entries()].sort((x,y)=>y[1]-x[1]);
+  const max=rows[0][1];
+  return `<div class="card"><h3>Terminal outcomes</h3>`
+    + `<p class="small">How each weapon that reached an endgame actually ended. Modes other than a scored engagement never reached a probability roll at all.</p>`
+    + rows.map(([k,v])=>`<div class="aarbar"><span class="aarbl ${k.startsWith('HIT')?'hit':'miss'}">${esc(k)}</span>`
+        + `<span class="aarbt"><i style="width:${(v/max*100).toFixed(1)}%"></i></span><span class="aarbn">${fmt.n(v)}</span></div>`).join('')
+    + `</div>`;
+}
+
+/* Direct/unguided fire is logged at the trigger pull, not at the endgame, and comes in two
+   flavours that must never be pooled: PoH (probability, % — higher is better) and
+   CEP (dispersion, length — LOWER is better). */
+function aarUnguided(a){
+  const rows = a.unguided || []; if (!rows.length) return '';
+  let html = `<div class="card"><h3>Unguided fire</h3>`
+    + `<p class="small">Logged at the moment of firing, with its own modifier chain. `
+    + `<b>PoH</b> is a probability (higher is better); <b>CEP</b> is a dispersion radius (<b>lower</b> is better) — they are different measures and are listed separately.</p>`;
+  for (const metric of ['CEP','PoH']){
+    const set = rows.filter(r=>r.metric===metric); if (!set.length) continue;
+    const by = new Map();
+    for (const r of set){ const k=r.weapon; if(!by.has(k)) by.set(k,[]); by.get(k).push(r); }
+    html += `<div class="aartier">${metric==='CEP'?'Circular error probable — lower is better':'Probability of hit — higher is better'}<span>${fmt.n(set.length)}</span></div>`
+      + `<div class="aarftw"><table class="list aarft"><thead><tr><th>Weapon</th><th class="num">bursts</th>`
+      + `<th class="num">nominal</th><th class="num">final</th><th class="num">${metric==='CEP'?'tighter / worse':'better / worse'}</th><th>modifiers seen</th></tr></thead><tbody>`;
+    for (const [w,rs] of [...by.entries()].sort((x,y)=>y[1].length-x[1].length)){
+      const u=rs[0].unit, mean=k=>rs.reduce((s,r)=>s+r[k],0)/rs.length;
+      const good = metric==='CEP' ? rs.filter(r=>r.final<r.nominal).length : rs.filter(r=>r.final>r.nominal).length;
+      const bad  = metric==='CEP' ? rs.filter(r=>r.final>r.nominal).length : rs.filter(r=>r.final<r.nominal).length;
+      // one entry per modifier NAME; show the detail only when it never varies
+      const seen=new Map();
+      for (const r of rs) for (const m of (r.mods||[])){
+        if (!seen.has(m.name)) seen.set(m.name,new Set());
+        if (m.detail) seen.get(m.name).add(m.detail);
+      }
+      const names=[...seen.entries()].map(([n,ds])=>ds.size===1?`${n} (${[...ds][0]})`:n);
+      html += `<tr><td>${esc(w)}</td><td class="num">${fmt.n(rs.length)}</td>`
+        + `<td class="num">${fmt.n(mean('nominal'),1)}${esc(u)}</td>`
+        + `<td class="num"><b>${fmt.n(mean('final'),1)}${esc(u)}</b></td>`
+        + `<td class="num">${good?`<span class="aargood">${good}</span>`:'0'} / ${bad?`<span class="aarbad">${bad}</span>`:'0'}</td>`
+        + `<td class="dim">${esc(names.join(' · '))||'—'}</td></tr>`;
+    }
+    html += `</tbody></table></div>`;
+  }
+  return html+`</div>`;
+}
+
+function aarClassTable(a){
+  const tiers={1:[],2:[],3:[]}; let un=0;
+  for (const [k,v] of Object.entries(a.classes)){
+    if (k==='UNMATCHED'){ un=v; continue; }
+    (tiers[AAR_TIER[k]||2]).push([k,v]);
+  }
+  let html=`<div class="card"><h3>Record classes</h3>`;
+  for (const t of [1,2,3]){
+    const rows=tiers[t].sort((x,y)=>y[1]-x[1]);
+    if (!rows.length) continue;
+    html += `<div class="aartier">${AAR_TIER_LABEL[t]}<span>${fmt.n(rows.reduce((s,r)=>s+r[1],0))}</span></div>`
+      + `<div class="aarcls">` + rows.map(([k,v])=>`<span class="aarcl"><b>${esc(k)}</b>${fmt.n(v)}</span>`).join('') + `</div>`;
+  }
+  html += `<div class="aarunm ${un?'bad':'ok'}">${un ? `⚠ ${fmt.n(un)} record${un===1?'':'s'} did not match any known pattern — the grammar needs extending for this scenario type.` : '✓ Every record matched a known pattern.'}</div>`;
+  if (un) html += `<details class="aarunmd"><summary>Show unmatched</summary><pre>${esc(a.unmatched.slice(0,60).map(u=>u.ts+' — '+u.body).join('\n'))}</pre></details>`;
+  return html+`</div>`;
+}
+
+/* F3: a log with no weapon employment is valid — show what it DOES contain. */
+function aarDetectionPanel(a){
+  const c=a.classes, n=k=>c[k]||0;
+  const contacts=n('CONTACT_NEW'), ids=n('CONTACT_ID'), lost=n('CONTACT_LOST')+n('CONTACT_LOST_PRIV');
+  const byObs=new Map(); for(const r of a.isr) byObs.set(r.by,(byObs.get(r.by)||0)+1);
+  let html=`<div class="card"><h3>Detection &amp; tracking</h3>`
+    + `<p class="small">No weapon reached an endgame in this log, so there is nothing to score. This is what the log does contain.</p>`
+    + `<div class="aarkpis">`
+    + `<div class="aarkpi"><div class="aarkv">${fmt.n(contacts)}</div><div class="aarkl">new contacts</div></div>`
+    + `<div class="aarkpi"><div class="aarkv">${fmt.n(ids)}</div><div class="aarkl">classifications</div></div>`
+    + `<div class="aarkpi"><div class="aarkv">${fmt.n(lost)}</div><div class="aarkl">contacts lost</div></div>`
+    + `<div class="aarkpi"><div class="aarkv">${fmt.n(n('COMMS'))}</div><div class="aarkl">comms events</div></div>`
+    + `</div>`;
+  if (byObs.size) html += `<div class="aartier">Airfield ISR by observer<span>${fmt.n(a.isr.length)}</span></div><div class="aarcls">`
+    + [...byObs.entries()].sort((x,y)=>y[1]-x[1]).slice(0,12).map(([k,v])=>`<span class="aarcl"><b>${esc(k)}</b>${fmt.n(v)}</span>`).join('')+`</div>`;
+  return html+`</div>`;
+}
+
+function aarSidesBanner(a){
+  const sides=Object.entries(a.sides).sort((x,y)=>y[1]-x[1]);
+  if (!sides.length) return '';
+  const ge = (a.godseye||[]).filter(g=>g.state==='ENABLED').length;
+  return `<div class="aarwarn"><b>Visibility:</b> a CMO log records what the selected side could see. `
+    + `Side-tagged records in this log: ` + sides.map(([s,n])=>`<span class="aarchip">${esc(s)} <b>${fmt.n(n)}</b></span>`).join(' ')
+    + `. Engagement-resolution records carry no side tag at all, so every rate below is “as observed”, not ground truth.`
+    + (ge ? `<br><b>God's Eye was enabled ${fmt.n(ge)}×</b> during this log — while it is on the log is not limited to one side's picture, so contact and detection counts here are not a fair measure of what that side actually knew.` : '')
+    + `</div>`;
+}
+
+function viewAAR(params, tab){
+  const a = D.aar;
+  if (!a) return aarIngestPanel();
+  let html = `<div class="scen aarpage"><div class="schead"><h2>AAR — message log</h2>`
+    + `<div class="scsub">${esc(a.name||'(pasted log)')}</div>`
+    + `<div class="scnote">${esc(aarFmtSpan(a))} · ingested ${esc((a.ingested||'').slice(0,16).replace('T',' '))} from ${esc(a.source||'paste')}`
+    + (a.tsFormat?` · dates read as <b>${esc(a.tsFormat)}</b>${a.tsAmbiguous?` <span class="aarflag warn" data-tip="No day above 12 appears anywhere in this log, so month-first vs day-first cannot be proven. Ordering is unaffected.">assumed</span>`:''}`:'')
+    + (a.mirrored?` · <span data-tip="The same event is written once per observing side; duplicates were collapsed so counts are not doubled.">${fmt.n(a.mirrored)} side-mirrored records merged</span>`:'')
+    + (a.notPersisted?` · <span class="aarno">not saved to this browser (storage unavailable) — export if you want to keep it</span>`:'')
+    + `</div></div>`;
+  html += `<div class="scctl"><button onclick="location.hash='#/aar/ingest'">Load a different log</button>`
+    + `<button onclick="aarExportJSON()">Export JSON</button>`
+    + `<button onclick="aarExportEngagementsCSV()" ${a.engagements.length?'':'disabled'}>Engagements CSV</button>`
+    + `<button onclick="aarExportWeaponsCSV()" ${a.engagements.length?'':'disabled'}>Weapons CSV (DB-joined)</button>`
+    + `<button onclick="aarExportTerminalCSV()" ${a.terminal.length?'':'disabled'}>Terminal CSV</button>`
+    + `<button onclick="aarExportEffectsCSV()" ${(a.terminal.length||a.damage.length)?'':'disabled'}>Effects CSV</button>`
+    + `<button onclick="aarExportXrefCSV()" ${(D.scenario&&D.scenario.units&&D.scenario.units.length)?'':'disabled'}>ORBAT x-ref CSV</button>`
+    + `<button onclick="clearAAR()">Clear</button></div>`;
+  html += aarTabs(tab||'');
+  html += aarSidesBanner(a);
+  html += aarKPI(a);
+  html += aarTimeline(a);
+  if (tab === 'weapons'){
+    html += aarWeaponsView(a);
+    html += `<div class="aarnext">The per-engagement modifier waterfall and the ORBAT cross-join are later phases.</div>`;
+    return html + `</div>`;
+  }
+  if (tab === 'mechanics'){
+    html += aarMechanicsView(a);
+    return html + `</div>`;
+  }
+  if (tab === 'orbat'){
+    html += aarOrbatView(a);
+    return html + `</div>`;
+  }
+  if (tab === 'losses'){
+    html += aarLossesView(a);
+    return html + `</div>`;
+  }
+  if (tab === 'denied'){
+    html += aarDeniedView(a);
+    return html + `</div>`;
+  }
+  const employed = a.terminal.length || a.engagements.length || (a.unguided||[]).length;
+  if (a.terminal.length) html += aarMissModes(a);
+  html += aarUnguided(a);
+  if (!employed) html += aarDetectionPanel(a);
+  html += aarClassTable(a);
+  return html + `</div>`;
+}
+
+function aarIngestPanel(){
+  return `<div class="scen aarpage"><div class="schead"><h2>AAR — message log</h2>`
+    + `<div class="scnote">Load one CMO message log to see what happened in it — engagements, terminal outcomes, soft-kill, damage and detection. One log at a time: loading a new one replaces the current one, so export anything you want to keep.</div></div>`
+    + `<div class="card"><h3>Load a log</h3>`
+    + `<ol class="scsteps"><li>In CMO, the running log is written to <code>AALog.txt</code> in your scenario/log folder. It is overwritten each session — <b>copy it aside before loading a new scenario.</b></li>`
+    + `<li>Choose that file below, or paste its contents into the box.</li>`
+    + `<li>A previously exported <code>*_aar.json</code> from this page can be loaded back the same way.</li></ol>`
+    + `<details class="scluawrap"><summary>Recommended Message Log settings (CMO ▸ Options ▸ Message Log)</summary>`
+    + `<div class="aarcfg"><p><b>Required</b> — the analysis does not work without these: Weapon Endgame Calculations · Unguided Weapon Accuracy Modifiers · Weapon Damage · Unit Damage · Unit Lost · Point Defence.</p>`
+    + `<p><b>Recommended on:</b> Contact change and the New-contact family · Comms-related Message · Special Messages.</p>`
+    + `<p><b>Recommended off:</b> Scenario Events (typically a quarter of the file, no analytic content) · Unit AI · Debug · User Interface.</p></div></details>`
+    + `<textarea id="aarpaste" class="scenta" placeholder="Paste the contents of AALog.txt here…"></textarea>`
+    + `<div class="scctl"><button class="cmpbtn" onclick="aarIngestFromBox()">Load</button>`
+    + `<label class="scfile">or choose a file<input type="file" accept=".txt,.log,.json" onchange="aarIngestFromFile(this)" hidden></label></div>`
+    + `<div id="aarerr" class="scerr" hidden></div></div></div>`;
+}
+
+/* ============================================================
+   AAR PHASE 2 — DB JOIN + WEAPON PERFORMANCE
+   The log carries only name strings. The dashboard already holds the whole weapon and
+   platform catalog, so every log entity is resolved by name to its DB record. That gives
+   click-through, the declared PoK/CEP to compare the logged value against, and
+   TargetSpeedMax — which turns out to explain most of the bad engagements.
+   ============================================================ */
+
+const AAR_GUN_POK = 2/3;   // OBSERVED: gun engagements log base-Ph at exactly 2/3 of DB AirPoK
+const AAR_MIN_N   = 5;     // below this, a rate is shown but never ranked or emphasised
+
+let AAR_IDX = null;
+function aarIndex(){
+  if (AAR_IDX) return AAR_IDX;
+  const norm = s => String(s||'').toLowerCase().replace(/\s+/g,' ').trim();
+  const w = new Map(), p = new Map();
+  for (const [id,x] of D.weapon) if (x.Name){ const k=norm(x.Name); if(!w.has(k)) w.set(k,x); }
+  for (const kind of Object.keys(D.platforms)) for (const [id,u] of D.platforms[kind])
+    if (u.Name){ const k=norm(u.Name); if(!p.has(k)) p.set(k,{kind,u}); }
+  AAR_IDX = {norm, w, p};
+  return AAR_IDX;
+}
+function aarWeapon(name){ const i=aarIndex(); return i.w.get(i.norm(name)) || null; }
+function aarPlatform(name){ const i=aarIndex(); return i.p.get(i.norm(name)) || null; }
+
+/* "STRIX #1 (Su-35K Flanker E)" -> {instance:'STRIX #1', type:'Su-35K Flanker E'} */
+function aarSplitTarget(name){
+  const m = /^(.*?)\s*#\d+\s*\((.+)\)$/.exec(String(name||''));
+  return m ? {instance:m[1].trim(), type:m[2].trim()} : {instance:null, type:String(name||'').trim()};
+}
+
+/* coarse target class — what F9 says the performance table must segment on */
+function aarTargetClass(name){
+  const {type} = aarSplitTarget(name);
+  const w = aarWeapon(type);
+  if (w) return {cls: (WFAM[w.fam]||WFAM.other).label, kind:'weapon', rec:w, route:`#/weapon/${w.ID}`};
+  const p = aarPlatform(type);
+  if (p) return {cls:(KIND_BY_KEY[p.kind]||{label:p.kind}).label, kind:'platform', rec:p.u,
+                 route:`#/${(KIND_BY_KEY[p.kind]||{route:''}).route}/${p.u.ID}`};
+  return {cls:'Unresolved', kind:null, rec:null, route:null};
+}
+
+/* speed bands. The cliff in the corpus sits between ~2,400 and ~3,500 kts. */
+const AAR_BANDS = [
+  {k:'subsonic',        label:'Subsonic (<600 kt)',        lo:0,    hi:600},
+  {k:'transonic',       label:'Transonic (600–1,200)',     lo:600,  hi:1200},
+  {k:'supersonic',      label:'Supersonic (1,200–2,400)',  lo:1200, hi:2400},
+  {k:'high-supersonic', label:'High supersonic (2,400–3,500)', lo:2400, hi:3500},
+  {k:'hypersonic',      label:'Hypersonic (>3,500)',       lo:3500, hi:Infinity},
+];
+function aarBand(kts){ if (kts==null) return null; return AAR_BANDS.find(b=>kts>=b.lo&&kts<b.hi) || null; }
+
+/* Wilson score interval — honest at the small n a single log produces */
+function aarWilson(hits, n, z){
+  if (!n) return null; z = z||1.96;
+  const p=hits/n, d=1+z*z/n, c=p+z*z/(2*n), m=z*Math.sqrt((p*(1-p)+z*z/(4*n))/n);
+  return {lo:Math.max(0,(c-m)/d), hi:Math.min(1,(c+m)/d)};
+}
+
+/* attach DB facts to every engagement, once per ingest */
+function aarJoin(a){
+  if (a._joined) return a._joined;
+  const rows = a.engagements.map(e => {
+    const w = aarWeapon(e.weapon);
+    const tc = aarTargetClass(e.target);
+    const isGun = e.kind === 'gun';
+    const dbPok = w ? w.AirPoK : null;
+    const expect = (dbPok==null) ? null : (isGun ? dbPok*AAR_GUN_POK : dbPok);
+    const tsMax = w && w.TargetSpeedMax ? w.TargetSpeedMax : null;
+    return {...e, w, wid: w?w.ID:null, tcls: tc.cls, troute: tc.route,
+      dbPok, expect,
+      baseMatches: expect==null ? null : Math.abs(expect - e.base) <= 0.1,
+      tsMax, overspeed: !!(tsMax && e.tgtKts && e.tgtKts > tsMax),
+      band: aarBand(e.tgtKts)};
+  });
+  a._joined = rows;
+  return rows;
+}
+
+function aarPk(n, hits){
+  const ci = aarWilson(hits, n);
+  const pk = n ? 100*hits/n : 0;
+  const low = n < AAR_MIN_N;
+  return `<span class="aarpk ${low?'low':''}">${fmt.n(pk,0)}%</span>`
+    + (ci ? `<span class="aarci">${fmt.n(ci.lo*100,0)}–${fmt.n(ci.hi*100,0)}</span>` : '');
+}
+
+function aarWeaponsView(a){
+  const rows = aarJoin(a);
+  if (!rows.length) return `<div class="card"><h3>Weapon performance</h3>`
+    + `<p class="small">This log contains no scored engagements, so there is no probability data to analyse. `
+    + (a.unguided&&a.unguided.length ? `Its ${fmt.n(a.unguided.length)} unguided-fire records are on the Overview tab.` : '')
+    + `</p></div>`;
+
+  const unres = rows.filter(r=>!r.w).length;
+  const byW = new Map();
+  for (const r of rows){ const k=r.weapon; if(!byW.has(k)) byW.set(k,[]); byW.get(k).push(r); }
+
+  let html = `<div class="card"><h3>Weapon performance</h3>`
+    + `<p class="small">Every weapon resolved against the loaded database (${esc(D.meta.file||'')}). `
+    + `Rates below n=${AAR_MIN_N} are dimmed and should not be ranked — the range after each rate is a 95% confidence interval. `
+    + `Expand a row to see it split by target class, which is where the real differences are.</p>`;
+  if (unres) html += `<div class="aarnote">${fmt.n(unres)} engagement${unres===1?'':'s'} use a weapon name absent from this database — shown without a link. A log made under a different DB version will do this.</div>`;
+
+  html += `<div class="aarftw"><table class="list aarwt"><thead><tr>`
+    + `<th>Weapon</th><th class="num">n</th><th class="num">hits</th><th class="num">Pk (95% CI)</th>`
+    + `<th class="num">base PH</th><th class="num">DB PoK</th><th class="num">final PH</th><th class="num">erosion</th><th>flags</th>`
+    + `</tr></thead><tbody>`;
+
+  for (const [name,rs] of [...byW.entries()].sort((x,y)=>y[1].length-x[1].length)){
+    const n=rs.length, h=rs.filter(r=>r.result==='HIT').length;
+    const base=rs.reduce((s,r)=>s+r.base,0)/n, fin=rs.reduce((s,r)=>s+r.final,0)/n;
+    const w=rs[0].w, isGun=rs[0].kind==='gun';
+    const over=rs.filter(r=>r.overspeed).length, floored=rs.filter(r=>r.floored).length;
+    const mism=rs.filter(r=>r.baseMatches===false).length;
+    const flags=[];
+    if (over) flags.push(`<span class="aarflag bad" data-tip="Target was faster than this weapon's database TargetSpeedMax (${fmt.n(rs[0].tsMax)} kt)">${over}× overspeed</span>`);
+    if (floored) flags.push(`<span class="aarflag warn" data-tip="Final PH hit the engine's 5% floor — the model gave up rather than computing 5%">${floored}× floored</span>`);
+    const id=`aw${name.replace(/[^a-z0-9]/gi,'')}`;
+    html += `<tr class="aarwrow" onclick="aarTog('${id}')"><td>`
+      + `<span class="aarchev" id="${id}c">▸</span> `
+      + (w?`<a href="#/weapon/${w.ID}" onclick="event.stopPropagation()">${esc(name)}</a>`:`${esc(name)} <span class="aarflag warn">not in DB</span>`)
+      + `</td><td class="num">${n}</td><td class="num">${h}</td><td class="num">${aarPk(n,h)}</td>`
+      + `<td class="num">${fmt.n(base,1)}%</td>`
+      + `<td class="num">${rs[0].dbPok==null?'—':fmt.n(rs[0].dbPok,0)+'%'+(isGun?`<span class="aarx" data-tip="Guns log base-Ph at two-thirds of the database AirPoK">×⅔</span>`:'')}${mism?`<span class="aarflag warn" data-tip="Logged base PH does not match this database — likely a different DB version">≠</span>`:''}</td>`
+      + `<td class="num"><b>${fmt.n(fin,1)}%</b></td>`
+      + `<td class="num aarero">${fmt.n(fin-base,1)}</td><td>${flags.join(' ')||''}</td></tr>`;
+    // per-target-class breakdown (F9)
+    const byC=new Map();
+    for (const r of rs){ const k=r.tcls+' · '+(r.band?r.band.label:'speed unknown'); if(!byC.has(k)) byC.set(k,[]); byC.get(k).push(r); }
+    html += `<tr class="aarsub" id="${id}" hidden><td colspan="9"><table class="aarsubt"><tbody>`;
+    for (const [k,cs] of [...byC.entries()].sort((x,y)=>y[1].length-x[1].length)){
+      const cn=cs.length, ch=cs.filter(r=>r.result==='HIT').length;
+      const cf=cs.reduce((s,r)=>s+r.final,0)/cn;
+      const co=cs.filter(r=>r.overspeed).length;
+      html += `<tr><td>${esc(k)}</td><td class="num">${cn}</td><td class="num">${aarPk(cn,ch)}</td>`
+        + `<td class="num">final ${fmt.n(cf,1)}%</td><td>${co?`<span class="aarflag bad">${co}× overspeed</span>`:''}</td></tr>`;
+    }
+    html += `</tbody></table></td></tr>`;
+  }
+  html += `</tbody></table></div></div>`;
+  html += aarBandPanel(rows) + aarOverspeedPanel(rows);
+  return html;
+}
+
+/* The mechanism behind F9, pooled across weapons so it survives small n. */
+function aarBandPanel(rows){
+  const set=rows.filter(r=>r.band); if(!set.length) return '';
+  const by=new Map();
+  for (const r of set){ const k=r.band.k; if(!by.has(k)) by.set(k,[]); by.get(k).push(r); }
+  const max=Math.max(...[...by.values()].map(v=>v.length));
+  let html=`<div class="card"><h3>Performance by target speed</h3>`
+    + `<p class="small">Pooled across every weapon in this log, so it stays readable where per-weapon cells are too thin to trust. `
+    + `${fmt.n(rows.length-set.length)} engagement${rows.length-set.length===1?'':'s'} logged no target speed and are excluded.</p>`;
+  for (const b of AAR_BANDS){
+    const rs=by.get(b.k); if(!rs) continue;
+    const n=rs.length,h=rs.filter(r=>r.result==='HIT').length;
+    const f=rs.reduce((s,r)=>s+r.final,0)/n;
+    const los=rs.filter(r=>r.los!=null);
+    html += `<div class="aarbar"><span class="aarbl">${esc(b.label)}</span>`
+      + `<span class="aarbt"><i style="width:${(n/max*100).toFixed(1)}%"></i></span>`
+      + `<span class="aarbn">n=${n}</span>`
+      + `<span class="aarbx">Pk ${aarPk(n,h)} · final PH ${fmt.n(f,1)}%`
+      + (los.length?` · LOS ${fmt.n(los.reduce((s,r)=>s+r.los,0)/los.length,2)}°/s`:'')
+      + `</span></div>`;
+  }
+  return html+`</div>`;
+}
+
+/* Weapons shooting past their own declared envelope. */
+function aarOverspeedPanel(rows){
+  const set=rows.filter(r=>r.overspeed); if(!set.length) return '';
+  const by=new Map();
+  for (const r of set){ const k=r.weapon; if(!by.has(k)) by.set(k,[]); by.get(k).push(r); }
+  let html=`<div class="card"><h3>Engagements beyond the weapon's declared envelope</h3>`
+    + `<p class="small">The target was faster than the weapon's <code>TargetSpeedMax</code> in this database. `
+    + `These are shots the catalog says the weapon cannot make.</p>`
+    + `<div class="aarftw"><table class="list"><thead><tr><th>Weapon</th><th class="num">TargetSpeedMax</th>`
+    + `<th class="num">fastest engaged</th><th class="num">n</th><th class="num">Pk</th><th class="num">mean final PH</th></tr></thead><tbody>`;
+  for (const [k,rs] of [...by.entries()].sort((x,y)=>y[1].length-x[1].length)){
+    const n=rs.length,h=rs.filter(r=>r.result==='HIT').length;
+    const w=rs[0].w;
+    html += `<tr><td>${w?`<a href="#/weapon/${w.ID}">${esc(k)}</a>`:esc(k)}</td>`
+      + `<td class="num">${fmt.n(rs[0].tsMax)} kt</td>`
+      + `<td class="num aarbadn">${fmt.n(Math.max(...rs.map(r=>r.tgtKts)))} kt</td>`
+      + `<td class="num">${n}</td><td class="num">${aarPk(n,h)}</td>`
+      + `<td class="num">${fmt.n(rs.reduce((s,r)=>s+r.final,0)/n,1)}%</td></tr>`;
+  }
+  return html+`</tbody></table></div></div>`;
+}
+
+/* F10 — the shots that were never taken, with the engine's stated reason. */
+function aarDeniedView(a){
+  const rows=a.denied||[];
+  if (!rows.length) return `<div class="card"><h3>Denied engagements</h3><p class="small">No doctrine or targeting-quality refusals in this log.</p></div>`;
+  const by=new Map();
+  for (const r of rows){ const k=r.weapon+' ⟵ '+r.unit; if(!by.has(k)) by.set(k,[]); by.get(k).push(r); }
+  let html=`<div class="card"><h3>Denied engagements</h3>`
+    + `<p class="small">Shots the engine refused, with the reason it gave. A refusal carries information a miss does not: the weapon was available and the target was known, and something else stopped the launch.</p>`
+    + `<div class="aarftw"><table class="list"><thead><tr><th>Weapon ⟵ shooter</th><th class="num">refusals</th><th>targets</th><th>reason</th></tr></thead><tbody>`;
+  for (const [k,rs] of [...by.entries()].sort((x,y)=>y[1].length-x[1].length)){
+    const w=aarWeapon(rs[0].weapon);
+    const tg=new Set(rs.map(r=>r.target.replace(/ #\d+$/,'')));
+    const reasons=new Set(rs.map(r=>(r.reason||'—').replace(/\(([\d.]+)\s*nm\)/g,'(N nm)')));
+    const nums=rs.map(r=>{const m=/\(([\d.]+)\s*nm\)/.exec(r.reason||''); return m?+m[1]:null;}).filter(v=>v!=null);
+    html += `<tr><td>${w?`<a href="#/weapon/${w.ID}">${esc(rs[0].weapon)}</a>`:esc(rs[0].weapon)} <span class="dim">⟵ ${esc(rs[0].unit)}</span></td>`
+      + `<td class="num">${rs.length}</td><td class="dim">${esc([...tg].slice(0,3).join(' · '))}${tg.size>3?` +${tg.size-3}`:''}</td>`
+      + `<td class="aarreason">${esc([...reasons][0])}`
+      + (nums.length?`<div class="dim">observed values ${fmt.n(Math.min(...nums),1)}–${fmt.n(Math.max(...nums),1)} nm</div>`:'')
+      + `</td></tr>`;
+  }
+  return html+`</tbody></table></div></div>`;
+}
+
+function aarTog(id){
+  const el=document.getElementById(id), c=document.getElementById(id+'c');
+  if(!el) return; el.hidden=!el.hidden; if(c) c.textContent = el.hidden?'▸':'▾';
+  /* remember it, so the row is still open after a trip to a weapon page and back */
+  if (typeof uisRemember === 'function') uisRemember(el.__uisk, !el.hidden);
+}
+
+function aarTabs(cur){
+  const t=(r,l)=>`<a class="aartab ${cur===r?'active':''}" href="#/aar${r?'/'+r:''}">${l}</a>`;
+  const orb = (typeof D!=='undefined' && D.scenario && D.scenario.units && D.scenario.units.length) ? ' ready' : '';
+  return `<div class="aartabs">${t('','Overview')}${t('weapons','Weapons')}${t('mechanics','Mechanics')}${t('losses','Losses')}`
+    + `<a class="aartab ${cur==='orbat'?'active':''}${orb}" href="#/aar/orbat">ORBAT${orb?'<span class="aardot" data-tip="A scenario snapshot is loaded, so the cross-reference is live"></span>':''}</a>`
+    + `${t('denied','Denied')}</div>`;
+}
+
+function aarExportWeaponsCSV(){
+  const a=D.aar; if(!a) return;
+  const rows=aarJoin(a).map(r=>({
+    time:r.ts, weapon:r.weapon, weapon_dbid:r.wid, kind:r.kind, target:r.target, target_class:r.tcls,
+    target_kts:r.tgtKts, speed_band:r.band?r.band.k:'', db_airpok:r.dbPok, expected_base_ph:r.expect,
+    logged_base_ph:r.base, base_matches_db:r.baseMatches==null?'':(r.baseMatches?1:0),
+    final_ph:r.final, floored:r.floored?1:0, target_speed_max:r.tsMax, overspeed:r.overspeed?1:0,
+    roll:r.roll, result:r.result, los_deg_s:r.los, intercept_angle_deg:r.angle,
+  }));
+  aarDownload(aarStem()+'_weapons.csv', aarCSV(rows, Object.keys(rows[0]||{time:1})), 'text/csv');
+}
+
+/* ============================================================
+   AAR PHASE 3 - ENGAGEMENT MECHANICS & SOFT KILL
+
+   This was scoped as a "modifier waterfall". It is not one, deliberately.
+
+   OBSERVED: across 1,599 unfloored, uncapped missile engagements, no composition of the
+   logged modifier terms reconstructs the logged Final PH - additive gets within half a
+   point 25% of the time, multiplicative and mixed models do worse. There are terms the
+   engine applies but does not print. A cascade chart implying base -> term -> term -> final
+   would therefore be a drawing of arithmetic that does not happen.
+
+   So: the chain is shown as the engine wrote it, the modifier table is framed as
+   association rather than contribution, and the causal story is carried by the geometry
+   scatter, which is pure observation.
+   ============================================================ */
+
+/* how far the additive model misses, reported honestly on the page */
+function aarChainResidual(e){
+  const get = n => { const x=(e.mods||[]).find(m=>m.name===n); return x?x.v:null; };
+  const ws=get('Weapon speed');
+  const b = ws!=null ? ws : e.base;
+  const sum = b + (get('Target speed')||0) + (get('Target signature')||0)
+            + (get('Kinematic penalty')||0) + (get('Agility')||0) + (get('Sea-skimmer')||0);
+  return {sum, resid: e.final - sum};
+}
+
+function aarChainCard(e){
+  const r = aarChainResidual(e);
+  const rows = (e.mods||[]).map(m=>{
+    const sign = m.v==null ? '' : (m.v>0?'+':'');
+    const cls  = m.v==null ? '' : (m.v>0?'aargood':(m.v<0?'aarbad':''));
+    return `<tr><td>${esc(m.name)}${m.detail?` <span class="dim">${esc(m.detail)}</span>`:''}</td>`
+      + `<td class="num ${cls}">${m.v==null?'&mdash;':sign+fmt.n(m.v,2)}</td>`
+      + `<td class="dim aarraw">${esc(m.raw||'')}</td></tr>`;
+  }).join('');
+  const hit = e.result==='HIT';
+  return `<div class="aarchain">`
+    + `<div class="aarchainhd"><b>${esc(e.weapon)}</b>${e.serial?` <span class="dim">#${e.serial}</span>`:''}`
+    + ` &rarr; ${esc(e.target)}<span class="aarchaint">${esc(e.ts||'')}</span></div>`
+    + `<div class="aarchainkpi">`
+    + `<span>base <b>${fmt.n(e.base,1)}%</b></span>`
+    + `<span>final <b>${fmt.n(e.final,1)}%</b>${e.floored?` <span class="aarflag warn" data-tip="At the engine's 5% floor - the model gave up rather than computing 5%">floor</span>`:''}</span>`
+    + `<span>roll <b>${e.roll}</b></span>`
+    + `<span class="${hit?'aargood':'aarbad'}"><b>${e.result}</b></span>`
+    + (e.note?`<span class="dim">${esc(e.note)}</span>`:'')
+    + `</div>`
+    + `<table class="aarchaint2"><tbody>${rows||'<tr><td class="dim">no modifier clauses logged</td></tr>'}</tbody></table>`
+    + `<div class="aarchainnote">`
+    + (r.sum < 0 || r.sum > 100
+        ? `The printed terms do not reconstruct this result at all &mdash; taken as a sum they fall outside 0&ndash;100%. `
+        : `The engine prints these terms but not everything it applies: as a sum they give ${fmt.n(r.sum,1)}%, `
+          + (Math.abs(r.resid)<0.5 ? `which happens to match the logged final. `
+             : `against a logged final of ${fmt.n(e.final,1)}% &mdash; a ${fmt.n(Math.abs(r.resid),1)}-point difference. `))
+    + `Read the chain as the reasons, not as the sum.</div>`
+    + `</div>`;
+}
+
+/* association, not contribution: how engagements carrying a term compare with those that don't */
+function aarModTable(rows){
+  const names = new Set(); for (const e of rows) for (const m of (e.mods||[])) names.add(m.name);
+  if (!names.size) return '';
+  let html = `<div class="card"><h3>Modifier incidence</h3>`
+    + `<p class="small">How often each clause appears, and how engagements carrying it compare with those that do not. `
+    + `This is <b>association</b>: the terms do not sum to the final PH (see any engagement chain below), so no column here is a contribution.</p>`
+    + `<div class="aarftw"><table class="list"><thead><tr><th>Clause</th><th class="num">appears</th>`
+    + `<th class="num">mean value</th><th class="num">final PH with</th><th class="num">final PH without</th><th class="num">Pk with</th></tr></thead><tbody>`;
+  const stat = a => a.length ? a.reduce((s,x)=>s+x,0)/a.length : null;
+  for (const n of [...names].sort()){
+    const withs = rows.filter(e=>(e.mods||[]).some(m=>m.name===n));
+    const without = rows.filter(e=>!(e.mods||[]).some(m=>m.name===n));
+    const vals = withs.map(e=>(e.mods.find(m=>m.name===n)||{}).v).filter(v=>v!=null);
+    const fw = stat(withs.map(e=>e.final)), fo = stat(without.map(e=>e.final));
+    const hits = withs.filter(e=>e.result==='HIT').length;
+    html += `<tr><td>${esc(n)}</td><td class="num">${fmt.n(withs.length)}</td>`
+      + `<td class="num">${vals.length?fmt.n(stat(vals),1):'&mdash;'}</td>`
+      + `<td class="num"><b>${fw==null?'&mdash;':fmt.n(fw,1)+'%'}</b></td>`
+      + `<td class="num">${fo==null?'&mdash;':fmt.n(fo,1)+'%'}</td>`
+      + `<td class="num">${aarPk(withs.length,hits)}</td></tr>`;
+  }
+  return html+`</tbody></table></div></div>`;
+}
+
+/* final PH against crossing rate - the F9 mechanism, drawn straight from observation.
+   Two series, so they are separated by SHAPE as well as colour and carry a legend. */
+function aarGeomScatter(rows){
+  const pts = rows.filter(e=>e.los!=null && e.final!=null);
+  if (pts.length < 8) return '';
+  const W=880, H=300, L=46, R=12, T=14, B=34;
+  const iw=W-L-R, ih=H-T-B;
+  const xs = v => L + iw * Math.min(1, Math.log10(1+Math.max(0,v)) / Math.log10(1+60));
+  const ys = v => T + ih - ih*(Math.max(0,Math.min(100,v))/100);
+  let marks='';
+  for (const e of pts){
+    const x=xs(e.los).toFixed(1), y=ys(e.final).toFixed(1);
+    const tip = `${e.weapon} vs ${e.target} - final PH ${fmt.n(e.final,1)}%, LOS ${fmt.n(e.los,2)} deg/s${e.tgtKts?`, target ${fmt.n(e.tgtKts)} kt`:''} - ${e.result}`;
+    marks += e.result==='HIT'
+      ? `<circle cx="${x}" cy="${y}" r="3" fill="var(--good)" fill-opacity="0.75" data-tip="${esc(tip)}"></circle>`
+      : `<circle cx="${x}" cy="${y}" r="3.2" fill="none" stroke="var(--bad)" stroke-width="1.3" stroke-opacity="0.8" data-tip="${esc(tip)}"></circle>`;
+  }
+  let grid='', xticks=[0,0.5,2,5,15,60];
+  for (const v of [0,25,50,75,100]){
+    const y=ys(v).toFixed(1);
+    grid += `<line x1="${L}" y1="${y}" x2="${W-R}" y2="${y}" stroke="var(--grid)" stroke-width="1"></line>`
+      + `<text x="${L-7}" y="${+y+3.5}" text-anchor="end" class="aaraxt">${v}%</text>`;
+  }
+  for (const v of xticks){
+    const x=xs(v).toFixed(1);
+    grid += `<text x="${x}" y="${H-B+16}" text-anchor="middle" class="aaraxt">${v}</text>`;
+  }
+  return `<div class="card"><h3>Probability against crossing rate</h3>`
+    + `<p class="small">Every scored engagement: its final PH against the line-of-sight rate the engine recorded. `
+    + `The collapse to the right is the geometry problem - a fast crosser, not a bad weapon. Log scale on the x axis.</p>`
+    + `<div class="aarlegend"><span><span class="aarsw hit"></span>hit</span><span><span class="aarsw miss"></span>miss</span></div>`
+    + `<svg class="aarsc" viewBox="0 0 ${W} ${H}" role="img" aria-label="Final probability of hit against line-of-sight rate">`
+    + grid
+    + `<line x1="${L}" y1="${T}" x2="${L}" y2="${T+ih}" stroke="var(--axis)"></line>`
+    + `<line x1="${L}" y1="${T+ih}" x2="${W-R}" y2="${T+ih}" stroke="var(--axis)"></line>`
+    + marks
+    + `<text x="${L+iw/2}" y="${H-3}" text-anchor="middle" class="aaraxl">line-of-sight rate (deg/s)</text>`
+    + `</svg><div class="aarsn">${fmt.n(pts.length)} engagements plotted; ${fmt.n(rows.length-pts.length)} logged no LOS rate.</div></div>`;
+}
+
+/* declared probability against what actually happened */
+function aarSoftkillView(a){
+  const sk = a.softkill||[];
+  if (!sk.length) return `<div class="card"><h3>Soft kill</h3><p class="small">No decoy or jammer attempts in this log.</p></div>`;
+  const by = new Map();
+  for (const s of sk){
+    let x=by.get(s.system);
+    if(!x){ x={system:s.system, kind:s.kind, n:0, ok:0, p:0, sensors:new Set(), weapons:new Set()}; by.set(s.system,x); }
+    x.n++; x.ok += s.result==='SUCCESS'; x.p += s.prob;
+    x.sensors.add(s.sensor); x.weapons.add(s.weapon);
+  }
+  const N=sk.length, OK=sk.filter(s=>s.result==='SUCCESS').length, P=sk.reduce((s,x)=>s+x.prob,0)/N;
+  let html = `<div class="card"><h3>Soft kill</h3>`
+    + `<p class="small">Each decoy or jammer attempt carries the probability the engine assigned it and the die roll against it, `
+    + `so declared and realised rates can be compared directly. Unlike the engagement PH, these probabilities are printed unrounded: `
+    + `the roll predicts the outcome in every one of the ${fmt.n(N)} attempts here.</p>`
+    + `<div class="aarkpis">`
+    + `<div class="aarkpi"><div class="aarkv">${fmt.n(N)}</div><div class="aarkl">attempts</div></div>`
+    + `<div class="aarkpi"><div class="aarkv">${fmt.n(P,1)}%</div><div class="aarkl">mean declared</div></div>`
+    + `<div class="aarkpi"><div class="aarkv">${fmt.n(100*OK/N,1)}%</div><div class="aarkl">realised</div>`
+    + `<div class="aarks">${fmt.n(OK)} of ${fmt.n(N)} succeeded</div></div>`
+    + `</div>`
+    + `<div class="aarftw"><table class="list"><thead><tr><th>System</th><th>type</th><th class="num">attempts</th>`
+    + `<th class="num">declared</th><th class="num">realised (95% CI)</th><th class="num">seekers faced</th></tr></thead><tbody>`;
+  for (const x of [...by.values()].sort((p,q)=>q.n-p.n).slice(0,30)){
+    const w = aarWeapon(x.system);
+    html += `<tr><td>${w?`<a href="#/weapon/${w.ID}">${esc(x.system)}</a>`:esc(x.system)}</td>`
+      + `<td class="dim">${esc(x.kind)}</td><td class="num">${x.n}</td>`
+      + `<td class="num">${fmt.n(x.p/x.n,1)}%</td>`
+      + `<td class="num">${aarPk(x.n, x.ok)}</td>`
+      + `<td class="num">${x.sensors.size}</td></tr>`;
+  }
+  return html+`</tbody></table></div></div>`;
+}
+
+function aarMechanicsView(a){
+  const rows = a.engagements||[];
+  if (!rows.length) return `<div class="card"><h3>Engagement mechanics</h3>`
+    + `<p class="small">This log has no scored engagements, so there is no probability chain to inspect.</p></div>`
+    + aarSoftkillView(a);
+  // Worked examples. Prefer engagements that were actually computed: a floored one shows the
+  // clamp rather than the mechanism, which makes a poor illustration.
+  const live = rows.filter(e=>!e.floored);
+  const pool = live.length ? live : rows;
+  const worst = pool.slice().sort((x,y)=>(x.final-x.base)-(y.final-y.base))[0];
+  const fastest = (pool.filter(e=>e.los!=null).sort((x,y)=>y.los-x.los)[0])
+               || (rows.filter(e=>e.los!=null).sort((x,y)=>y.los-x.los)[0]);
+  let html = aarGeomScatter(rows) + aarModTable(rows);
+  html += `<div class="card"><h3>Engagement chains</h3>`
+    + `<p class="small">The engine's own reasoning for two engagements from this log: the one that lost the most probability between base and final, and the one fought at the highest crossing rate.`
+    + (live.length && live.length<rows.length ? ` Engagements clamped at the 5% floor are excluded from these examples &mdash; they show the clamp, not the mechanism.` : '')
+    + `</p>`
+    + aarChainCard(worst)
+    + (fastest && fastest!==worst ? aarChainCard(fastest) : '')
+    + `</div>`;
+  html += aarSoftkillView(a);
+  return html;
+}
+
+/* ============================================================
+   AAR PHASE 4 - ORBAT CROSS-REFERENCE
+
+   The scenario ORBAT and the message log are independent features and stay that way: each
+   ingests separately, each renders fully on its own, and neither requires the other. This
+   tab is the only place they meet, and it is inert unless both are present.
+
+   What the join adds that neither has alone:
+     - the log knows damage points taken; the ORBAT knows each unit's DBID, and the catalog
+       knows that class's DamagePoints - so damage can finally be read against capacity
+     - the ORBAT knows what was in the magazines; the log knows what was fired
+     - the ORBAT is the roster the losses came out of
+   ============================================================ */
+
+function aarScenUnits(){
+  const s = D.scenario;
+  if (!s || !Array.isArray(s.units)) return null;
+  const byName = new Map();
+  for (const u of s.units) if (u.name) byName.set(String(u.name).toLowerCase().trim(), u);
+  return byName;
+}
+
+/* the catalog record behind an ORBAT unit, for DamagePoints and a link */
+function aarScenCatalog(u){
+  if (!u || u.dbid == null) return null;
+  const kind = (typeof SCEN_TYPE_KIND!=='undefined' && SCEN_TYPE_KIND[u.type]) || null;
+  if (!kind || !D.platforms[kind]) return null;
+  const rec = D.platforms[kind].get(u.dbid);
+  if (!rec) return null;
+  const route = (typeof SCEN_TYPE_ROUTE!=='undefined' && SCEN_TYPE_ROUTE[u.type]) || null;
+  return {rec, kind, route};
+}
+
+function aarCrossref(a){
+  if (a._xref) return a._xref;
+  const byName = aarScenUnits();
+  if (!byName) return null;
+  const e = aarEffects(a);
+
+  const rows = [];
+  let matched = 0;
+  for (const u of e.units){
+    const su = byName.get(u.unit.toLowerCase().trim()) || null;
+    if (su) matched++;
+    const cat = aarScenCatalog(su);
+    const cap = cat && cat.rec.DamagePoints ? cat.rec.DamagePoints : null;
+    rows.push({...u, scen:su, cat, cap,
+      pct: (cap && u.dp) ? 100*u.dp/cap : null});
+  }
+
+  // expenditure: what the snapshot carried against what the log shows leaving the rail
+  const carried = new Map();                    // weapon dbid -> qty in the ORBAT snapshot
+  for (const su of (D.scenario.units||[])) for (const [wid,qty] of (su.inv||[]))
+    carried.set(wid, (carried.get(wid)||0) + (qty||0));
+
+  const fired = new Map();                      // weapon name -> rounds seen in the log
+  const bump = (n)=> fired.set(n, (fired.get(n)||0)+1);
+  for (const t of (a.terminal||[])) if (t.weapon) bump(t.weapon);
+  for (const en of (a.engagements||[])) if (en.kind!=='gun' && en.weapon) { /* counted via terminal */ }
+
+  const exp = [];
+  for (const [name, n] of fired){
+    const w = aarWeapon(name);
+    const have = w ? (carried.get(w.ID) || 0) : 0;
+    exp.push({name, w, fired:n, carried:have});
+  }
+  exp.sort((x,y)=>y.fired-x.fired);
+
+  const lostNames = new Set(e.units.filter(u=>u.destroyed||u.sinking).map(u=>u.unit.toLowerCase().trim()));
+  const roster = {total:(D.scenario.units||[]).length, lost:0, bySide:new Map()};
+  for (const su of (D.scenario.units||[])){
+    const side = su.side || 'Unknown';
+    let r = roster.bySide.get(side);
+    if (!r){ r={side, total:0, lost:0}; roster.bySide.set(side,r); }
+    r.total++;
+    if (lostNames.has(String(su.name||'').toLowerCase().trim())){ r.lost++; roster.lost++; }
+  }
+
+  a._xref = {rows, matched, total:e.units.length, exp, roster,
+    scenName: (D.scenario.name || (D.scenario.meta&&D.scenario.meta.title) || 'scenario snapshot'),
+    scenUnits: (D.scenario.units||[]).length};
+  return a._xref;
+}
+
+function aarOrbatView(a){
+  const hasScen = !!(D.scenario && Array.isArray(D.scenario.units) && D.scenario.units.length);
+  if (!hasScen) return `<div class="card"><h3>ORBAT cross-reference</h3>`
+    + `<p class="small">This tab compares the log against a scenario order of battle. `
+    + `The two features are independent &mdash; each works on its own &mdash; but a few things can only be `
+    + `worked out from both together:</p>`
+    + `<ul class="aarul"><li><b>Damage against capacity.</b> The log records damage points taken; the ORBAT supplies each unit's database ID, and the catalog supplies that class's total damage points. Only with all three can "took 754 DP" become "took 140% of what it could absorb".</li>`
+    + `<li><b>Expenditure against inventory.</b> The ORBAT knows what was in the magazines at the snapshot; the log knows what was fired.</li>`
+    + `<li><b>Losses against the roster.</b> The ORBAT is the force the losses came out of.</li></ul>`
+    + `<p class="small">Load one on the <a href="#/scenario">Scenario ORBAT</a> page and come back. The log stays loaded.</p></div>`;
+
+  const x = aarCrossref(a);
+  if (!x) return `<div class="card"><h3>ORBAT cross-reference</h3><p class="small">Could not read the loaded scenario.</p></div>`;
+
+  const pctMatch = x.total ? 100*x.matched/x.total : 0;
+  let html = `<div class="card"><h3>ORBAT cross-reference</h3>`
+    + `<p class="small">Log matched against <b>${esc(String(x.scenUnits))}</b> units in the loaded scenario snapshot, by unit name. `
+    + `<b>${fmt.n(x.matched)} of ${fmt.n(x.total)}</b> units mentioned in the log (${fmt.n(pctMatch,0)}%) were found in it.</p>`
+    + (pctMatch < 50 ? `<div class="aarwarn">Fewer than half the log's units appear in this snapshot. `
+        + `That usually means the snapshot is from a different scenario, or was taken after the units in question were already gone. `
+        + `The tables below only cover the units that matched.</div>` : '');
+
+  // --- damage against capacity: the DamagePoints denominator ---
+  const dmg = x.rows.filter(r=>r.cap && r.dp).sort((p,q)=>q.pct-p.pct);
+  if (dmg.length){
+    html += `<div class="aartier">Damage against capacity<span>${fmt.n(dmg.length)}</span></div>`
+      + `<p class="small">Damage points taken against the class total from the database. Over 100% is ordnance spent on a unit that was already finished.</p>`
+      + `<div class="aarftw"><table class="list"><thead><tr><th>Unit</th><th>class</th><th class="num">DP taken</th>`
+      + `<th class="num">class DP</th><th class="num">of capacity</th><th class="num">impacts</th><th>outcome</th></tr></thead><tbody>`;
+    for (const r of dmg.slice(0,60)){
+      const c=r.cat;
+      html += `<tr><td>${esc(r.unit)}</td>`
+        + `<td>${c&&c.route?`<a href="#/${c.route}/${c.rec.ID}">${esc(c.rec.Name)}</a>`:'<span class="dim">&mdash;</span>'}</td>`
+        + `<td class="num">${fmt.n(r.dp,1)}</td><td class="num">${fmt.n(r.cap)}</td>`
+        + `<td class="num ${r.pct>100?'aarbadn':''}"><b>${fmt.n(r.pct,0)}%</b></td>`
+        + `<td class="num">${r.impacts.length}</td><td>${esc(r.outcome)}</td></tr>`;
+    }
+    html += `</tbody></table></div>`;
+  } else {
+    html += `<div class="aarnote">No unit in this log both took recorded damage and resolved to a scenario unit with a catalog class, so damage cannot be read against capacity here.</div>`;
+  }
+  html += `</div>`;
+
+  // --- expenditure against what the snapshot carried ---
+  const exp = x.exp.filter(r=>r.fired>0);
+  if (exp.length){
+    html += `<div class="card"><h3>Expenditure against inventory</h3>`
+      + `<p class="small">Rounds seen reaching an endgame in the log, against the quantity of that weapon held across the whole snapshot. `
+      + `The ORBAT is a <b>point in time</b>: if it was taken mid-battle the remaining column is what was left at that moment, not what the force started with.</p>`
+      + `<div class="aarftw"><table class="list"><thead><tr><th>Weapon</th><th class="num">seen in log</th>`
+      + `<th class="num">held in snapshot</th><th class="num">ratio</th></tr></thead><tbody>`;
+    for (const r of exp.slice(0,40)){
+      const ratio = r.carried ? 100*r.fired/r.carried : null;
+      html += `<tr><td>${r.w?`<a href="#/weapon/${r.w.ID}">${esc(r.name)}</a>`:esc(r.name)}</td>`
+        + `<td class="num">${fmt.n(r.fired)}</td>`
+        + `<td class="num">${r.carried?fmt.n(r.carried):'<span class="dim">not carried</span>'}</td>`
+        + `<td class="num">${ratio==null?'<span class="dim">&mdash;</span>':fmt.n(ratio,0)+'%'}</td></tr>`;
+    }
+    html += `</tbody></table></div></div>`;
+  }
+
+  // --- losses against the roster ---
+  if (x.roster.total){
+    const sides=[...x.roster.bySide.values()].filter(r=>r.total).sort((p,q)=>q.lost-p.lost);
+    const max=Math.max(1,...sides.map(r=>r.total));
+    html += `<div class="card"><h3>Losses against the roster</h3>`
+      + `<p class="small">${fmt.n(x.roster.lost)} of the snapshot's ${fmt.n(x.roster.total)} units appear in this log as destroyed or sinking. `
+      + `Units lost before the snapshot was taken will not be counted.</p>`;
+    for (const r of sides){
+      html += `<div class="aarbar"><span class="aarbl">${esc(r.side)}</span>`
+        + `<span class="aarbt"><i style="width:${(r.total/max*100).toFixed(1)}%"></i></span>`
+        + `<span class="aarbn">${fmt.n(r.lost)}/${fmt.n(r.total)}</span>`
+        + `<span class="aarbx">${r.total?fmt.n(100*r.lost/r.total,0):0}% lost</span></div>`;
+    }
+    html += `</div>`;
+  }
+  return html;
+}
+
+function aarExportXrefCSV(){
+  const a=D.aar; if(!a) return;
+  const x=aarCrossref(a); if(!x) return;
+  const rows=x.rows.map(r=>({
+    unit:r.unit, in_orbat:r.scen?1:0, dbid:r.scen?r.scen.dbid:'', class:r.cat?r.cat.rec.Name:'',
+    side:r.scen?r.scen.side:'', group:r.scen?r.scen.group:'',
+    dp_taken:r.dp||'', class_damage_points:r.cap||'', pct_of_capacity:r.pct==null?'':Math.round(r.pct),
+    impacts:r.impacts.length, effective:r.tracked?r.effective:'', outcome:r.outcome, cause:r.cause||'',
+  }));
+  aarDownload(aarStem()+'_orbat_xref.csv',
+    aarCSV(rows,['unit','in_orbat','dbid','class','side','group','dp_taken','class_damage_points',
+                 'pct_of_capacity','impacts','effective','outcome','cause']), 'text/csv');
+}
+
+/* ============================================================
+   AAR PHASE 5 - LOSSES & EFFECTS
+   Who killed what, what killed whom, what the losses actually cost, and how much of the
+   ordnance was wasted on targets that were already finished.
+
+   The overkill measure rests on one observation: CMO stops emitting damage records once a
+   unit is dead or sinking. So an impact with no damage record beside it is a round that
+   changed nothing. That needs no database lookup - the log says it on its own.
+   ============================================================ */
+
+const AAR_EFFECT_WIN = 3;   // seconds either side of an impact to look for its damage record
+
+function aarEffects(a){
+  if (a._effects) return a._effects;
+
+  const dmgAt = new Map();                    // "unit sec" -> damage happened for that unit then
+  const byUnit = new Map();
+  const unit = u => { let x=byUnit.get(u); if(!x){ x={unit:u, dp:0, dpEvents:0, destroyed:false,
+      sinking:false, cause:null, comps:0, impacts:[], effective:0}; byUnit.set(u,x); } return x; };
+
+  for (const d of (a.damage||[])){
+    const u = unit(d.unit);
+    const k = d.unit + ' ' + Math.floor(d.t/1000);
+    if (d.kind === 'dp'){
+      u.dp += d.dp || 0; u.dpEvents++;
+      dmgAt.set(k, true);
+    } else if (d.kind === 'component-destroyed' || d.kind === 'component-damaged'){
+      u.comps++; dmgAt.set(k, true);          // a component event still proves effect
+    } else if (d.kind === 'destroyed'){ u.destroyed = true; if(!u.cause) u.cause='enemy action';
+    } else if (d.kind === 'sinking'){ u.sinking = true; if(!u.cause) u.cause='enemy action';
+    } else if (d.kind === 'lost'){ u.destroyed = true; u.cause = d.cause; }
+  }
+
+  for (const t of (a.terminal||[])){
+    if (t.result !== 'HIT' || !t.target) continue;
+    const u = unit(t.target);
+    const sec = Math.floor(t.t/1000);
+    let eff = false;
+    for (let d=-AAR_EFFECT_WIN; d<=AAR_EFFECT_WIN && !eff; d++)
+      if (dmgAt.has(t.target + ' ' + (sec+d))) eff = true;
+    u.impacts.push({weapon:t.weapon, t:t.t, ts:t.ts, effective:eff});
+    if (eff) u.effective++;
+  }
+
+  const units = [...byUnit.values()].filter(u => u.impacts.length || u.destroyed || u.sinking || u.dp);
+  for (const u of units){
+    // A unit with no damage record ANYWHERE in the log tells us nothing about whether its
+    // impacts did anything - damage logging may simply be off. Those impacts are UNKNOWN,
+    // not wasted. Calling them wasted would manufacture an overkill finding out of a
+    // logging setting, which is the single easiest way for this page to lie.
+    u.tracked = (u.dpEvents > 0 || u.comps > 0);
+    u.wasted  = u.tracked ? u.impacts.length - u.effective : 0;
+    u.unknown = u.tracked ? 0 : u.impacts.length;
+    u.outcome = u.destroyed ? (u.cause && u.cause!=='enemy action' ? u.cause : 'destroyed')
+              : u.sinking ? 'sinking' : (u.dp||u.comps ? 'damaged' : u.impacts.length ? 'effect unknown' : 'no effect');
+  }
+
+  const byWeapon = new Map();
+  for (const u of units) for (const i of u.impacts){
+    let w = byWeapon.get(i.weapon);
+    if (!w){ w = {weapon:i.weapon, impacts:0, effective:0, units:new Set(), kills:new Set()}; byWeapon.set(i.weapon,w); }
+    w.impacts++; if (i.effective) w.effective++; if (!u.tracked) w.unknown=(w.unknown||0)+1;
+    w.units.add(u.unit); if (u.destroyed || u.sinking) w.kills.add(u.unit);
+  }
+
+  const tracked = units.filter(u=>u.tracked);
+  const totImp = tracked.reduce((s,u)=>s+u.impacts.length,0);   // only units whose damage IS logged
+  const totEff = tracked.reduce((s,u)=>s+u.effective,0);
+  const totUnknown = units.reduce((s,u)=>s+u.unknown,0);
+  const allImp = units.reduce((s,u)=>s+u.impacts.length,0);
+  const causes = new Map();
+  for (const u of units) if (u.destroyed || u.sinking){
+    const c = u.cause || 'enemy action';
+    causes.set(c, (causes.get(c)||0)+1);
+  }
+  a._effects = {units, tracked, byWeapon:[...byWeapon.values()], totImp, totEff,
+    wasted: totImp-totEff, totUnknown, allImp, causes};
+  return a._effects;
+}
+
+function aarLossesView(a){
+  const e = aarEffects(a);
+  if (!e.units.length) return `<div class="card"><h3>Losses &amp; effects</h3>`
+    + `<p class="small">No impacts, damage records or losses in this log.</p></div>`;
+
+  let html = '';
+
+  if (e.causes.size){
+    const rows=[...e.causes.entries()].sort((x,y)=>y[1]-x[1]);
+    const tot=rows.reduce((s,r)=>s+r[1],0), max=rows[0][1];
+    const combat=e.causes.get('enemy action')||0;
+    html += `<div class="card"><h3>Losses by cause</h3>`
+      + `<p class="small">${fmt.n(tot)} unit${tot===1?'':'s'} lost. `
+      + (tot-combat ? `<b>${fmt.n(tot-combat)} (${fmt.n(100*(tot-combat)/tot,0)}%) were not to enemy fire.</b>` : `All to enemy fire.`)
+      + `</p>`;
+    for (const [c,n] of rows)
+      html += `<div class="aarbar"><span class="aarbl ${c==='enemy action'?'':'miss'}">${esc(c)}</span>`
+        + `<span class="aarbt"><i style="width:${(n/max*100).toFixed(1)}%"></i></span><span class="aarbn">${fmt.n(n)}</span></div>`;
+    html += `</div>`;
+  }
+
+  if (e.allImp){
+    const pct = e.totImp ? 100*e.wasted/e.totImp : 0;
+    const hit = e.units.filter(u=>u.impacts.length).sort((x,y)=>y.impacts.length-x.impacts.length);
+    html += `<div class="card"><h3>Ordnance effect and overkill</h3>`;
+    if (!e.totImp){
+      html += `<div class="aarwarn"><b>Effect cannot be measured in this log.</b> It contains `
+        + `${fmt.n(e.allImp)} impact${e.allImp===1?'':'s'} but no damage records for any of the units struck, `
+        + `so there is no way to tell a round that did nothing from a round whose effect simply was not written down. `
+        + `Turn on <b>Weapon Damage</b> and <b>Unit Damage</b> in CMO's Message Log options and the measure becomes available.</div>`;
+    } else {
+      html += `<p class="small">An impact counts as <b>effective</b> when a damage record for that unit appears within ${AAR_EFFECT_WIN}s of it. `
+        + `The engine stops recording damage once a unit is dead or sinking, so impacts with no damage beside them are rounds that changed nothing. `
+        + `Only units whose damage is actually logged are counted${e.totUnknown?`; ${fmt.n(e.totUnknown)} further impact${e.totUnknown===1?'':'s'} struck units with no damage record at all and are shown as <i>effect unknown</i>`:''}.</p>`
+        + `<div class="aarkpis">`
+        + `<div class="aarkpi"><div class="aarkv">${fmt.n(e.totImp)}</div><div class="aarkl">measurable impacts</div></div>`
+        + `<div class="aarkpi"><div class="aarkv">${fmt.n(e.totEff)}</div><div class="aarkl">did damage</div></div>`
+        + `<div class="aarkpi"><div class="aarkv aarbadn">${fmt.n(e.wasted)}</div><div class="aarkl">changed nothing</div>`
+        + `<div class="aarks">${fmt.n(pct,0)}% of measurable impacts</div></div>`
+        + (e.totUnknown?`<div class="aarkpi"><div class="aarkv">${fmt.n(e.totUnknown)}</div><div class="aarkl">effect unknown</div><div class="aarks">unit never logged damage</div></div>`:'')
+        + `</div>`;
+    }
+    html += ``
+      + `<div class="aarftw"><table class="list aarwt"><thead><tr><th>Unit</th><th class="num">impacts</th>`
+      + `<th class="num">effective</th><th class="num">wasted</th><th class="num">total DP</th><th>outcome</th></tr></thead><tbody>`;
+    for (const u of hit.slice(0,60)){
+      const id='ae'+u.unit.replace(/[^a-z0-9]/gi,'');
+      const w=new Map(); for(const i of u.impacts) w.set(i.weapon,(w.get(i.weapon)||0)+1);
+      html += `<tr class="aarwrow" onclick="aarTog('${id}')"><td><span class="aarchev" id="${id}c">&#9656;</span> ${esc(u.unit)}</td>`
+        + `<td class="num">${u.impacts.length}</td><td class="num">${u.effective}</td>`
+        + `<td class="num">${u.tracked?(u.wasted?`<span class="aarbadn">${u.wasted}</span>`:'0'):'<span class="dim">?</span>'}</td>`
+        + `<td class="num">${u.dp?fmt.n(u.dp,1):'&mdash;'}</td>`
+        + `<td>${esc(u.outcome)}${u.cause&&u.cause!=='enemy action'?` <span class="aarflag warn">${esc(u.cause)}</span>`:''}</td></tr>`
+        + `<tr class="aarsub" id="${id}" hidden><td colspan="6"><table class="aarsubt"><tbody>`
+        + [...w.entries()].sort((x,y)=>y[1]-x[1]).map(([wn,c])=>{
+            const wr=aarWeapon(wn);
+            return `<tr><td>${wr?`<a href="#/weapon/${wr.ID}">${esc(wn)}</a>`:esc(wn)}</td><td class="num">${c} impact${c===1?'':'s'}</td></tr>`;
+          }).join('')
+        + `</tbody></table></td></tr>`;
+    }
+    if (hit.length>60) html += `<tr><td colspan="6" class="dim">+${fmt.n(hit.length-60)} more units</td></tr>`;
+    html += `</tbody></table></div></div>`;
+
+    const ws = e.byWeapon.slice().sort((x,y)=>y.impacts-x.impacts);
+    html += `<div class="card"><h3>Weapon effect</h3>`
+      + `<p class="small">The same measure from the firing end: of the rounds that struck, how many actually did something, and how many units they finished.</p>`
+      + `<div class="aarftw"><table class="list"><thead><tr><th>Weapon</th><th class="num">impacts</th>`
+      + `<th class="num">effective</th><th class="num">wasted</th><th class="num">unknown</th>`
+      + `<th class="num">units hit</th><th class="num">units lost</th></tr></thead><tbody>`;
+    for (const w of ws.slice(0,40)){
+      const wr=aarWeapon(w.weapon);
+      html += `<tr><td>${wr?`<a href="#/weapon/${wr.ID}">${esc(w.weapon)}</a>`:esc(w.weapon)}</td>`
+        + `<td class="num">${w.impacts}</td><td class="num">${w.effective}</td>`
+        + `<td class="num">${(w.impacts-(w.unknown||0)-w.effective)?`<span class="aarbadn">${w.impacts-(w.unknown||0)-w.effective}</span>`:'0'}</td>`
+        + `<td class="num dim">${w.unknown||0}</td>`
+        + `<td class="num">${w.units.size}</td><td class="num">${w.kills.size}</td></tr>`;
+    }
+    html += `</tbody></table></div></div>`;
+  }
+  return html;
+}
+
+function aarExportEffectsCSV(){
+  const a=D.aar; if(!a) return;
+  const e=aarEffects(a);
+  const rows=e.units.map(u=>({
+    unit:u.unit, impacts:u.impacts.length, damage_logged:u.tracked?1:0,
+    effective:u.tracked?u.effective:'', wasted:u.tracked?u.wasted:'',
+    total_dp:u.dp||'', damage_events:u.dpEvents, component_events:u.comps,
+    outcome:u.outcome, cause:u.cause||'',
+    weapons:[...new Set(u.impacts.map(i=>i.weapon))].join('; '),
+  }));
+  aarDownload(aarStem()+'_effects.csv',
+    aarCSV(rows,['unit','impacts','damage_logged','effective','wasted','total_dp','damage_events','component_events','outcome','cause','weapons']),
+    'text/csv');
+}
+
 </script>
 <script>
 /* ============================================================

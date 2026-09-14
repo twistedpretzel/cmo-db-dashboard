@@ -1,7 +1,9 @@
 # --- Never commit: these embed proprietary Command: Modern Operations data ---
-# Generated dashboards carry a full copy of the game database
-*_dashboard.html
-# ...but always keep the (data-free) template
+# Any generated dashboard carries a full copy of the game database. This rule FAILS CLOSED:
+# every .html is ignored and only the data-free template is allowed back in. The earlier
+# version keyed on the "*_dashboard.html" naming convention, which a test build named
+# anything else (aar_test.html) slipped straight past.
+*.html
 !*.template.html
 
 # Game databases and any compressed copies
@@ -14,6 +16,9 @@ Images/
 
 # Raw JSON extracts from the database (also proprietary data)
 *.json
+
+# --- Local working documents (release packages, drafts) ---
+RELEASE_*.md
 
 # --- Python / PyInstaller build output ---
 __pycache__/
